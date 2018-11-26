@@ -1,25 +1,26 @@
 .Layout {
   height: 100vh;
+  max-width: 1200px;
+  position: relative;
   display: flex;
   flex-direction: column;
-  background-color: #eee;
+  background-color: #aaaaaa;
   color: #0a0a0a;
   align-content: center;
   justify-content: center;
+  box-sizing: border-box;
+  overflow: hidden;
+  margin: auto;
 }
 
 .Layout main {
   display: flex;
   flex-direction: column;
   flex-grow: 1;
-  max-width: 400px;
+  max-width: 1200px;
   width: 100%;
   border: 2px solid #524c4c;
   justify-content: center;
   margin: auto;
   box-shadow: inset 0px 0px 0px 10px cadetblue;
-}
-
-.Layout h1 {
-  text-align: center;
-}
+} 
