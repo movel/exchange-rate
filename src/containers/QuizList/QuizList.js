@@ -1,18 +1,35 @@
 import React, { PureComponent } from 'react';
-import PropTypes from 'prop-types';
+import classes from './QuizList.module.css'
+import { NavLink } from 'react-router-dom'
 
 class QuizList extends PureComponent {
+  renderQuizes() {
+    return [1, 2,3].map((quiz, index) => {
+      return (
+        <li
+          key={ index }
+        >
+          <NavLink to={ '/quiz/' + quiz }>
+            Test { quiz } 
+          </NavLink>
+        </li>
+      )
+    })
+  }
+
   render() {
     return (
-      <div>
-        <h1>Quiz List</h1>
+      <div className={ classes.QuizList }>
+        <div>
+          <h1>List of tests</h1>
+
+          <ul>
+            { this.renderQuizes() }
+          </ul>
+        </div>        
       </div>
     );
   }
 }
-
-QuizList.propTypes = {
-
-};
 
 export default QuizList;

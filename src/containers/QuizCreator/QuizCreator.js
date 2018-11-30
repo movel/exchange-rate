@@ -1,5 +1,4 @@
 import React, { PureComponent } from 'react';
-import PropTypes from 'prop-types';
 
 class QuizCreator extends PureComponent {
   render() {
@@ -10,9 +9,5 @@ class QuizCreator extends PureComponent {
     );
   }
 }
-
-QuizCreator.propTypes = {
-
-};
 
 export default QuizCreator;

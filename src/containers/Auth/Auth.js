@@ -1,5 +1,4 @@
 import React, { PureComponent } from 'react';
-import PropTypes from 'prop-types';
 
 class Auth extends PureComponent {
   render() {
@@ -10,9 +9,5 @@ class Auth extends PureComponent {
     );
   }
 }
-
-Auth.propTypes = {
-
-};
 
 export default Auth;
