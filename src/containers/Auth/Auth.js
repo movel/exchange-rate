@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react';
 import classes from './Auth.module.css'
 import Button from '../../components/UI/Button/Button'
+import Input from '../../components/UI/Input/Input'
 
 class Auth extends PureComponent {
   loginHandler = () => {
@@ -13,7 +14,7 @@ class Auth extends PureComponent {
 
   submitHandler = event => {
     event.preventDefault()
-  }
+  } 
 
   render() {
     return (
@@ -22,8 +23,13 @@ class Auth extends PureComponent {
           <h1>Authorisation</h1>
 
           <form onSubmit={ this.submitHandler } className={ classes.AuthForm }>
-            <input type="text" />
-            <input type="text" />
+            <Input 
+              label="Email" 
+            />
+            <Input 
+              label="Password"
+              errorMessage="TEST!!!"
+            />
 
             <Button 
               type="success" 
