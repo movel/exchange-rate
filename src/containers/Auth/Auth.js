@@ -3,6 +3,12 @@ import classes from './Auth.module.css'
 import Button from '../../components/UI/Button/Button'
 import Input from '../../components/UI/Input/Input'
 
+function validateEmail(email) {
+  // eslint-disable-next-line
+  const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+  return re.test(String(email).toLowerCase())
+}
+
 class Auth extends PureComponent {
 
   state = {
@@ -46,9 +52,43 @@ class Auth extends PureComponent {
     event.preventDefault()
   } 
 
-  onChangeHandler = (event, controlName) => {
-    console.log(`${ controlName }: `, event.target.value)
+  validateControl(value, validation) {
+    if(!validation) {
+      return true
+    }
+
+    let isValid = true
+
+    if(validation.required) {
+      isValid = value.trim() !== '' && isValid
+    }
+
+    if(validation.email) {
+      isValid = validateEmail(value) && isValid
+    }
+
+    if(validation.minLength) {
+      isValid = value.length >= validation.minLength && isValid
+    }
+
+    return isValid
   }
+
+  onChangeHandler = (event, controlName) => {
+    const formControls = { ...this.state.formControls }
+    const control = { ...formControls[controlName] }
+
+    control.value = event.target.value
+    control.touched = true
+    control.valid = this.validateControl(control.value, control.validation)
+
+    formControls[controlName] = control
+
+    this.setState({
+      formControls
+    })
+  }
+
 
   renderInputs() {
     return Object.keys(this.state.formControls).map((controlName, index) => {
