@@ -12,6 +12,7 @@ function validateEmail(email) {
 class Auth extends PureComponent {
 
   state = {
+    isFormValid: false,
     formControls: {
       email: {
         value: '',
@@ -84,8 +85,16 @@ class Auth extends PureComponent {
 
     formControls[controlName] = control
 
+    let isFormValid = true
+
+    Object.keys(formControls).forEach(name => {
+      isFormValid = formControls[name].valid && isFormValid
+    })
+
+    console.log('isFormValid', isFormValid)
+
     this.setState({
-      formControls
+      formControls, isFormValid
     })
   }
 
@@ -121,13 +130,15 @@ class Auth extends PureComponent {
 
             <Button 
               type="success" 
-              onClick={ this.loginHandler}
+              onClick={ this.loginHandler }
+              disabled={ !this.state.isFormValid }
             >
               Log in
             </Button>
             <Button 
               type="primary" 
-              onClick={ this.registerHandler}
+              onClick={ this.registerHandler }
+              disabled={ !this.state.isFormValid }
             >
               Register
             </Button>
