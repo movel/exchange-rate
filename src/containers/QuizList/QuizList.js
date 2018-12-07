@@ -1,20 +1,50 @@
 import React, { PureComponent } from 'react';
 import classes from './QuizList.module.css'
 import { NavLink } from 'react-router-dom'
+import Loader from '../../components/UI/Loader/Loader'
+import axios from 'axios'
 
 class QuizList extends PureComponent {
+
+  state = {
+    quizes: [],
+    loading: true
+  }
+
   renderQuizes() {
-    return [1, 2,3].map((quiz, index) => {
+    return this.state.quizes.map(quiz => {
       return (
         <li
-          key={ index }
+          key={ quiz.id }
         >
-          <NavLink to={ '/quiz/' + quiz }>
-            Test { quiz } 
+          <NavLink to={ '/quiz/' + quiz.id }>
+            { quiz.name } 
           </NavLink>
         </li>
       )
     })
+  }
+  
+  async componentDidMount() {
+    try {
+      const response = await axios.get('https://react-quiz-be55b.firebaseio.com/quizes.json')
+
+      const quizes = []
+
+      Object.keys(response.data).forEach((key, index) => {
+        quizes.push({
+          id: key,
+          name: `Test #${index + 1}`
+        })
+      })
+
+      this.setState({
+        quizes,
+        loading: false
+      })
+    } catch (e) {
+      console.log('error: ', e)
+    }
   }
 
   render() {
@@ -23,9 +53,13 @@ class QuizList extends PureComponent {
         <div>
           <h1>List of tests</h1>
 
-          <ul>
-            { this.renderQuizes() }
-          </ul>
+          { 
+            this.state.loading 
+              ? <Loader />
+              : <ul>
+                  { this.renderQuizes() }
+                </ul>
+          }
         </div>        
       </div>
     );

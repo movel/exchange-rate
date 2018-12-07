@@ -1,24 +1,26 @@
-import React, { PureComponent } from 'react';
+import React, {Component} from 'react'
+import axios from 'axios'
 import classes from './QuizCreator.module.css'
 import Button from '../../components/UI/Button/Button'
 import Input from '../../components/UI/Input/Input'
 import Select from '../../components/UI/Select/Select'
-import { createControl, validate, validateForm } from '../../Form/formFramework'
+import {createControl, validate, validateForm} from '../../Form/formFramework'
 import Auxiliary from '../../hoc/Auxiliary/Auxiliary'
 
 function createOptionControl(number) {
   return createControl({
-    label: `Option ${number}`,
-    errorMessage: `Option don't have idle`
-  }, {reqiered: true})
+    label: `Вариант ${number}`,
+    errorMessage: 'Значение не может быть пустым',
+    id: number
+  }, {required: true})
 }
 
 function createFormControls() {
   return {
     question: createControl({
-      label: 'Enter question',
-      errorMessage: `Question don't have idle`
-    }, {reqiered: true}),
+      label: 'Введите вопрос',
+      errorMessage: 'Вопрос не может быть пустым'
+    }, {required: true}),
     option1: createOptionControl(1),
     option2: createOptionControl(2),
     option3: createOptionControl(3),
@@ -26,7 +28,7 @@ function createFormControls() {
   }
 }
 
-class QuizCreator extends PureComponent {
+export default class QuizCreator extends Component {
 
   state = {
     quiz: [],
@@ -35,12 +37,12 @@ class QuizCreator extends PureComponent {
     formControls: createFormControls()
   }
 
-  submitHandler = event => {
+  sibmitHandler = event => {
     event.preventDefault()
   }
 
   addQuestionHandler = event => {
-    event.preventDefault() // Чтобы не перезагружалась страница
+    event.preventDefault()
 
     const quiz = this.state.quiz.concat()
     const index = quiz.length + 1
@@ -52,22 +54,10 @@ class QuizCreator extends PureComponent {
       id: index,
       rightAnswerId: this.state.rightAnswerId,
       answers: [
-        {
-          text: option1.value,
-          id: option1.id
-        },
-        {
-          text: option2.value,
-          id: option2.id
-        },
-        {
-          text: option3.value,
-          id: option3.id
-        },
-        {
-          text: option4.value,
-          id: option4.id
-        }
+        {text: option1.value, id: option1.id},
+        {text: option2.value, id: option2.id},
+        {text: option3.value, id: option3.id},
+        {text: option4.value, id: option4.id}
       ]
     }
 
@@ -81,10 +71,22 @@ class QuizCreator extends PureComponent {
     })
   }
 
-  createQuizHandler = event => {
+  createQuizHandler = async event => {
     event.preventDefault()
 
-    console.log(this.state.quiz)
+    try {
+      await axios.post('https://react-quiz-be55b.firebaseio.com/quizes.json', this.state.quiz)
+      
+      this.setState({
+        quiz: [],
+        isFormValid: false,
+        rightAnswerId: 1,
+        formControls: createFormControls()
+      })
+
+    } catch (e) {
+      console.log('error axios: ', e)
+    }
   }
 
   changeHandler = (value, controlName) => {
@@ -131,8 +133,8 @@ class QuizCreator extends PureComponent {
   }
 
   render() {
-    const select = <Select 
-      label="Choose right answer"
+    const select = <Select
+      label="Выберите правильный ответ"
       value={this.state.rightAnswerId}
       onChange={this.selectChangeHandler}
       options={[
@@ -144,11 +146,11 @@ class QuizCreator extends PureComponent {
     />
 
     return (
-      <div className={ classes.QuizCreator }>
+      <div className={classes.QuizCreator}>
         <div>
-          <h1>Creating Test</h1>
+          <h1>Создание теста</h1>
 
-          <form onSubmit={ this.submitHandler }>
+          <form onSubmit={this.submitHandler}>
 
             { this.renderControls() }
 
@@ -156,23 +158,23 @@ class QuizCreator extends PureComponent {
 
             <Button
               type="primary"
-              onClick={ this.addQuestionHandler }
-              disabled={ !this.state.isFormValid }
+              onClick={this.addQuestionHandler}
+              disabled={!this.state.isFormValid}
             >
-              Add question
+              Добавить вопрос
             </Button>
+
             <Button
               type="success"
-              onClick={ this.createQuizHandler }
-              disabled={ this.state.quiz.length === 0 }
+              onClick={this.createQuizHandler}
+              disabled={this.state.quiz.length === 0}
             >
-              Create test
+              Создать тест
             </Button>
+
           </form>
         </div>
       </div>
-    );
+    )
   }
 }
-
-export default QuizCreator;
