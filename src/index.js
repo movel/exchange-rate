@@ -24,7 +24,7 @@ const store = createStore(
   )
 
 const app = (
-  <Provider>
+  <Provider store={ store }>
     <BrowserRouter>
       <App />
     </BrowserRouter>
