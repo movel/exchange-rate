@@ -10,6 +10,7 @@
 } */
 .cryptocurrency__name {
   font-size: 1.25rem;
+  font-weight: 600;
   color: rgba(0, 0, 0, 0.75);
 }
 .bitcoin {

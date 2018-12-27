@@ -14,7 +14,7 @@ class Cryptocurrency extends PureComponent {
     } = this.props.data;
     return (
       <li className={"cryptocurrency " + id}>
-        <p className="cryptocurrency-name">{name} ({symbol})</p>
+        <p className="cryptocurrency__name">{name} ({symbol})</p>
         <h1>${ (+price_usd).toFixed(2) }</h1>
         <p className={percent_change_1h > 0 ? "green" : "red"}>{percent_change_1h}% 1hr</p>
         <p className={percent_change_24h > 0 ? "green" : "red"}>{percent_change_24h}% 24hrs</p>
