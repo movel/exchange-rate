@@ -37,33 +37,14 @@ class Tickers extends PureComponent {
               percent_change_7d: "0",
           }
       ],
-      dataCurrency: [
-        {
-            id: "rub",
-            name: "RUB",
-            symbol: "RUB",
-            price_usd: "1",
-            percent_change_1h: "0",
-            percent_change_24h: "0",
-            percent_change_7d: "0",
-        },
-        {
-            id: "uah",
-            name: "UAH",
-            symbol: "UAH",
-            price_usd: "1",
-            percent_change_1h: "0",
-            percent_change_24h: "0",
-            percent_change_7d: "0",
-        }
-      ]
+      dataCurrency: []
   };
   }
 
   componentDidMount() {
-    this.fetchCryptocurrencyData();
+    // this.fetchCryptocurrencyData();
     this.fetchCurrencyData()
-    this.interval = setInterval(() => this.fetchCryptocurrencyData(), 60 * 1000);
+    // this.interval = setInterval(() => this.fetchCryptocurrencyData(), 60 * 1000);
   }
 
   fetchCryptocurrencyData() {
@@ -81,24 +62,13 @@ class Tickers extends PureComponent {
     axios.get("https://openexchangerates.org/api/latest.json?app_id=1337cbc5bc7d462bb39d6e89e7bd19b2")
       .then(response => {
         const wanted = ["RUB", "UAH"];
-        const rates = response.data.rates;
-        // console.log('rates: ', rates)
-        // const result = response.data.rates.map(currency => wanted.includes(currency.name));
-        const result = wanted.map(rate =>  
-          [{
-            id: rate,
-            name: rate,
-            symbol: rate,
-            price_usd: rates[rate],
-            percent_change_1h: "0",
-            percent_change_24h: "0",
-            percent_change_7d: "0"
-          }]
-        )
-        // console.log('currency: ', result);
-        this.setState({ dataCurrency: result });
-        console.log('dataCurrency.state', this.state.dataCurrency);
-        console.log('data.state', this.state.data);
+        const result = Object.keys(response.data.rates).map(function(key) {
+          return [key, response.data.rates[key]];
+        });
+        const res = result.filter(currency => {
+          return wanted.includes(currency[0])
+        })
+        this.setState({ dataCurrency: res });
       })
       .catch(err => console.log(err));
     }
@@ -107,16 +77,19 @@ class Tickers extends PureComponent {
     const tickers = this.state.data.map((currency) =>
       <Cryptocurrency data={currency} key={currency.id} />
     )
-    const tickersC = this.state.dataCurrency.map((currency) => 
+    console.log('datac', this.state.dataCurrency)
+    const tickersCurrency = this.state.dataCurrency.map((currency, index) =>
       {
-        // console.log(currency)
-        return <Currency dataCurrency={currency} key={currency.id} />
+        // console.log('tickersCurr', currency[1])
+        return <Currency dataCurrency={currency} key={currency[index]} />
       }
+    
     )
     return (
       <div className={classes.tickers__container}>
         <ul className={classes.tickers}>{tickers}</ul>
-        <ul className={classes.tickersC}>{tickersC}</ul>
+        <br></br>
+        <ul className={classes.tickers}>{tickersCurrency}</ul>
         <p>Information updated every minute courtesy of <a href="http://www.coinmarketcap.com" target="_blank" rel="noopener noreferrer">coinmarketcap.com</a></p>
       </div>
     );
