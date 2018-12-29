@@ -3,18 +3,13 @@ import classes from './Currency.module.css'
 
 class Currency extends PureComponent {
   render() {
-    // const {
-    //   id,
-    //   name,
-    //   symbol,
-    //   price_usd,
-    //   percent_change_1h,
-    //   percent_change_24h,
-    //   percent_change_7d,
-    // } = this.props.dataCurrency;
-    console.log('currency.props.dataCurrency', this.props.dataCurrency[0])
-    const name = this.props.dataCurrency[0]
-    const price_usd = this.props.dataCurrency[1]
+    const {
+      name,
+      price_usd
+    } = this.props.dataCurrency;
+    console.log('name', name)
+    // const name = this.props.dataCurrency[0]
+    // const price_usd = this.props.dataCurrency[1]
     return (
       <li className={`${classes.currency}`}>
         <p className="cryptocurrency__name">{name} ({name})</p>

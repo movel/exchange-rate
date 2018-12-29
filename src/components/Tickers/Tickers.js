@@ -37,7 +37,12 @@ class Tickers extends PureComponent {
               percent_change_7d: "0",
           }
       ],
-      dataCurrency: []
+      dataCurrency: [
+        {
+          name: 'USD',
+          price_usd: 1
+        }
+      ]
   };
   }
 
@@ -52,7 +57,6 @@ class Tickers extends PureComponent {
       .then(response => {
         const wanted = ["bitcoin", "ethereum", "litecoin"];
         const result = response.data.filter(currency => wanted.includes(currency.id));
-        // console.log('bitcoin: ', response.data)
         this.setState({ data: result });
       })
       .catch(err => console.log(err));
@@ -63,11 +67,13 @@ class Tickers extends PureComponent {
       .then(response => {
         const wanted = ["RUB", "UAH"];
         const result = Object.keys(response.data.rates).map(function(key) {
-          return [key, response.data.rates[key]];
+          return [{name: key}, {price_usd: response.data.rates[key]}];
         });
         const res = result.filter(currency => {
-          return wanted.includes(currency[0])
+          return wanted.includes(currency)
         })
+        console.log('result', result)
+        console.log('res', res)
         this.setState({ dataCurrency: res });
       })
       .catch(err => console.log(err));
@@ -81,7 +87,7 @@ class Tickers extends PureComponent {
     const tickersCurrency = this.state.dataCurrency.map((currency, index) =>
       {
         // console.log('tickersCurr', currency[1])
-        return <Currency dataCurrency={currency} key={currency[index]} />
+        return <Currency dataCurrency={currency} key={index} />
       }
     
     )
