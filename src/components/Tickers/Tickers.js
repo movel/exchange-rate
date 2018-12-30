@@ -37,12 +37,7 @@ class Tickers extends PureComponent {
               percent_change_7d: "0",
           }
       ],
-      dataCurrency: [
-        {
-          name: 'USD',
-          price_usd: 1
-        }
-      ]
+      dataCurrency: []
   };
   }
 
@@ -74,7 +69,7 @@ class Tickers extends PureComponent {
         })
         console.log('result', result)
         console.log('res', res)
-        this.setState({ dataCurrency: res });
+        this.setState({ dataCurrency: response.data.rates });
       })
       .catch(err => console.log(err));
     }
@@ -84,18 +79,16 @@ class Tickers extends PureComponent {
       <Cryptocurrency data={currency} key={currency.id} />
     )
     console.log('datac', this.state.dataCurrency)
-    const tickersCurrency = this.state.dataCurrency.map((currency, index) =>
-      {
-        // console.log('tickersCurr', currency[1])
-        return <Currency dataCurrency={currency} key={index} />
-      }
-    
-    )
+    // const tickersCurrency = this.state.dataCurrency.map((currency, index) =>
+    //   {
+    //     // console.log('tickersCurr', currency[1])
+    //     return <Currency dataCurrency={currency} key={index} />
+    //   }
+    // )
     return (
       <div className={classes.tickers__container}>
         <ul className={classes.tickers}>{tickers}</ul>
         <br></br>
-        <ul className={classes.tickers}>{tickersCurrency}</ul>
         <p>Information updated every minute courtesy of <a href="http://www.coinmarketcap.com" target="_blank" rel="noopener noreferrer">coinmarketcap.com</a></p>
       </div>
     );
