@@ -66,7 +66,11 @@ class Tickers extends PureComponent {
     } 
 
   fetchCurrencyData() {
-    axios.get("https://openexchangerates.org/api/latest.json?app_id=1337cbc5bc7d462bb39d6e89e7bd19b2")
+    const YOUR_APP_ID = process.env.REACT_APP_ID
+    console.log('api', YOUR_APP_ID)
+    const api = `https://openexchangerates.org/api/latest.json?app_id=${process.env.REACT_APP_ID}`
+    
+    axios.get(api)
       .then(response => {
         const wanted = ["RUB", "UAH"];
         const result = Object.keys(response.data.rates).map(function(key) {
@@ -104,6 +108,8 @@ class Tickers extends PureComponent {
       <div className={classes.tickers__container}>
         <ul className={classes.tickers}>{tickers}</ul>
         <br />
+        <p>print env secret to HTML</p>
+        <h1>{process.env.REACT_APP_ID}</h1>
         <div className={ classes.select }>
           <Select
             value={selectedOption}
