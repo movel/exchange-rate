@@ -1,8 +1,15 @@
 import React, { PureComponent } from 'react';
 import axios from 'axios'
+import Select from 'react-select'
 import Cryptocurrency from '../Cryptocurrency/Cryptocurrency'
 import Currency from '../Currency/Currency'
 import classes from './Tickers.module.css'
+
+const options = [
+  { value: 'chocolate', label: 'Chocolate' },
+  { value: 'strawberry', label: 'Strawberry' },
+  { value: 'vanilla', label: 'Vanilla' }
+]
 
 class Tickers extends PureComponent {
   constructor(props) {
@@ -37,7 +44,8 @@ class Tickers extends PureComponent {
               percent_change_7d: "0",
           }
       ],
-      dataCurrency: []
+      dataCurrency: [],
+      selectedOption: null,
   };
   }
 
@@ -74,7 +82,14 @@ class Tickers extends PureComponent {
       .catch(err => console.log(err));
     }
 
+  handleChange = (selectedOption) => {
+    this.setState({ selectedOption });
+    console.log(`Option selected:`, selectedOption);
+  }
+
   render() {
+    const { selectedOption } = this.state
+
     const tickers = this.state.data.map((currency) =>
       <Cryptocurrency data={currency} key={currency.id} />
     )
@@ -88,7 +103,16 @@ class Tickers extends PureComponent {
     return (
       <div className={classes.tickers__container}>
         <ul className={classes.tickers}>{tickers}</ul>
-        <br></br>
+        <br />
+        <div className={ classes.select }>
+          <Select
+            value={selectedOption}
+            onChange={this.handleChange}
+            isMulti
+            options={options}
+          />
+        </div>
+        
         <p>Information updated every minute courtesy of <a href="http://www.coinmarketcap.com" target="_blank" rel="noopener noreferrer">coinmarketcap.com</a></p>
       </div>
     );
