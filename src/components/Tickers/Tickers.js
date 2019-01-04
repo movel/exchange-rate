@@ -213,15 +213,14 @@ class Tickers extends PureComponent {
         "ZWL": 322.355011
       },
       selectedOption: [{
-        "value": "RUB",
-        "label": "RUB"
+        "value": "UAH",
+        "label": "UAH"
       }],
   };
   }
 
   componentDidMount() {
     this.fetchCryptocurrencyData();
-    console.log('options', constants.options)
     // this.fetchCurrencyData()
     // this.interval = setInterval(() => this.fetchCryptocurrencyData(), 60 * 1000);
   }
@@ -259,33 +258,26 @@ class Tickers extends PureComponent {
 
   handleChange = (selectedOption) => {
     this.setState({ selectedOption });
-    // console.log(`Option selected:`, selectedOption);
   }
 
   render() {
     const { selectedOption } = this.state
-    console.log('selectedOption', selectedOption)
 
     const tickers = this.state.data.map((currency) =>
       <Cryptocurrency data={currency} key={currency.id} />
     )
-    // console.log('datac', this.state.dataCurrency)
-    // const tickersCurrency = this.state.dataCurrency.map((currency, index) =>
-    //   {
-    //     // console.log('tickersCurr', currency[1])
-    //     return <Currency dataCurrency={currency} key={index} />
-    //   }
-    // )
 
-    const result = selectedOption.map(currency => this.state.dataCurrency[currency.label]);
-    console.log('result', result)
+    const tickersCurrency = selectedOption.map((currency, index) =>
+      {
+        return <Currency value={this.state.dataCurrency[currency.label]} name={currency.label} key={index} />
+      }
+    )   
 
     return (
       <div className={ classes.tickers__container }>
         <ul className={ classes.tickers }>{ tickers }</ul>
         <br />
-        <p>print env secret to HTML</p>
-        <h1>{ process.env.REACT_APP_OPENEXCHANGERATES_ORG_ID }</h1>
+        <ul className={ classes.tickers }>{ tickersCurrency }</ul>
         <div className={ classes.select }>
           <Select
             value={ selectedOption }
