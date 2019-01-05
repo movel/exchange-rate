@@ -277,7 +277,7 @@ class Tickers extends PureComponent {
       <div className={ classes.tickers__container }>
         <ul className={ classes.tickers }>{ tickers }</ul>
         <br />
-        <ul className={ classes.tickers }>{ tickersCurrency }</ul>
+        <ul>{ tickersCurrency }</ul>
         <div className={ classes.select }>
           <Select
             value={ selectedOption }
