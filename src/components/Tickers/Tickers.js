@@ -221,7 +221,7 @@ class Tickers extends PureComponent {
 
   componentDidMount() {
     this.fetchCryptocurrencyData();
-    // this.fetchCurrencyData()
+    this.fetchCurrencyData()
     // this.interval = setInterval(() => this.fetchCryptocurrencyData(), 60 * 1000);
   }
 
@@ -230,7 +230,7 @@ class Tickers extends PureComponent {
       .then(response => {
         const wanted = ["bitcoin", "ethereum", "litecoin"];
         const result = response.data.filter(currency => wanted.includes(currency.id));
-        this.setState({ data: result });
+        this.setState({ dataCurrency: result });
       })
       .catch(err => console.log(err));
     } 
@@ -243,15 +243,9 @@ class Tickers extends PureComponent {
     axios.get(api)
       .then(response => {
         const wanted = ["RUB", "UAH"];
-        const result = Object.keys(response.data.rates).map(function(key) {
-          return [{name: key}, {price_usd: response.data.rates[key]}];
-        });
-        const res = result.filter(currency => {
-          return wanted.includes(currency)
-        })
+        const result = response.data.rates;
         console.log('result', result)
-        console.log('res', res)
-        this.setState({ dataCurrency: response.data.rates });
+        this.setState({ dataCurrency: result });
       })
       .catch(err => console.log(err));
     }

@@ -6,7 +6,7 @@ class Currency extends PureComponent {
     const { value, name } = this.props
     return (
       <li className={ `${ classes.currency }` }>
-        <p className="currency__name">{ name } { (+value).toFixed(2) }</p>
+        <p className="currency__name">{ name } &#8381;{ (+value).toFixed(2) }</p>
       </li>
     )
   }
