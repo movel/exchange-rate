@@ -2,7 +2,7 @@ import React, { PureComponent } from 'react'
 import axios from 'axios'
 import Select from 'react-select'
 import Cryptocurrency from '../Cryptocurrency/Cryptocurrency'
-import Currency from '../Currency/Currency'
+import CurrencyContainer from '../../containers/CurrenciesContainer/CurrenciesContainer'
 import classes from './Tickers.module.css'
 import * as constants from '../../options'
 
@@ -39,9 +39,6 @@ class Tickers extends PureComponent {
               percent_change_7d: "0",
           }
       ],
-      dataCurrency: {
-        "JPY": 108.45183333,
-      },
       selectedOption: [{
         "value": "JPY",
         "label": "JPY"
@@ -51,7 +48,6 @@ class Tickers extends PureComponent {
 
   componentDidMount() {
     this.fetchCryptocurrencyData()
-    this.fetchCurrencyData()
     // this.interval = setInterval(() => this.fetchCryptocurrencyData(), 60 * 1000);
   }
 
@@ -59,21 +55,8 @@ class Tickers extends PureComponent {
     axios.get("https://api.coinmarketcap.com/v1/ticker/")
       .then(response => {
         const wanted = ["bitcoin", "ethereum", "litecoin"]
-        const result = response.data.filter(currency => wanted.includes(currency.id))
-        this.setState({ dataCurrency: result })
-      })
-      .catch(err => console.log(err))
-    } 
-
-  fetchCurrencyData() {
-    const APP_ID = process.env.REACT_APP_OPENEXCHANGERATES_ORG_ID
-    console.log('api', APP_ID)
-    const api = `https://openexchangerates.org/api/latest.json?app_id=${APP_ID}`
-    
-    axios.get(api)
-      .then(response => {
-        const dataCurrency = response.data.rates
-        this.setState({ dataCurrency })
+        const data = response.data.filter(currency => wanted.includes(currency.id))
+        this.setState({ data })
       })
       .catch(err => console.log(err))
     }
@@ -89,15 +72,11 @@ class Tickers extends PureComponent {
       <Cryptocurrency data={currency} key={currency.id} />
     )
 
-    const tickersCurrency = selectedOption.map((currency, index) =>
-      <Currency value={this.state.dataCurrency[currency.label]} name={currency.label} key={index} />
-    )   
-
     return (
       <div className={ classes.tickers__container }>
         <ul className={ classes.tickers }>{ tickers }</ul>
         <br />
-        <ul>{ tickersCurrency }</ul>
+        <CurrencyContainer selected={selectedOption} />
         <div className={ classes.select }>
           <Select
             value={ selectedOption }

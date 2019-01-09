@@ -1,15 +1,19 @@
-import React, { PureComponent } from 'react'
+import React from 'react'
 import classes from './Currency.module.css'
 
-class Currency extends PureComponent {
-  render() {
-    const { value, name } = this.props
-    return (
-      <li className={ `${ classes.currency }` }>
+const Currency = props => {
+  const {
+    name,
+    value
+  } = props
+
+  return (
+    <ul>
+        <li className={`${classes.currency}`}>
         <p className="currency__name">{ name } - { (+value).toFixed(2) }</p>
       </li>
-    )
-  }
+    </ul>
+  )
 }
 
 export default Currency
