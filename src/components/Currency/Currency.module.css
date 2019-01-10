@@ -4,22 +4,33 @@
 /* .currency p {
   color: rgba(0, 0, 0, 0.75);
 } */
+
+.currency__ul {
+  list-style-type: none;
+  margin: 0 auto;
+  padding: 0;
+  max-width: 50%;
+  width: 100%;
+}
+
+.currency__ul > li:nth-of-type(odd) {
+  background-color: #e9e9f9 ;
+}
+
+.currency__ul > li {
+  border-bottom: 1px solid #dddddd;
+  padding: 1px;
+}
+
+.currency__ul > li:last-child {
+  border-bottom: none;
+  margin-bottom: 10px;
+}
+
 .currency__name {
-  /* font-size: 1.25rem; */
-  font-weight: 600;
+  font-size: 1.25rem;
+  font-weight: 700;
   color: rgba(0, 0, 0, 0.75);
-}
-.uah {
-  background-color: #fbe2c3;
-  border-bottom: solid 4px #f7931a;
-}
-.rub {
-  background-color: #c2c9ff;
-  border-bottom: solid 4px #454a75;
-}
-.litecoin {
-  background-color: #ececec;
-  border-bottom: solid 4px #bebebe;
 }
 
 .red {

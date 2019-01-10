@@ -33,14 +33,8 @@ class CurrenciesContainer extends PureComponent {
   render() {
     const { selected } = this.props
 
-    const tickersCurrency = selected.map((currency, index) =>
-      <Currency value={this.state.dataCurrency[currency.label]} name={currency.label} key={index} />
-    )
-
     return (
-      <div>
-        { tickersCurrency }
-      </div>
+      <Currency selected={ selected } dataCurrency={ this.state.dataCurrency }/>
     )
   }
 }

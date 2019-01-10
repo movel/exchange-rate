@@ -3,15 +3,18 @@ import classes from './Currency.module.css'
 
 const Currency = props => {
   const {
-    name,
-    value
+    selected
   } = props
 
+  const tickersCurrency = selected.map((currency) =>
+    <li className={`${classes.currency}`}>
+      <p className="currency__name">{ currency.label } - { (+props.dataCurrency[currency.label]).toFixed(2) }</p>
+    </li>
+  )
+
   return (
-    <ul>
-        <li className={`${classes.currency}`}>
-        <p className="currency__name">{ name } - { (+value).toFixed(2) }</p>
-      </li>
+    <ul className={`${classes.currency__ul}`}>
+      { tickersCurrency }
     </ul>
   )
 }
