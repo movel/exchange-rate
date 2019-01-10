@@ -1,3 +1,9 @@
+.tickers {
+  list-style-type: none;
+  padding: 0;
+  display: inline-flex;
+}
+
 .cryptocurrency {
   padding: 1rem 2rem 2rem;
   margin: 1rem;

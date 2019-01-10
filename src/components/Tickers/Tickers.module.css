@@ -1,9 +1,3 @@
-.tickers {
-  list-style-type: none;
-  padding: 0;
-  display: inline-flex;
-}
-
 .tickers__container a {
   text-decoration: none;
 }
