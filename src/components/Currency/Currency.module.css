@@ -1,5 +1,7 @@
 .currency {
   /* border: solid 1px rgba(0, 0, 0, 0.05); */
+  position: relative;
+  border-bottom: 1px dotted black;
 }
 /* .currency p {
   color: rgba(0, 0, 0, 0.75);
@@ -18,13 +20,47 @@
 }
 
 .currency__ul > li {
-  border-bottom: 1px solid #dddddd;
+  border: 1px solid #aaaaaa;
+  border-radius: 20px;
   padding: 1px;
 }
 
 .currency__ul > li:last-child {
   border-bottom: none;
   margin-bottom: 10px;
+}
+
+.currency .currency__tooltiptext {
+  visibility: hidden;
+  width: 25%;
+  background-color: #555;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+  position: absolute;
+  z-index: 1;
+  bottom: 25%;
+  left: 60%;
+  margin-left: -10px;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.currency .currency__tooltiptext::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #555 transparent transparent transparent;
+}
+
+.currency:hover .currency__tooltiptext {
+  visibility: visible;
+  opacity: 1;
 }
 
 .currency__name {

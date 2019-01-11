@@ -9,6 +9,9 @@ class CurrenciesContainer extends PureComponent {
       dataCurrency: {
         "JPY": 108.45183333,
       },
+      dataDescription: {
+        "JPY": '',
+      },
     }
   }
 
@@ -30,25 +33,28 @@ class CurrenciesContainer extends PureComponent {
           dataCurrency
         })
       })
-      .catch(err => console.log(err))    
+      .catch(err => console.log(err))
   }
 
   fetchCurrenciesDescription() {
-    axios.get('https://openexchangerates.org/api/currencies.json')
+    const api = 'https://openexchangerates.org/api/currencies.json'
+
+    axios.get(api)
       .then(response => {
-        const data = response.data
-        console.log("Did you know? One unit of JPY is known as a '" + data.JPY + "'")
+        const dataDescription = response.data
+        console.log("Did you know? One unit of JPY is known as a '" + dataDescription.JPY + "'")
+        this.setState({
+          dataDescription
+        })
       })
       .catch(err => console.log(err))
-        
-    
   }
 
   render() {
     const { selected } = this.props
 
     return (
-      <Currency selected={ selected } dataCurrency={ this.state.dataCurrency }/>
+      <Currency selected={ selected } dataCurrency={ this.state.dataCurrency } dataDescription={ this.state.dataDescription } />
     )
   }
 }
