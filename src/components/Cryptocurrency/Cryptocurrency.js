@@ -2,8 +2,8 @@ import React from 'react';
 import './Cryptocurrency.css'
 
 const Cryptocurrency = props => {
-  const tickers = props.data.map((currency) =>
-    <li className={"cryptocurrency " + currency.id}>
+  const tickers = props.data.map((currency, index) =>
+    <li className={"cryptocurrency " + currency.id} key={ index }>
       <p className="cryptocurrency__name">{currency.name} ({currency.symbol})</p>
       <h1>${ (+currency.price_usd).toFixed(2) }</h1>
       <p className={currency.percent_change_1h > 0 ? "green" : "red"}>{currency.percent_change_1h}% 1hr</p>

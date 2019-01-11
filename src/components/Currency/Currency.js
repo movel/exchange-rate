@@ -6,9 +6,9 @@ const Currency = props => {
     selected
   } = props
 
-  const tickersCurrency = selected.map((currency) =>
-    <li className={`${classes.currency}`}>
-      <p className="currency__name">{ currency.label } - { (+props.dataCurrency[currency.label]).toFixed(2) }</p>
+  const tickersCurrency = selected.map((currency, index) =>
+    <li className={`${classes.currency}`} key={ index }>
+      <p className={`${classes.currency__name}`}>{ currency.label } - { (+props.dataCurrency[currency.label]).toFixed(2) }</p>
     </li>
   )
 
