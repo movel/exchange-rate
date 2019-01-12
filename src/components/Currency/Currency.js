@@ -4,8 +4,7 @@ import * as constants from '../../countries'
 
 const Currency = props => {
   const {
-    dataCurrency,
-    dataDescription
+    dataCurrency
   } = props.state
 
   const {
@@ -13,11 +12,11 @@ const Currency = props => {
   } = props
 
   const tickersCurrency = selected.map((currency, index) =>
-    <li className={`${classes.currency}`} key={ index }>
-      <div className={`${classes.currency__img}`}>
+    <li className={classes.currency} key={ index }>
+      <div className={classes.currency__img}>
         <img src={`https://www.countryflags.io/${constants.countries[currency.label]}/shiny/64.png`} alt="flag"></img>
       </div>
-      <p className={`${classes.currency__name}`}>
+      <p className={classes.currency__name}>
         { currency.label } - { (+dataCurrency[currency.label]).toFixed(2) }
       </p>
     </li>
