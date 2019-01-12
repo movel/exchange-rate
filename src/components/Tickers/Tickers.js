@@ -28,6 +28,7 @@ class Tickers extends PureComponent {
         <CryptoCurrencyContainer />
         <br />
         <CurrencyContainer selected={selectedOption} />
+        <br />
         <div className={ classes.select }>
           <Select
             value={ selectedOption }

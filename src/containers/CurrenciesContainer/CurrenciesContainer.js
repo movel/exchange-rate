@@ -1,7 +1,6 @@
 import React, { PureComponent } from 'react'
 import axios from 'axios'
 import Currency from '../../components/Currency/Currency'
-import * as constants from '../../options'
 
 class CurrenciesContainer extends PureComponent {
   constructor() {
@@ -13,10 +12,6 @@ class CurrenciesContainer extends PureComponent {
       dataDescription: {
         "JPY": '',
       },
-      dataCountry: [{
-        "value": "USD",
-        "label": "US"
-      }],
     }
   }
 
@@ -47,7 +42,6 @@ class CurrenciesContainer extends PureComponent {
     axios.get(api)
       .then(response => {
         const dataDescription = response.data
-        console.log("Did you know? One unit of JPY is known as a '" + dataDescription.JPY + "'")
         this.setState({
           dataDescription
         })
@@ -59,7 +53,7 @@ class CurrenciesContainer extends PureComponent {
     const { selected } = this.props
 
     return (
-      <Currency selected={ selected } dataCurrency={ this.state.dataCurrency } dataDescription={ this.state.dataDescription } />
+      <Currency selected={ selected } state={ this.state } />
     )
   }
 }

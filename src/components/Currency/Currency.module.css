@@ -7,6 +7,22 @@
   color: rgba(0, 0, 0, 0.75);
 } */
 
+.currency__img,
+.currency p {
+  display: flex;
+}
+
+.currency__img {
+  padding-left: 10px;
+  float: left;
+}
+
+.currency p {
+  height: 30px;
+  margin-left: 10px;
+  float: right;
+}
+
 .currency__ul {
   list-style-type: none;
   margin: 0 auto;
@@ -24,6 +40,7 @@
   border-radius: 20px;
   margin: 3px;
   padding: 1px;
+  display: flex;
 }
 
 .currency__ul > li:last-child {
@@ -68,6 +85,7 @@
   font-size: 1.25rem;
   font-weight: 700;
   color: rgba(0, 0, 0, 0.75);
+  text-align: center;
 }
 
 .red {
