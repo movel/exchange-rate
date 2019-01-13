@@ -41,7 +41,7 @@ export const countries = {
   "EGP": "EG" ,
   "ERN": "ER" ,
   "ETB": "ET" ,
-  "EUR": "IE" ,
+  "EUR": "EU" ,
   "FJD": "FJ" ,
   "FKP": "FK" ,
   "GBP": "GB" ,

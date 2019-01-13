@@ -37,11 +37,9 @@ class Tickers extends PureComponent {
             options={ constants.options }
           />
         </div>
-        
-        <p>Information updated every minute courtesy of <a href="http://www.coinmarketcap.com" target="_blank" rel="noopener noreferrer">coinmarketcap.com</a></p>
       </div>
-    );
+    )
   }
 }
 
-export default Tickers;
+export default Tickers
