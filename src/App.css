@@ -2,9 +2,20 @@
   text-align: center;
 }
 .App-header {
-  background-color: #222;
+  background-color: #afafaf;
   color: white;
   font-size: 1.25rem;
   margin: 0;
   padding: 1rem;
+}
+
+.nav li {
+  display: inline-block;
+  margin-right: 10px;
+}
+
+.nav a {
+  font-weight: 700;
+  text-decoration: none;
+  color: #000000;
 }
