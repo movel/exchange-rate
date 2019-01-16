@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import {NavLink, Route, Switch, Redirect} from 'react-router-dom'
-import About from './components/About/About'
-import './App.css'
-import Tickers from './components/Tickers/Tickers'
+import About from '../../components/About/About'
+import '../css/App.css'
+import Tickers from '../../components/Tickers/Tickers'
 
 class App extends Component {
   state = {
