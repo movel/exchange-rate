@@ -1,5 +1,5 @@
 import React from 'react'
-import classes from './Currency.sass'
+import classes from './Currency.module.css'
 import * as constants from '../../countries'
 
 const Currency = props => {

@@ -1,7 +1,6 @@
 import React, { PureComponent } from 'react'
 import axios from 'axios'
 import Currency from '../../components/Currency/Currency'
-import './CurrenciesContainer.sass'
 
 class CurrenciesContainer extends PureComponent {
   constructor() {

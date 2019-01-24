@@ -1,7 +1,6 @@
 import React, { PureComponent } from 'react'
 import axios from 'axios'
 import Cryptocurrency from '../../components/Cryptocurrency/Cryptocurrency'
-import './CryptoCurrencyContainer.sass'
 
 class CryptoCurrencyContainer extends PureComponent {
   constructor(props) {

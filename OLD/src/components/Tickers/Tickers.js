@@ -2,7 +2,7 @@ import React, { PureComponent } from 'react'
 import Select from 'react-select'
 import CryptoCurrencyContainer from '../../containers/CryptoCurrencyContainer/CryptoCurrencyContainer'
 import CurrencyContainer from '../../containers/CurrenciesContainer/CurrenciesContainer'
-import classes from './Tickers.sass'
+import classes from './Tickers.module.css'
 import * as constants from '../../options'
 
 class Tickers extends PureComponent {

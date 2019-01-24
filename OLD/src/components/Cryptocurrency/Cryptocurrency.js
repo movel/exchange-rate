@@ -1,5 +1,5 @@
 import React from 'react';
-import './Cryptocurrency.sass'
+import './Cryptocurrency.css'
 
 const Cryptocurrency = props => {
   const tickers = props.data.map((currency, index) =>
