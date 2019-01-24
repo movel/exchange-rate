@@ -25,6 +25,8 @@ class CurrenciesContainer extends PureComponent {
   fetchCurrencyData() {
     const APP_ID = process.env.REACT_APP_OPENEXCHANGERATES_ORG_ID
 
+    console.log('app_ID', APP_ID)
+
     const api = `https://openexchangerates.org/api/latest.json?app_id=${APP_ID}`
 
     axios.get(api)

@@ -1,5 +1,5 @@
 {
-  "name": "expense-manager-mern",
+  "name": "exchange-rate",
   "version": "1.0.0",
   "description": "This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).",
   "main": "webpack.config.js",
@@ -9,17 +9,9 @@
     "prebuild": "webpack --mode production --config config/webpack.prod.config.js --env.PLATFORM=production --env.VERSION=stag --progress",
     "build": "node server"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/umairraslam/expense-manager-mern.git"
-  },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/umairraslam/expense-manager-mern/issues"
-  },
-  "homepage": "https://github.com/umairraslam/expense-manager-mern#readme",
   "dependencies": {
     "axios": "^0.18.0",
     "express": "^4.16.4",

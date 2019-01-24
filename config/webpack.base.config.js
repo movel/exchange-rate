@@ -16,10 +16,6 @@ module.exports = env => {
         module: {
           rules: [
             {
-              test: /\.css$/,
-              use: ['style-loader', 'css-loader'],
-            },
-            {
               test: /\.js$/,
               exclude: /node_modules/,
               use: {
@@ -33,6 +29,10 @@ module.exports = env => {
                 'css-loader',
                 'sass-loader'
               ]
+            },
+            {
+              test: /\.css$/,
+              use: ['style-loader', 'css-loader']
             }
           ]
         },
@@ -55,6 +55,7 @@ module.exports = env => {
             'process.env.VERSION': JSON.stringify(env.VERSION),
             'process.env.PLATFORM': JSON.stringify(env.PLATFORM)
           }),
+          new webpack.EnvironmentPlugin( { ...process.env } ),
           new CopyWebpackPlugin([ { from: 'src/static' } ]), // Add this in the plugins section
         ],
     }
