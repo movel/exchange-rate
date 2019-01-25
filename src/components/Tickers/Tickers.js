@@ -2,7 +2,7 @@ import React, { PureComponent } from 'react'
 import Select from 'react-select'
 import CryptoCurrencyContainer from '../../containers/CryptoCurrencyContainer/CryptoCurrencyContainer'
 import CurrencyContainer from '../../containers/CurrenciesContainer/CurrenciesContainer'
-import classes from './Tickers.sass'
+import './Tickers.sass'
 import * as constants from '../../options'
 
 class Tickers extends PureComponent {
@@ -24,12 +24,12 @@ class Tickers extends PureComponent {
     const { selectedOption } = this.state
 
     return (
-      <div className={ classes.tickers__container }>
+      <div className="tickers__container">
         <CryptoCurrencyContainer />
         <br />
         <CurrencyContainer selected={selectedOption} />
         <br />
-        <div className={ classes.select }>
+        <div className="select">
           <Select
             value={ selectedOption }
             onChange={ this.handleChange }
