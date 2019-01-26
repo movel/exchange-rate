@@ -2,6 +2,7 @@ import React, { PureComponent } from 'react'
 import axios from 'axios'
 import Currency from '../../components/Currency/Currency'
 import './CurrenciesContainer.sass'
+import * as constants from '../../../env'
 
 class CurrenciesContainer extends PureComponent {
   constructor() {
@@ -23,7 +24,11 @@ class CurrenciesContainer extends PureComponent {
   }
 
   fetchCurrencyData() {
-    const APP_ID = process.env.REACT_APP_OPENEXCHANGERATES_ORG_ID
+    // const APP_ID = process.env.REACT_APP_OPENEXCHANGERATES_ORG_ID
+
+    const APP_ID = constants.REACT_API.value
+
+    console.log('.env', constants.REACT_API.value)
 
     console.log('app_ID', APP_ID)
 
