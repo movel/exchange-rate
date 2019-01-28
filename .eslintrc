@@ -1,7 +1,7 @@
 {
   "extends": [
-    "prettier",
-    "prettier/react"
+    "react-app",
+    "prettier"
   ],
   "rules": {
     "jsx-quotes": [

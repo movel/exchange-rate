@@ -1,6 +1,6 @@
 import React, {
   PureComponent
-} from "react"
+} from 'react'
 import axios from 'axios'
 import Currency from '../../components/Currency/Currency'
 import './CurrenciesContainer.sass'
@@ -72,14 +72,7 @@ class CurrenciesContainer extends PureComponent {
       selected
     } = this.props
 
-    return ( <
-      Currency selected = {
-        selected
-      }
-      state = {
-        this.state
-      }
-      />
+    return (<Currency selected={selected} state={this.state} />
     )
   }
 }

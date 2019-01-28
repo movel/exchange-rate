@@ -29,35 +29,24 @@ class Tickers extends PureComponent {
       selectedOption
     } = this.state
 
-    return ( <
-      div className = "tickers__container" >
-      <
-      CryptoCurrencyContainer / >
-      <
-      br / >
-      <
-      CurrencyContainer selected = {
-        selectedOption
-      }
-      /> <
-      br / >
-      <
-      select className = "currencies" >
-      <
-      option value = "AED"
-      title = "United Arab Emirates Dirham" > AED < /option> <
-      option value = "AFN"
-      title = "Afghan Afghani" > AFN < /option> <
-      option value = "ALL"
-      title = "Albanian Lek" > ALL < /option> <
-      option value = "AMD"
-      title = "Armenian Dram" > AMD < /option> <
-      option value = "ANG"
-      title = "Netherlands Antillean Guilder" > ANG < /option> < /
-      select > <
-      div className = "select" >
-      <
-      Select value = {
+    return (<div className="tickers__container"><CryptoCurrencyContainer />
+      <br />
+      <CurrencyContainer selected={selectedOption} />
+      <br />
+      <select className = "currencies">
+      <option value = "AED"
+        title = "United Arab Emirates Dirham"> AED </option> 
+      <option value = "AFN"
+        title = "Afghan Afghani" > AFN </option> 
+      <option value = "ALL"
+        title = "Albanian Lek" > ALL </option> 
+      <option value = "AMD"
+        title = "Armenian Dram"> AMD </option> 
+      <option value = "ANG"
+        title = "Netherlands Antillean Guilder"> ANG </option> 
+      </select> 
+      <div className = "select" >
+      <Select value = {
         selectedOption
       }
       onChange = {
@@ -66,9 +55,7 @@ class Tickers extends PureComponent {
       isMulti options = {
         constants.options
       }
-      /> < /
-      div > <
-      /div>
+      /></div></div>
     )
   }
 }
