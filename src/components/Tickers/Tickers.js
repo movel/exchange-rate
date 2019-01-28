@@ -29,6 +29,13 @@ class Tickers extends PureComponent {
         <br />
         <CurrencyContainer selected={selectedOption} />
         <br />
+        <select name='currencies'>
+            <option value='AED' title='United Arab Emirates Dirham'>AED</option>
+            <option value='AFN' title='Afghan Afghani'>AFN</option>
+            <option value='ALL' title='Albanian Lek'>ALL</option>
+            <option value='AMD' title='Armenian Dram'>AMD</option>
+            <option value='ANG' title='Netherlands Antillean Guilder'>ANG</option>
+        </select>
         <div className="select">
           <Select
             value={ selectedOption }

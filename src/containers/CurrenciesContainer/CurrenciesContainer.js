@@ -74,4 +74,4 @@ class CurrenciesContainer extends PureComponent {
   }
 }
 
-export default CurrenciesContainer
+export default CurrenciesContainer 
