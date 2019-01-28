@@ -1,4 +1,6 @@
-import React, { PureComponent } from 'react'
+import React, {
+  PureComponent
+} from "react"
 import axios from 'axios'
 import Currency from '../../components/Currency/Currency'
 import './CurrenciesContainer.sass'
@@ -41,9 +43,9 @@ class CurrenciesContainer extends PureComponent {
 
     let apiTimeSeries = `https://openexchangerates.org/api/time-series.json?app_id=${APP_ID}`
     apiTimeSeries += '&start=2019-01-01&end=2019-01-10&base=USD&symbols=RUB,EUR,HKD,prettyprint=1'
-    
+
     console.log('apitimes', apiTimeSeries)
-    
+
     axios.get(apiTimeSeries.trim())
       .then(response => {
         const dataCurrency = response.data.rates
@@ -64,14 +66,22 @@ class CurrenciesContainer extends PureComponent {
       })
       .catch(err => console.log(err))
   }
-  
-  render() {
-    const { selected } = this.props
 
-    return (
-      <Currency selected={ selected } state={ this.state } />
+  render() {
+    const {
+      selected
+    } = this.props
+
+    return ( <
+      Currency selected = {
+        selected
+      }
+      state = {
+        this.state
+      }
+      />
     )
   }
 }
 
-export default CurrenciesContainer 
+export default CurrenciesContainer

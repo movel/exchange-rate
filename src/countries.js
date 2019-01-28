@@ -3,7 +3,7 @@ export const countries = {
   "AFN": "AF" ,
   "ALL": "AL" ,
   "AMD": "AM" ,
-  "ANG": "CW" ,
+  "ANG": "AN" ,
   "AOA": "AO" ,
   "ARS": "AR" ,
   "AUD": "AU" ,
