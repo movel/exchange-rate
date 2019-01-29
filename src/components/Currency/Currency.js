@@ -1,7 +1,7 @@
 import React from 'react'
 import shortid from 'shortid'
 import './Currency.sass'
-import * as constants from '../../countries'
+import * as constants from '../../options'
 
 const Currency = props => {
   const {
@@ -15,7 +15,7 @@ const Currency = props => {
   const flagCountry = '<img src={`https://www.countryflags.io/${constants.countries[currency.label]}/shiny/64.png`} alt="flag"></img>'
 
   const tickersCurrency = selected.map( currency =>
-    <li className="currency" key={ shortid.generate() } title={ currency.title }>
+    <li className="currency" key={ shortid.generate() } title={ constants.currencies[currency.label] }>
       <div className="currency__img">
         { 
           constants.countries[currency.label] === 'EU'
