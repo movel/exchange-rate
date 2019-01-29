@@ -13,7 +13,8 @@ class Tickers extends PureComponent {
     this.state = {
       selectedOption: [{
         "value": "JPY",
-        "label": "JPY"
+        "label": "JPY",
+        "title": "Japan Yen"
       }],
     }
   }
@@ -25,9 +26,7 @@ class Tickers extends PureComponent {
   }
 
   render() {
-    const {
-      selectedOption
-    } = this.state
+    const {selectedOption} = this.state
 
     return (<div className="tickers__container"><CryptoCurrencyContainer />
       <br />
@@ -46,16 +45,14 @@ class Tickers extends PureComponent {
         title = "Netherlands Antillean Guilder"> ANG </option> 
       </select> 
       <div className = "select" >
-      <Select value = {
-        selectedOption
-      }
-      onChange = {
-        this.handleChange
-      }
-      isMulti options = {
-        constants.options
-      }
-      /></div></div>
+      <Select 
+        value = {selectedOption}
+        onChange = {this.handleChange}
+        isMulti 
+        options = {constants.options}
+      />
+      </div>
+      </div>
     )
   }
 }

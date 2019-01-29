@@ -1,5 +1,5 @@
 export const options = [
-  { value: "AED", label: "AED"},
+  { value: "AED", label: "AED", title:"United Arab Emirates Dirham" }, 
   { value: "AFN", label: "AFN"},
   { value: "ALL", label: "ALL"},
   { value: "AMD", label: "AMD"},
@@ -72,7 +72,7 @@ export const options = [
   { value: "JEP", label: "JEP"},
   { value: "JMD", label: "JMD"},
   { value: "JOD", label: "JOD"},
-  { value: "JPY", label: "JPY"},
+  { value: "JPY", label: "JPY", title: "Japan Yen"},
   { value: "KES", label: "KES"},
   { value: "KGS", label: "KGS"},
   { value: "KHR", label: "KHR"},

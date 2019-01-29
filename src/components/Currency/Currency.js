@@ -15,7 +15,7 @@ const Currency = props => {
   const flagCountry = '<img src={`https://www.countryflags.io/${constants.countries[currency.label]}/shiny/64.png`} alt="flag"></img>'
 
   const tickersCurrency = selected.map( currency =>
-    <li className="currency" key={ shortid.generate() }>
+    <li className="currency" key={ shortid.generate() } title={ currency.title }>
       <div className="currency__img">
         { 
           constants.countries[currency.label] === 'EU'

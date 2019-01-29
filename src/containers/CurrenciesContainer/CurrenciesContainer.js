@@ -20,8 +20,8 @@ class CurrenciesContainer extends PureComponent {
   }
 
   componentDidMount() {
-    this.fetchCurrencyData()
-    this.fetchCurrenciesDescription()
+    // this.fetchCurrencyData()
+    // this.fetchCurrenciesDescription()
     // this.interval = setInterval(() => this.fetchCryptocurrencyData(), 60 * 1000);
   }
 
@@ -44,12 +44,9 @@ class CurrenciesContainer extends PureComponent {
     let apiTimeSeries = `https://openexchangerates.org/api/time-series.json?app_id=${APP_ID}`
     apiTimeSeries += '&start=2019-01-01&end=2019-01-10&base=USD&symbols=RUB,EUR,HKD,prettyprint=1'
 
-    console.log('apitimes', apiTimeSeries)
-
     axios.get(apiTimeSeries.trim())
       .then(response => {
         const dataCurrency = response.data.rates
-        console.log('apiTimesSeries', dataCurrency)
       })
       .catch(err => console.log(err))
   }
