@@ -12,7 +12,7 @@ const Currency = props => {
     selected
   } = props
 
-  const flagCountry = '<img src={`https://www.countryflags.io/${constants.countries[currency.label]}/shiny/64.png`} alt="flag"></img>'
+  // const flagCountry = '<img src={`https://www.countryflags.io/${constants.countries[currency.label]}/shiny/64.png`} alt="flag"></img>'
 
   const tickersCurrency = selected.map( currency =>
     <li className="currency" key={ shortid.generate() } title={ currency.title }>

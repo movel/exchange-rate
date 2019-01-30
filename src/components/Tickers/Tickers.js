@@ -62,8 +62,10 @@ class Tickers extends PureComponent {
     };
 
     const options = constants.options.map( item => {
-      return {...item}
+      return {...item, title: constants.currencies[item.label]}
     })
+
+    console.log('options', options)
 
     // https://codesandbox.io/s/k57k95qy53?module=/example.js
     // https://codesandbox.io/s/1qopmv0nvj?module=/example.js
