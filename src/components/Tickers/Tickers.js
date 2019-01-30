@@ -1,8 +1,8 @@
 import React, {
   PureComponent
 } from 'react'
+import { css } from 'emotion'
 import Select, { components } from 'react-select'
-import makeAnimated from 'react-select/lib/animated'
 import Tooltip from '@atlaskit/tooltip'
 import CryptoCurrencyContainer from '../../containers/CryptoCurrencyContainer/CryptoCurrencyContainer'
 import CurrencyContainer from '../../containers/CurrenciesContainer/CurrenciesContainer'
@@ -27,20 +27,12 @@ class Tickers extends PureComponent {
     })
   }
 
-  
-
   render() {
     const {selectedOption} = this.state
 
-    const formatGroupLabel = data => (
-      <div title={data.options.title}>
-        {data.options.title}
-      </div>
-    )
-
     const MultiValueContainer = (props) => {
       return (
-        <Tooltip content={props.data.label}>
+        <Tooltip content={props.data.title}>
           <components.MultiValueContainer {...props}/>
         </Tooltip>
       )
@@ -52,6 +44,7 @@ class Tickers extends PureComponent {
         <div
           ref={innerRef}
           className={cx(
+            css(getStyles('option', props)),
             {
               'option': true,
               'option--is-disabled': isDisabled,
@@ -61,12 +54,16 @@ class Tickers extends PureComponent {
             className
           )}
           {...innerProps}
-          title={props.data.label}
+          title={props.data.title}
         >
           {children}
         </div>
       );
     };
+
+    const options = constants.options.map( item => {
+      return {...item}
+    })
 
     // https://codesandbox.io/s/k57k95qy53?module=/example.js
     // https://codesandbox.io/s/1qopmv0nvj?module=/example.js
@@ -80,13 +77,12 @@ class Tickers extends PureComponent {
         <br />
 
         <Select 
-          value={selectedOption}
-          onChange={this.handleChange}
+          value={ selectedOption }
+          onChange={ this.handleChange }
           components={{ MultiValueContainer, Option }}
-          styles={{ option: (base) => ({ ...base, border: `2px dotted #333355`, height: '100%' }) }}
+          styles={{ option: (base) => ({ ...base, height: '100%' }) }}
           isMulti 
-          options={constants.options}
-          formatGroupLabel={formatGroupLabel}
+          options={ options }
         />
       </div>
     )
