@@ -11,7 +11,7 @@ class CurrenciesContainer extends PureComponent {
     super()
     this.state = {
       dataCurrency: {
-        "JPY": 108.45183333,
+        USDJPY: 108.45183333,
       },
       dataDescription: {
         "JPY": '',
@@ -20,33 +20,23 @@ class CurrenciesContainer extends PureComponent {
   }
 
   componentDidMount() {
-    // this.fetchCurrencyData()
+    this.fetchCurrencyData()
     // this.fetchCurrenciesDescription()
     // this.interval = setInterval(() => this.fetchCryptocurrencyData(), 60 * 1000);
   }
 
   fetchCurrencyData() {
-    // const APP_ID = process.env.REACT_APP_OPENEXCHANGERATES_ORG_ID
+    const APP_ID = constants.REACT_API_CURRENCY_LAYER_COM.value
 
-    const APP_ID = constants.REACT_API.value
-
-    // const api = `https://openexchangerates.org/api/latest.json?app_id=${APP_ID}`
-
-    // axios.get(api)
-    //   .then(response => {
-    //     const dataCurrency = response.data.rates
-    //     this.setState({
-    //       dataCurrency
-    //     })
-    //   })
-    //   .catch(err => console.log(err))
-
-    let apiTimeSeries = `https://openexchangerates.org/api/time-series.json?app_id=${APP_ID}`
-    apiTimeSeries += '&start=2019-01-01&end=2019-01-10&base=USD&symbols=RUB,EUR,HKD,prettyprint=1'
+    let apiTimeSeries = `http://apilayer.net/api/live?access_key=${APP_ID}`
+    apiTimeSeries += '&source=USD&format=1'
 
     axios.get(apiTimeSeries.trim())
       .then(response => {
-        const dataCurrency = response.data.rates
+        const dataCurrency = response.data.quotes
+        this.setState({
+          dataCurrency
+        })
       })
       .catch(err => console.log(err))
   }

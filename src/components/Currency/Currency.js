@@ -24,7 +24,7 @@ const Currency = props => {
         }
       </div>
       <p className="currency__name">
-        { currency.label } - { (+dataCurrency[currency.label]).toFixed(2) }
+        { currency.label } - { (+dataCurrency[`USD${currency.label}`]).toFixed(2) }
       </p>
     </li>
   )

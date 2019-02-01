@@ -9,6 +9,41 @@ import CurrencyContainer from '../../containers/CurrenciesContainer/CurrenciesCo
 import './Tickers.sass'
 import * as constants from '../../options'
 
+const MultiValueContainer = (props) => {
+  return (
+    <Tooltip content={props.data.title}>
+      <components.MultiValueContainer {...props}/>
+    </Tooltip>
+  )
+}
+
+const Option = (props) => {
+  const { children, className, cx, getStyles, isDisabled, isFocused, isSelected, innerRef, innerProps } = props;
+  return (
+    <div
+      ref={innerRef}
+      className={cx(
+        css(getStyles('option', props)),
+        {
+          'option': true,
+          'option--is-disabled': isDisabled,
+          'option--is-focused': isFocused,
+          'option--is-selected': isSelected,
+        },
+        className
+      )}
+      {...innerProps}
+      title={props.data.title}
+    >
+      {children}
+    </div>
+  );
+};
+
+const options = constants.options.map( item => {
+  return {...item, title: constants.currencies[item.label]}
+})
+
 class Tickers extends PureComponent {
   constructor(props) {
     super(props);
@@ -30,43 +65,6 @@ class Tickers extends PureComponent {
   render() {
     const {selectedOption} = this.state
 
-    const MultiValueContainer = (props) => {
-      return (
-        <Tooltip content={props.data.title}>
-          <components.MultiValueContainer {...props}/>
-        </Tooltip>
-      )
-    }
-
-    const Option = (props) => {
-      const { children, className, cx, getStyles, isDisabled, isFocused, isSelected, innerRef, innerProps } = props;
-      return (
-        <div
-          ref={innerRef}
-          className={cx(
-            css(getStyles('option', props)),
-            {
-              'option': true,
-              'option--is-disabled': isDisabled,
-              'option--is-focused': isFocused,
-              'option--is-selected': isSelected,
-            },
-            className
-          )}
-          {...innerProps}
-          title={props.data.title}
-        >
-          {children}
-        </div>
-      );
-    };
-
-    const options = constants.options.map( item => {
-      return {...item, title: constants.currencies[item.label]}
-    })
-
-    console.log('options', options)
-
     // https://codesandbox.io/s/k57k95qy53?module=/example.js
     // https://codesandbox.io/s/1qopmv0nvj?module=/example.js
 
@@ -86,6 +84,7 @@ class Tickers extends PureComponent {
           isMulti 
           options={ options }
         />
+        
       </div>
     )
   }
