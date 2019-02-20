@@ -1,10 +1,10 @@
 import React from 'react'
-import classes from './Home.sass'
+import './Home.sass'
 
 const Home = props => (
-  <div className={classes.Home}>
-    
-  </div>
+    <div className="Home">
+      <h1>Home</h1>
+    </div>
 )
 
 export default Home

@@ -70,9 +70,6 @@ class Tickers extends PureComponent {
 
     return (
       <div className="tickers__container">
-        <CryptoCurrencyContainer />
-        <br />
-
         <CurrencyContainer selected={selectedOption} />
         <br />
 
