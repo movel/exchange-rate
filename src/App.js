@@ -1,68 +1,57 @@
 import React, { Component } from 'react'
-import {NavLink, Route, Switch, Redirect} from 'react-router-dom'
-import * as constants from '../env'
-import Home from './components/Home/Home'
-import About from './components/About/About'
-import './App.sass'
-import Tickers from './components/Tickers/Tickers'
+import { User } from './User'
+import './App.css'
 
 class App extends Component {
   state = {
-    isLoggedIn: true,
     name: null,
     imgUrl: null,
   }
-
+  componentDidMount() {
+    const _onInit = auth2 => {
+      console.log('init OK', auth2)
+    }
+    const _onError = err => {
+      console.log('error', err)
+    }
+    window.gapi.load('auth2', function() {
+      window.gapi.auth2
+        .init({
+          client_id: process.env.REACT_APP_GOOGLE_CLIENT_ID,
+        })
+        .then(_onInit, _onError)
+    })
+  }
+  signIn = () => {
+    const auth2 = window.gapi.auth2.getAuthInstance()
+    auth2.signIn().then(googleUser => {
+      const profile = googleUser.getBasicProfile()
+      this.setState({
+        name: profile.getName(),
+        imgUrl: profile.getImageUrl(),
+      })
+    })
+  }
+  signOut = () => {
+    const auth2 = window.gapi.auth2.getAuthInstance()
+    auth2.signOut().then(() => {
+      this.setState({
+        name: null,
+        imgUrl: null,
+      })
+    })
+  }
   render() {
     const { name, imgUrl } = this.state
-
     return (
       <div className="App">
-        <div className="App-header">
-          <h2>Currency Exchange Rate</h2>
-          <nav className="nav">
-            <ul>
-              <li>
-                <NavLink
-                  to="/"
-                  exact
-                  activeClassName={'wfm-active'}
-                  activeStyle={{
-                    color: 'white'
-                  }}
-                >Home</NavLink>
-              </li>
-              <li>
-                <NavLink to="/about" 
-                  activeStyle={{
-                    color: 'white'
-                }}
-                >About</NavLink>
-              </li>
-              <li>
-                <NavLink to={{
-                    pathname: '/tickers/'
-                  }}
-                  activeStyle={{
-                    color: 'white'
-                  }}
-                >Tickers</NavLink>
-              </li>
-            </ul>
-          </nav>
-        </div>
-
-        {/*localhost:3000*/}
-        <Switch>
-          <Route path="/" exact component={Home} />
-
-          { this.state.isLoggedIn ? <Route path="/about" component={About} /> : null }
-
-          <Route path="/tickers" component={Tickers}/>
-          <Redirect to={'/'}/>
-        </Switch>
+        <header className="App-header">
+          {!name && <button onClick={this.signIn}>Log in</button>}
+          {!!name && <button onClick={this.signOut}>Log out</button>}
+          {!!name && <User name={name} imgUrl={imgUrl} />}
+        </header>
       </div>
-    );
+    )
   }
 }
 
