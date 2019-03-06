@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import './App.css';
 
-import Facebook from './components/Facebook'
 import Google from './components/Google'
-
 import Modal from './components/Modal'
+
+import ModalExample from './ModalExample'
 
 class App extends Component {
   constructor(props) {
@@ -13,6 +13,7 @@ class App extends Component {
     this.state = { 
       isOpen: false,
       isLoggedIn: false,
+      visible: false,
     }
   }
 
@@ -22,8 +23,19 @@ class App extends Component {
     });
   }
 
+  openModal() {
+    this.setState({
+        visible : true
+    });
+}
+
+  closeModal() {
+      this.setState({
+          visible : false
+      });
+  }
+
   render() {
-    const { isLoggedIn } = this.state
 
     return (
       <div className="App">
@@ -42,6 +54,17 @@ class App extends Component {
         <div>
           <Google />
         </div>
+        <section>
+            <h1>React-Modal Examples</h1>
+            <input type="button" value="Open" onClick={() => this.openModal()} />
+            <ModalExample visible={this.state.visible} width="400" height="300" effect="fadeInDown" onClickAway={() => this.closeModal()}>
+                <div>
+                    <h1>Title</h1>
+                    <p>Some Contents</p>
+                    <a href="javascript:void(0);" onClick={() => this.closeModal()}>Close</a>
+                </div>
+            </ModalExample>
+        </section>        
       </div>
     );
   }
