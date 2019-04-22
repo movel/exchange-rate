@@ -64,7 +64,7 @@ class App extends Component {
                     <a href="javascript:void(0);" onClick={() => this.closeModal()}>Close</a>
                 </div>
             </ModalExample>
-        </section>        
+        </section>       
       </div>
     );
   }
