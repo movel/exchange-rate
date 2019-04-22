@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import style from './style.js';
+import style from './style';
 
 export default class ModalExample extends Component {
-    constructor(props) {
+    constructor(props: any) {
         super(props);
         let effect = props.effect || 'fadeInDown';
         this.setSize(effect);
