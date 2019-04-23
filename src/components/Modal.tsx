@@ -1,4 +1,5 @@
 import React from 'react';
+import './Modal.css'
 
 type Props = {
   show: boolean,
@@ -14,7 +15,6 @@ class Modal extends React.Component<Props> {
 
     // The gray background
     const backdropStyle = {
-      position: 'fixed',
       top: 0,
       bottom: 0,
       left: 0,
