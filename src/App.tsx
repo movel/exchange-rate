@@ -6,15 +6,19 @@ import Modal from './components/Modal'
 
 import ModalExample from './ModalExample'
 
-class App extends Component {
-  constructor(props) {
-    super(props);
+type State = {
+  isOpen: boolean,
+  isLoggedIn: boolean,
+  visible: boolean,
+}
 
-    this.state = { 
-      isOpen: false,
-      isLoggedIn: false,
-      visible: false,
-    }
+type Props = {}
+
+class App extends Component<Props, State> {
+  state = { 
+    isOpen: false,
+    isLoggedIn: false,
+    visible: false,
   }
 
   toggleModal = () => {

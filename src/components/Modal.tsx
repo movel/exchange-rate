@@ -1,7 +1,11 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
-class Modal extends React.Component {
+type Props = {
+  show: boolean,
+  onClose: any,
+}
+
+class Modal extends React.Component<Props> {
   render() {
     // Render nothing if the "show" prop is false
     if(!this.props.show) {
@@ -44,11 +48,5 @@ class Modal extends React.Component {
     );
   }
 }
-
-Modal.propTypes = {
-  onClose: PropTypes.func.isRequired,
-  show: PropTypes.bool,
-  children: PropTypes.node
-};
 
 export default Modal;

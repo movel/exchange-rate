@@ -1,18 +1,17 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 
-const User = ({ name, imgUrl }) => {
+type Props = {
+  name: string,
+  imgUrl: string,
+}
+
+const User = ({ name, imgUrl }: Props) => {
   return (
     <React.Fragment>
       <p>Привет, {name}!</p>
-      <img src={imgUrl} alt="profle" />
+      <img src={imgUrl} alt="img_profile" />
     </React.Fragment>
   )
-}
-
-User.propTypes = {
-  name: PropTypes.string.isRequired,
-  imgUrl: PropTypes.string.isRequired,
 }
 
 export { User }
