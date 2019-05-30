@@ -15,6 +15,7 @@ const routes = (
     <Route path="/home" component={Home} />
     <Route path="/about" component={About} />
     <Route path="/login" component={Login} />
+    <Route path="/logout" component={Home} />
     <ProtectedRoute exact path="/profile" component={Profile} />
     <Route component={PageNotFound} />
   </Switch>

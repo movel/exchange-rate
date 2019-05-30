@@ -1,41 +1,63 @@
-import * as React from 'react';
-import { withRouter } from 'react-router-dom';
-import { RouteComponentProps } from 'react-router-dom'
+import React from 'react';
+import { withRouter, RouteComponentProps, NavLink } from 'react-router-dom';
+import auth from '../Auth/Auth'
+import './Menu.sass'
 
-
-const goTo = (route: string, props: RouteComponentProps): any => {
+const goTo = (route: string, props: RouteComponentProps) => {
   props.history.replace(`/${route}`)
 }
 
 const Menu = (props: RouteComponentProps) => {
 
     return (
-      <div className="menu">
-          <button
-            className="button__menu"
-            onClick={() => goTo('home', props)}
-          >
-            На главную
-          </button>
-          <button
-            className="button__menu"
-            onClick={() => goTo('profile', props)}
-          >
-            Профиль
-          </button>
-          <button
-            className="button__menu"
-            onClick={() => goTo('login', props)}
-          >
-            Log In
-          </button>
-          <button
-            className="button__menu"
-            onClick={() => goTo('page-not-found', props)}
-          >
-            404
-          </button>
-      </div>
+      <nav className="menu">
+        <ul>
+          <li>
+            <NavLink to="/home"
+              className="button__menu"
+              onClick={() => goTo('home', props)}
+            >
+              На главную
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to="/profile"
+              className="button__menu"
+              onClick={() => goTo('profile', props)}
+            >
+              Профиль  
+            </NavLink>
+          </li>
+          {
+            !auth.isAuthenticated() && (
+              <li>
+                <NavLink to="/login"
+                  className="button__menu"
+                  onClick={() => goTo('login', props)}
+                >
+                  Log In
+                </NavLink>
+              </li>
+            )
+          }
+          {
+            auth.isAuthenticated() && (
+              <li>  
+                <NavLink to="/logout"
+                  className="button__menu"
+                  onClick={() => {
+                  auth.logout(() => {
+                    goTo('logout', props);
+                  });
+                } }>
+                  Log Out
+                </NavLink>
+              </li>  
+            )
+          }
+          
+        </ul>
+      </nav>
     );
   
 }
