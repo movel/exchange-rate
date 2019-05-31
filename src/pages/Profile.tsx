@@ -12,6 +12,8 @@ const Profile = (props: RouteComponentProps) => {
     } }>
       Logout
     </button>
+    <br />
+    <img src="https://foter.com/photos/394/portrait-of-three-dogs-on-dirt-road.jpg" alt="dogs" />
   </>);
 }
 

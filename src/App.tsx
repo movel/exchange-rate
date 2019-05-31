@@ -2,6 +2,7 @@ import React, { Suspense } from 'react'
 import { BrowserRouter as Router } from 'react-router-dom'
 import routes from './routes'
 import Menu from '../src/components/Menu/Menu'
+import Loading from '../src/components/Loading/Loading'
 import './App.css'
 
 const App = () => {
@@ -9,7 +10,7 @@ const App = () => {
     <div className="App">
       <Router>
         <Menu />
-        <Suspense fallback={<div>Loading...</div>}>
+        <Suspense fallback={ <Loading />}>
           <div className="page">
             { routes }
           </div>

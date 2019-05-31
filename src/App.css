@@ -1,5 +1,6 @@
 .App {
   text-align: center;
+  background-color: aquamarine;
 }
 
 .App-header {
@@ -15,6 +16,10 @@
 
 .App-link {
   color: #61dafb;
+}
+
+.page {
+  /* background-color: aquamarine; */
 }
 
 button {
