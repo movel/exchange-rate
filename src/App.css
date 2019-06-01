@@ -1,25 +1,28 @@
 .App {
   text-align: center;
   background-color: aquamarine;
+  height: 100vh;
+  width: 100%;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 10vh;
+header {
+  background-color: #444444;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
+  /* font-size: calc(10px + 2vmin); */
+  color: #ccc;
 }
 
 .page {
-  /* background-color: aquamarine; */
+  margin: 0 auto;
+  padding: 0 20px;
+  width: 100%;
+}
+
+img {
+  padding: 20px;
 }
 
 button {
