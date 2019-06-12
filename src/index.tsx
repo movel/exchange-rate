@@ -7,13 +7,17 @@ import configureStore, { history } from './configureStore'
 import App from './App'
 import * as serviceWorker from './serviceWorker'
 
+import { MyThemeProvider, } from "../src/themes/ThemeContext"
+
 const store = configureStore()
 
 const render = () => {
   ReactDOM.render(
     <AppContainer>
       <Provider store={store}>
+        <MyThemeProvider>
           <App history={history} />
+        </MyThemeProvider>
       </Provider>
     </AppContainer>,
     document.getElementById('root') as HTMLElement

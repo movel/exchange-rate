@@ -10,13 +10,13 @@ import Loading from '../src/components/Loading/Loading'
 import './App.css'
 
 type Props = {
-  history: History
+  history: History,
 }
 
-const App = (props: Props) => {
+const App = ({history}: Props) => {
   return (
     <div className="App">
-      <ConnectedRouter history={props.history}>
+      <ConnectedRouter history={history}>
           <Router>
             <header>
               <Menu />
