@@ -1,7 +1,20 @@
-import React from 'react';
-import { withRouter, RouteComponentProps, NavLink } from 'react-router-dom';
+import React from 'react'
+import { withRouter, RouteComponentProps, NavLink } from 'react-router-dom'
 import auth from '../Auth/Auth'
 import './Menu.sass'
+
+import styled, { withTheme } from 'styled-components'
+import { backgroundColor, textColor } from '../../themes/theme'
+
+const StyledNavLink = styled(NavLink)`
+    background: ${backgroundColor};
+    color: ${textColor};
+  `;
+
+const StyledNav = styled.nav`
+  background: ${backgroundColor};
+  color: ${textColor};
+  `;
 
 const goTo = (route: string, props: RouteComponentProps) => {
   props.history.replace(`/${route}`)
@@ -10,56 +23,57 @@ const goTo = (route: string, props: RouteComponentProps) => {
 const Menu = (props: RouteComponentProps) => {
 
     return (
-      <nav className="menu">
+      <StyledNav className="menu">
         <ul>
           <li>
-            <NavLink to="/home"
+            <StyledNavLink to="/home"
               className="button__menu"
               onClick={() => goTo('home', props)}
+              defaultChecked
             >
               На главную
-            </NavLink>
+            </StyledNavLink>
           </li>
           <li>
-            <NavLink to="/profile"
+            <StyledNavLink to="/profile"
               className="button__menu"
               onClick={() => goTo('profile', props)}
             >
               Профиль  
-            </NavLink>
+            </StyledNavLink>
           </li>
           {
             !auth.isAuthenticated() && (
               <li>
-                <NavLink to="/login"
+                <StyledNavLink to="/login"
                   className="button__menu"
                   onClick={() => goTo('login', props)}
                 >
                   Log In
-                </NavLink>
+                </StyledNavLink>
               </li>
             )
           }
           {
             auth.isAuthenticated() && (
               <li>  
-                <NavLink to="/logout"
+                <StyledNavLink to="/logout"
                   className="button__menu"
                   onClick={() => {
-                  auth.logout(() => {
-                    goTo('logout', props);
-                  });
-                } }>
+                    auth.logout(() => {
+                      goTo('logout', props);
+                    });
+                  }}>
                   Log Out
-                </NavLink>
+                </StyledNavLink>
               </li>  
             )
           }
           
         </ul>
-      </nav>
+      </StyledNav>
     );
   
 }
 
-export default withRouter(Menu);
+export default withTheme(withRouter(Menu))

@@ -2,22 +2,18 @@ import React, { FunctionComponent } from 'react';
 import styled, { ThemeProvider } from 'styled-components';
 import { backgroundColor, textColor } from './theme';
 
-interface IContextProps { 
+type ContextProps = { 
   toggle: Function
 };
 
-const ThemeToggleContext = React.createContext<IContextProps>({toggle: () => {}});
+const ThemeToggleContext = React.createContext<ContextProps>({toggle: () => {}});
 
 export const useTheme = () => React.useContext(ThemeToggleContext);
-
-type MyThemeProviderProps = {
-  children: JSX.Element,
-}
 
 export const MyThemeProvider: FunctionComponent = (props) => {
 
   const [themeState, setThemeState] = React.useState({
-    mode: 'light'
+    mode: 'dark'
   });
 
   const Wrapper = styled.div`
