@@ -16,7 +16,6 @@
     "@types/styled-components": "^4.1.16",
     "@types/styled-theming": "^2.2.1",
     "@types/webpack-env": "^1.13.9",
-    "connected-react-router": "^6.4.0",
     "eslint": "5.x",
     "eslint-plugin-flowtype": "2.x",
     "eslint-plugin-import": "2.x",

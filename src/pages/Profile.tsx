@@ -1,6 +1,5 @@
 import React from 'react'
 import { RouteComponentProps } from 'react-router-dom'
-import { connect } from 'react-redux'
 
 import auth from '../components/Auth/Auth'
 
@@ -21,4 +20,4 @@ const Profile = (props: RouteComponentProps) => {
   )
 }
 
-export default connect()(Profile)
+export default Profile
