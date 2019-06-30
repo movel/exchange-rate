@@ -3,10 +3,10 @@ import { RouteComponentProps } from 'react-router-dom'
 
 import auth from '../components/Auth/Auth'
 
-const Profile = (props: RouteComponentProps) => {
+const Tickers = (props: RouteComponentProps) => {
   return (
     <>
-      <h1>Profile</h1>
+      <h1>Tickers</h1>
       <button onClick={() => {
         auth.logout(() => {
           props.history.push("/");
@@ -20,4 +20,4 @@ const Profile = (props: RouteComponentProps) => {
   )
 }
 
-export default Profile
+export default Tickers

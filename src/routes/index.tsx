@@ -5,7 +5,7 @@ import { ProtectedRoute } from '../pages/ProtectedRoute'
 const Home = lazy(() => import('../pages/Home'))
 const About = lazy(() => import('../pages/About'))
 const Login = lazy(() => import('../pages/Login'))
-const Profile = lazy(() => import('../pages/Profile'))
+const Tickers = lazy(() => import('../components/Tickers/Tickers'))
 
 const PageNotFound = lazy(() => import('../components/PageNotFound/PageNotFound'))
 
@@ -16,7 +16,7 @@ const routes = (
     <Route path="/about" component={About} />
     <Route path="/login" component={Login} />
     <Route path="/logout" component={Home} />
-    <ProtectedRoute exact path="/profile" component={Profile} />
+    <ProtectedRoute exact path="/tickers" component={Tickers} />
     <Route component={PageNotFound} />
   </Switch>
 )
