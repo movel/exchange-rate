@@ -1,11 +1,11 @@
 import React, { lazy } from 'react'
-import { Route, Switch } from 'react-router-dom'
+import { Route, Switch } from 'react-router'
 import { ProtectedRoute } from '../pages/ProtectedRoute'
 
 const Home = lazy(() => import('../pages/Home'))
 const About = lazy(() => import('../pages/About'))
 const Login = lazy(() => import('../pages/Login'))
-const Tickers = lazy(() => import('../components/Tickers/Tickers'))
+const Tickers = lazy(() => import('../pages/Tickers'))
 
 const PageNotFound = lazy(() => import('../components/PageNotFound/PageNotFound'))
 

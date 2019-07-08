@@ -31,15 +31,15 @@ const Menu = (props: RouteComponentProps) => {
               onClick={() => goTo('home', props)}
               defaultChecked
             >
-              На главную
+              Home
             </StyledNavLink>
           </li>
           <li>
-            <StyledNavLink to="/profile"
+            <StyledNavLink to="/tickers"
               className="button__menu"
-              onClick={() => goTo('profile', props)}
+              onClick={() => goTo('tickers', props)}
             >
-              Профиль  
+              Tickers  
             </StyledNavLink>
           </li>
           {
@@ -69,7 +69,14 @@ const Menu = (props: RouteComponentProps) => {
               </li>  
             )
           }
-          
+          <li>
+            <StyledNavLink to="/about"
+              className="button__menu"
+              onClick={() => goTo('about', props)}
+            >
+              About  
+            </StyledNavLink>
+          </li>
         </ul>
       </StyledNav>
     );

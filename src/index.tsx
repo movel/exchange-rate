@@ -1,18 +1,23 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { AppContainer } from 'react-hot-loader'
+import { Provider } from 'react-redux'
 import './index.css'
 import App from './App'
 import * as serviceWorker from './serviceWorker'
+import configureStore, { history } from './configureStore'
 
 import { MyThemeProvider, } from "../src/themes/ThemeContext"
 
+const store = configureStore()
 const render = () => {
   ReactDOM.render(
     <AppContainer>
+      <Provider store={store}>
         <MyThemeProvider>
-          <App />
+          <App history={history} />
         </MyThemeProvider>
+      </Provider>
     </AppContainer>,
     document.getElementById('root') as HTMLElement
   );

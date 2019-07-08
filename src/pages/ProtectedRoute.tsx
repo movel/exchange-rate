@@ -12,7 +12,7 @@ export const ProtectedRoute: React.ComponentType<any> = ({
       }
       else {
         return (<Redirect to={{
-          pathname: "/",
+          pathname: "/home",
           state: {
             from: props.location
           }

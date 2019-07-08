@@ -9,7 +9,7 @@ const Login = (props: RouteComponentProps) => {
       <button
         onClick={() => {
           auth.login(() => {
-            props.history.push("/profile")
+            props.history.push("/tickers")
           })
         }}
       >
