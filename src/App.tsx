@@ -7,8 +7,8 @@ import Loading from '../src/components/Loading/Loading'
 
 import './App.css'
 
-interface AppProps {
-  history: History;
+type AppProps = {
+  history: History
 }
 
 const App = ({ history }: AppProps) => {
