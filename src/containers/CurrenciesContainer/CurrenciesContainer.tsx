@@ -6,7 +6,7 @@ import './CurrenciesContainer.sass'
 const CurrenciesContainer = () => {
   const [dataCurrency, setDataCurrency] = useState({USDJPY: 108.45183333,})
 
-  const [dataDescription, setDataDescription] = useState({"JPY": '',})
+  // const [dataDescription, setDataDescription] = useState({"JPY": '',})
 
   useEffect(() => {
     fetchCurrencyData()
@@ -26,18 +26,18 @@ const CurrenciesContainer = () => {
       .catch(err => console.log(err))
   }
 
-  const fetchCurrenciesDescription = () => {
-    const api = 'https://openexchangerates.org/api/currencies.json'
+  // const fetchCurrenciesDescription = () => {
+  //   const api = 'https://openexchangerates.org/api/currencies.json'
 
-    axios.get(api)
-      .then(response => {
-        const dataDescription = response.data
-        setDataDescription(dataDescription)
-      })
-      .catch(err => console.log(err))
-  }
+  //   axios.get(api)
+  //     .then(response => {
+  //       const dataDescription = response.data
+  //       setDataDescription(dataDescription)
+  //     })
+  //     .catch(err => console.log(err))
+  // }
 
-  return (<Currency selected={selected} state={this.state} />)
+  return (<Currency />)
 }
 
 export default CurrenciesContainer

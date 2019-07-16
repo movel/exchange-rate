@@ -5,7 +5,7 @@ import { ProtectedRoute } from '../pages/ProtectedRoute'
 const Home = lazy(() => import('../pages/Home'))
 const About = lazy(() => import('../pages/About'))
 const Login = lazy(() => import('../pages/Login'))
-const Tickers = lazy(() => import('../pages/Tickers'))
+const Tickers = lazy(() => import('../pages/Tickers/Tickers'))
 
 const PageNotFound = lazy(() => import('../components/PageNotFound/PageNotFound'))
 
