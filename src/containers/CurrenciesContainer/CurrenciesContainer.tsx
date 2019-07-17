@@ -6,8 +6,6 @@ import './CurrenciesContainer.sass'
 const CurrenciesContainer = () => {
   const [dataCurrency, setDataCurrency] = useState({USDJPY: 108.45183333,})
 
-  // const [dataDescription, setDataDescription] = useState({"JPY": '',})
-
   useEffect(() => {
     fetchCurrencyData()
   })

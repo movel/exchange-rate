@@ -37,9 +37,8 @@ const Option = (props: any) => {
         className
       )}
       {...innerProps}
-      title={props.data.title}
     >
-      {children}
+      {children}<span className="tooltip">{props.data.title}</span>
     </div>
   );
 };

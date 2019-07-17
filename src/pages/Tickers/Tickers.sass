@@ -11,4 +11,27 @@
 .react-select__menu div div:hover
   color: #ffffff
   background-color: rgba(59, 153, 252, .7)
+  position: relative
   
+.react-select__menu div div 
+  text-decoration: none
+
+.react-select__menu div div span 
+  display: none
+
+.react-select__menu div div:hover span
+  padding: 5px 20px 5px 5px
+  display: block
+  z-index: 100
+  background: #000000 no-repeat 100% 5%
+  color: #ffffff
+  left: 0px
+  margin: 10px
+  width: 250px
+  position: absolute
+  top: 10px
+  text-decoration: none
+  border-radius: 6px
+
+.react-select__menu div div:hover:last-child span
+  top: -50px
