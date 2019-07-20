@@ -1,9 +1,9 @@
-import React, { useState } from 'react'
+import React, { useState, createContext } from 'react'
 import { RouteComponentProps } from 'react-router'
 import { connect } from 'react-redux'
 import { css } from 'emotion'
 import Select, { components } from 'react-select'
-// import CurrenciesContainer from '../../containers/CurrenciesContainer/CurrenciesContainer'
+import CurrenciesContainer from '../../containers/CurrenciesContainer/CurrenciesContainer'
 import * as constants from '../../options'
 import auth from '../../components/Auth/Auth'
 import './Tickers.sass'
@@ -51,12 +51,16 @@ const options: any = constants.options.map(item => {
   return {...item, title: title.label}
 })
 
+const selectedContext = createContext([])
+
 const Tickers = (props: RouteComponentProps<any> & StateProps & DispatchProps) => {
   const [selectedOption, setSelectedOption] = useState(props.selected)
 
   const handleChange = (selectedOption: any) => {
     setSelectedOption(selectedOption)
   }
+
+  console.log('selectedOption', selectedOption)
 
   return (
     <div className="tickers__container">
@@ -69,7 +73,9 @@ const Tickers = (props: RouteComponentProps<any> & StateProps & DispatchProps) =
         Logout
       </button>
       <br />
-      {/* <CurrenciesContainer /> */}
+      <selectedContext.Provider value={selectedOption}>
+        <CurrenciesContainer />
+      </selectedContext.Provider>
       <br />
         <Select 
           closeMenuOnSelect={false}
@@ -107,3 +113,4 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 })
 
 export default connect<StateProps, DispatchProps, RouteComponentProps<any>, any>(mapStateToProps, mapDispatchToProps)(Tickers)
+export { selectedContext }
