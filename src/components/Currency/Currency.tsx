@@ -30,19 +30,16 @@ const Currency = () => {
       
 
       return (
-        
-            
-              <li className="currency" key={ shortid.generate() } title={ currency.title }>
-                <div className="currency__img">
-                  { 
-                    imgFlag
-                  }
-                </div>
-                <p className="currency__name">
-                  { currency.label } - { (+dataCurrency[`USD${currency.label}`]).toFixed(2) }
-                </p>
-              </li>
-            
+        <li className="currency" key={ shortid.generate() } title={ currency.title }>
+          <div className="currency__img">
+            { 
+              imgFlag
+            }
+          </div>
+          <div className="currency__name">
+            { currency.label } - { (+dataCurrency[`USD${currency.label}`]).toFixed(2) }
+          </div>
+        </li>
       )
     }
   )

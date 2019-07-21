@@ -3,9 +3,10 @@
   border-bottom: 1px dotted black
   align-items: center
   justify-content: flex-start
+  height: 48px
 
 .currency__img,
-.currency p 
+.currency__name 
   display: flex
   margin-left: 15px
 
@@ -15,13 +16,12 @@
   height: 48px
   img 
     width: 72px
+    padding: 0
     height: 100%
 
-.currency p 
+.currency__name 
   height: 30px
-  margin-left: 10px
   float: right
-
 
 .currency__ul 
   list-style-type: none
@@ -38,10 +38,8 @@
 .currency__ul > li 
   border: 1px solid #aaaaaa
   border-radius: 20px
-  margin: 3px
   padding: 1px
   display: flex
-
 
 .currency__ul > li:last-child 
   border-bottom: none

@@ -60,8 +60,6 @@ const Tickers = (props: RouteComponentProps<any> & StateProps & DispatchProps) =
     setSelectedOption(selectedOption)
   }
 
-  console.log('selectedOption', selectedOption)
-
   return (
     <div className="tickers__container">
       <h1>Tickers</h1>

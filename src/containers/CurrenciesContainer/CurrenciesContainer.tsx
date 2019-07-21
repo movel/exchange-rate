@@ -17,8 +17,6 @@ const CurrenciesContainer = () => {
   const fetchCurrencyData = () => {
     const APP_ID = REACT_API_CURRENCY_LAYER_COM
 
-    console.log('APP_ID', APP_ID)
-
     let apiTimeSeries = `http://apilayer.net/api/live?access_key=${APP_ID}`
     apiTimeSeries += '&source=USD&format=1'
 
@@ -29,19 +27,6 @@ const CurrenciesContainer = () => {
       })
       .catch(err => console.log(err))
   }
-
-  console.log('dataCurrency', dataCurrency)
-
-  // const fetchCurrenciesDescription = () => {
-  //   const api = 'https://openexchangerates.org/api/currencies.json'
-
-  //   axios.get(api)
-  //     .then(response => {
-  //       const dataDescription = response.data
-  //       setDataDescription(dataDescription)
-  //     })
-  //     .catch(err => console.log(err))
-  // }
 
   return (
     <dataCurrencyContext.Provider value={dataCurrency}>
