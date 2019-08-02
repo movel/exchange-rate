@@ -8,7 +8,7 @@ export const initialState = {
   }]
 }
 
-export function selectedReducer(state = initialState.selected, action: Action) {
+export default function selectedReducer(state = initialState.selected, action: Action) {
   switch (action.type) {
     case 'addSelected': return {
       ...state,

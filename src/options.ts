@@ -376,6 +376,7 @@ export const countries = [
   {value: "CNY", label: "CN"} ,
   {value: "COP", label: "CO"} ,
   {value: "CRC", label: "CR"} ,
+  {value: "CUC", label: "CU"} ,
   {value: "CUP", label: "CU"} ,
   {value: "CVE", label: "CV"} ,
   {value: "CZK", label: "CZ"} ,

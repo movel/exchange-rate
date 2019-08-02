@@ -135,7 +135,7 @@ const CurrenciesContainer = () => {
       }
     }) 
     .then(async () => {
-      if(isActualData) {
+      if(!isActualData) {
         difference = daysLag(date, lastData.date)
         if(difference > 10) {
           itemsOfDelete = 10
@@ -158,7 +158,7 @@ const CurrenciesContainer = () => {
       }      
     })
     .then(async () => {
-      if(isActualData) {
+      if(!isActualData) {
         if(itemsOfReceived > 0) {
           fetchCurrencyDataHistoricalRates(itemsDateStart)
           .then(() => {
@@ -168,7 +168,7 @@ const CurrenciesContainer = () => {
       }
     })
     .then(async () => {
-      if(isActualData) {
+      if(!isActualData) {
         let apiTimeSeries = REACT_API_GOOGLE_FIREBASE + 'currency/' + quotesKeys[quotesKeys.length - 1].id + '.json'
         records = quotesKeys.length
 

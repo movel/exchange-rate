@@ -1,11 +1,13 @@
 import { combineReducers } from 'redux'
 import { History } from 'history'
 import { RouterState, connectRouter } from 'connected-react-router'
-import { selectedReducer } from './selected'
+import selectedReducer from './selected'
+import authReducer from './auth';
 
 export const rootReducer = (history: History) => combineReducers({
   selected: selectedReducer,
-  router: connectRouter(history)
+  router: connectRouter(history),
+  auth: authReducer
 })
 
 export interface State {
