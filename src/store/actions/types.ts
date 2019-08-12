@@ -1,1 +1,3 @@
-export const AUTH_GOOGLE_FIREBASE = 'AUTH_GOOGLE_FIREBASE'
+export const AUTH_SUCCESS = 'AUTH_SUCCESS'
+export const AUTH_LOGOUT = 'AUTH_LOGOUT'
+export const AUTH_LOGIN = 'AUTH_LOGIN'

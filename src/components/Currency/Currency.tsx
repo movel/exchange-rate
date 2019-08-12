@@ -14,7 +14,7 @@ const Currency = () => {
 
   const tickersCurrency: any = selected.map( (currency: { title: string | undefined; label: string | any; value: string | any; }) =>
     {
-      let a: {value: String, label: String} = { value: '', label: ''}
+      let a: {value: string, label: string} = { value: '', label: ''}
       let b = constants.countries.find(elem => {
         return elem.value === currency.value
       })

@@ -1,4 +1,4 @@
-import { AUTH_GOOGLE_FIREBASE } from '../actions/types'
+import { AUTH_SUCCESS, AUTH_LOGOUT } from '../actions/types'
 
 const initialState = {
   token: null
@@ -6,8 +6,16 @@ const initialState = {
 
 export default function authReducer(state = initialState, action: any) {
   switch(action.type) {
-    case AUTH_GOOGLE_FIREBASE:
-      return action.data
+    case AUTH_SUCCESS:
+      return {
+        ...state,
+        token: action.token
+      }
+    case AUTH_LOGOUT:
+      return {
+        ...state,
+        token: null
+      }
     default: 
       return state
   }

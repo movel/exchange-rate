@@ -5,7 +5,7 @@ const isInvalid = (props: any) => {
   return !props.valid && props.shouldValidate && props.touched
 }
 
-const Input = (props: { valid: any; touched: any; shouldValidate: any; type: any; label: any; value?: any; onChange?: any; errorMessage?: any; }) => {
+const Input = (props: { valid: any; touched: any; shouldValidate: any; type: any; label: any; value?: any; onChange?: any; placeholder?: any; errorMessage?: any; }) => {
   const inputType = props.type || 'text'
   const cls = ['Input']
   const htmlFor = `${inputType}-${Math.random()}`
@@ -21,6 +21,7 @@ const Input = (props: { valid: any; touched: any; shouldValidate: any; type: any
         type={inputType}
         id={htmlFor}
         value={props.value}
+        placeholder={props.placeholder}
         onChange={props.onChange}
       />
 

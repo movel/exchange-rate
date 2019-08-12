@@ -72,7 +72,7 @@ const CurrenciesContainer = () => {
       let apiTimeSeries = `http://apilayer.net/api/historical?access_key=${APP_ID}`
       apiTimeSeries += '&date=' + dateNow
   
-      console.log('api', apiTimeSeries)
+      // console.log('api', apiTimeSeries)
   
       try {
         await axios.get(apiTimeSeries.trim())
@@ -96,8 +96,8 @@ const CurrenciesContainer = () => {
       let dateNow = new Date(dateString)
       let dateCopy = new Date(dateNow)
 
-      console.log('dateNow', dateNow)
-      console.log('dateCopy', dateCopy)
+      // console.log('dateNow', dateNow)
+      // console.log('dateCopy', dateCopy)
     
       dateCopy.setDate(dateNow.getDate() - days)
       return dateCopy.toISOString().split('T')[0]
@@ -110,7 +110,7 @@ const CurrenciesContainer = () => {
     let itemsDateStart: string = ''
 
     fetchGoogleFirebase()
-    .then(() => {
+    .then(() => { // Get keys all quotes
       Object.keys(quotesGoogle).forEach(key => {
         quotesKeys.push({
           id: key
@@ -120,7 +120,7 @@ const CurrenciesContainer = () => {
     .then(async () => {
       let apiTimeSeries = REACT_API_GOOGLE_FIREBASE + 'currency/' + quotesKeys[quotesKeys.length - 1].id + '.json'
       records = quotesKeys.length
-
+      
       try {
         await axios.get(apiTimeSeries.trim())
         .then(response => {

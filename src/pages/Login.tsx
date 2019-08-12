@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { connect } from 'react-redux'
+import Form from '../components/UI/Form/Form'
 import Button from '../components/UI/Button/Button'
 import Input from '../components/UI/Input/Input'
 import auth from '../components/Auth/Auth'
@@ -11,6 +12,7 @@ const initialFormControls =
       value: '',
       type: 'email',
       label: 'Email',
+      placeholder: 'Enter Email',
       errorMessage: 'Enter a valid email',
       valid: false,
       touched: false,
@@ -23,7 +25,8 @@ const initialFormControls =
       value: '',
       type: 'password',
       label: 'Password',
-      errorMessage: 'Enter the correct password',
+      placeholder: 'Enter Password',
+      errorMessage: 'Enter the correct password at least 6 signs',
       valid: false,
       touched: false,
       validation: {
@@ -51,24 +54,11 @@ const Login = (props: any) => {
       true
     )
 
-    // if(props.data.registered) {
-    //   auth.login(() => {
-    //     props.history.push('/tickers')
-    //   })
-    // }
-
-    // const api = 'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=' + REACT_API_GOOGLE_WEB_API_KEY
-
-    // try {
-    //   const response = await axios.post(api, authData)
-    //   if(response.data.registered) {
-    //     auth.login(() => {
-    //       props.history.push('/tickers')
-    //     })
-    //   }
-    // } catch (e) {
-    //   console.log(e)
-    // }
+    if(props.isAuthenticated) {
+      auth.login(() => {
+        props.history.push('/tickers')
+      })
+    }
   }
 
   const registerHandler = () => {
@@ -77,16 +67,6 @@ const Login = (props: any) => {
       formControls.password.value,
       false
     )
-
-    // const api = 'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=' + REACT_API_GOOGLE_WEB_API_KEY
-
-    // try {
-    //   const response = await axios.post(api, authData)
-
-      
-    // } catch (e) {
-    //   console.log(e)
-    // }
   }
 
 
@@ -149,6 +129,7 @@ const Login = (props: any) => {
           touched={control.touched}
           label={control.label}
           shouldValidate={!!control.validation}
+          placeholder={control.placeholder}
           errorMessage={control.errorMessage}
           onChange={(event: any) => onChangeHandler(event, controlName)}
         />
@@ -156,39 +137,53 @@ const Login = (props: any) => {
     })
   }
 
+  let h2Style = {
+    color: '#ffffff'
+  };
+
   return (
       
       <div>
         {
           !auth.isAuthenticated() && (
             <>
-              <h2>Login</h2>
-              <form onSubmit={submitHandler}>
+              <h2 style={h2Style}>Log in</h2>
+              <Form onSubmit={submitHandler}>
 
                 { renderInputs() }
 
-                <Button
-                  type="success"
-                  onClick={loginHandler}
-                  disabled={!isFormValid}
-                >
-                  LogIn
-                </Button>
+                <hr />
 
-                <Button
-                  type="primary"
-                  onClick={registerHandler}
-                  disabled={!isFormValid}
-                >
-                  Register
-                </Button>
+                <div className="clearfix">
+                  <Button
+                    type="success"
+                    onClick={loginHandler}
+                    disabled={!isFormValid}
+                  >
+                    Log in
+                  </Button>
 
-              </form>
+                  <Button
+                    type="primary"
+                    onClick={registerHandler}
+                    disabled={!isFormValid}
+                  >
+                    Register
+                  </Button>
+                </div>
+
+              </Form>
             </>
           )
         }        
       </div>    
   )
+}
+
+function mapStateToProps(state: { auth: { token: any; }; }) {
+  return {
+    isAuthenticated: !!state.auth.token
+  }
 }
 
 function mapDispatchToProps(dispatch: (arg0: any) => void) {
@@ -197,4 +192,4 @@ function mapDispatchToProps(dispatch: (arg0: any) => void) {
   }
 }
 
-export default connect(null, mapDispatchToProps)(Login)
+export default connect(mapStateToProps, mapDispatchToProps)(Login)

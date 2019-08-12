@@ -1,42 +1,10 @@
 import { REACT_API_GOOGLE_WEB_API_KEY } from '../../env.local'
-import { AUTH_GOOGLE_FIREBASE } from './types'
-import auth from '../../components/Auth/Auth'
+import { AUTH_SUCCESS, AUTH_LOGOUT, AUTH_LOGIN } from './types'
+import * as Redux from 'redux'
 import axios from 'axios'
 
-// export function loginAuth(email: string, password: string, isLogin: boolean) {
-//   return async (dispatch: any) => {
-//     const authData = { email, password, returnSecureToken: true}
-//     let api = 'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=' + REACT_API_GOOGLE_WEB_API_KEY
-//     if(isLogin) {
-//       api = 'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=' + REACT_API_GOOGLE_WEB_API_KEY
-//     }
-
-//     try {
-//       await axios.post(api, authData)
-//       .then(response => console.log(response.data))
-//     } catch (e) {
-//       console.log(e)
-//     }
-//     // if(response.data.registered) {
-//     //   auth.login(() => {
-//     //     props.history.push('/tickers')
-//     //   })
-//     // }  
-//   }
-// }
-
-
-// const apiUrl = 'https://api.github.com/users/KrunalLathiya';
-
-export const postData = (data: any) => {
-  return {
-    type: AUTH_GOOGLE_FIREBASE,
-    data
-  }
-};
-
 export const loginAuth = (email: string, password: string, isLogin: boolean) => {
-  return async (dispatch: any) => {
+  return async (dispatch: Redux.Dispatch<any>) => {
     const authData = { email, password, returnSecureToken: true}
     let apiUrl = 'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=' + REACT_API_GOOGLE_WEB_API_KEY
     if(isLogin) {
@@ -44,13 +12,60 @@ export const loginAuth = (email: string, password: string, isLogin: boolean) => 
     }
     return axios.post(apiUrl, authData)
       .then(response => {
-        dispatch(postData(response.data))
-        if(response.data.registered) {
-          auth.login(() => {})
-        }
+        const data = response.data
+
+        const expirationDate = new Date(new Date().getTime() + data.expiresIn + 1000)
+
+        localStorage.setItem('token', data.idToken)
+        localStorage.setItem('userId', data.localId)
+        localStorage.setItem('expirationDate', expirationDate.toString())
+
+        dispatch(authSuccess(data.idToken))
+        dispatch(autoLogout(data.expiresIn))
       })
       .catch(error => {
-        throw(error);
-      });
-  };
-};
+        throw(error)
+      })
+  }
+}
+
+export const autoLogin = () => {
+  return (dispatch: Redux.Dispatch<any>) => {
+    const token = localStorage.getItem('token')
+    if(!token) {
+      dispatch(logout())
+    } else {
+      const expirationDate = new Date(localStorage.getItem('expirationDate')!)
+      if(expirationDate <= new Date()) {
+        dispatch(logout())
+      } else {
+        dispatch(authSuccess(token))
+        dispatch(autoLogout((expirationDate.getTime() - new Date().getTime()) / 1000))
+      }
+    }
+  }
+}
+
+export const authSuccess = (token: string) => {
+  return {
+    type: AUTH_SUCCESS,
+    token
+  }
+}
+
+export const autoLogout = (time: any) => {
+  return (dispatch: Redux.Dispatch<any>) => {
+    setTimeout(() => {
+      dispatch(logout())
+    }, time * 1000)
+  }
+}
+
+export const logout = () => {
+  localStorage.removeItem('token')
+  localStorage.removeItem('userId')
+  localStorage.removeItem('expirationDate')
+  return {
+    type: AUTH_LOGOUT
+  }
+}

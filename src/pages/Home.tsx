@@ -18,7 +18,7 @@ const Button = styled.button`
   `;
 
 const Home = (props: any) => {
-  const themeToggle = useTheme();
+  const themeToggle = useTheme()
 
   return (
     <>
