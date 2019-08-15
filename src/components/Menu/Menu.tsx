@@ -1,6 +1,8 @@
 import React from 'react'
+import { connect } from 'react-redux'
 import { withRouter, RouteComponentProps, NavLink } from 'react-router-dom'
-import auth from '../Auth/Auth'
+// import auth from '../Auth/Auth'
+import { logout } from '../../store/actions/auth'
 import './Menu.sass'
 
 import styled, { withTheme } from 'styled-components'
@@ -20,7 +22,7 @@ const goTo = (route: string, props: RouteComponentProps) => {
   props.history.replace(`/${route}`)
 }
 
-const Menu = (props: RouteComponentProps) => {
+const Menu = (props: any) => {
 
     return (
       <StyledNav className="menu">
@@ -43,7 +45,7 @@ const Menu = (props: RouteComponentProps) => {
             </StyledNavLink>
           </li>
           {
-            !auth.isAuthenticated() && (
+            !props.isAuthenticated && (
               <li>
                 <StyledNavLink to="/login"
                   className="button__menu"
@@ -55,12 +57,12 @@ const Menu = (props: RouteComponentProps) => {
             )
           }
           {
-            auth.isAuthenticated() && (
+            props.isAuthenticated && (
               <li>  
                 <StyledNavLink to="/logout"
                   className="button__menu"
                   onClick={() => {
-                    auth.logout(() => {
+                    props.logout(() => {
                       goTo('logout', props);
                     });
                   }}>
@@ -83,4 +85,16 @@ const Menu = (props: RouteComponentProps) => {
   
 }
 
-export default withTheme(withRouter(Menu))
+function mapStateToProps(state: { auth: { token: any; }; }) {
+  return {
+    isAuthenticated: !!state.auth.token
+  }
+}
+
+function mapDispatchToProps(dispatch: (arg0: any) => void) {
+  return {
+    logout: () => dispatch(logout())
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(withTheme(withRouter(Menu)))

@@ -53,12 +53,12 @@ const Login = (props: any) => {
       formControls.password.value,
       true
     )
-
-    if(props.isAuthenticated) {
-      auth.login(() => {
-        props.history.push('/tickers')
-      })
-    }
+    .then(() => {
+      props.history.push('/tickers')
+    })
+    .catch((e: any) => {
+      console.log(e)
+    })
   }
 
   const registerHandler = () => {
@@ -142,10 +142,9 @@ const Login = (props: any) => {
   };
 
   return (
-      
       <div>
         {
-          !auth.isAuthenticated() && (
+          !props.isAuthenticated && (
             <>
               <h2 style={h2Style}>Log in</h2>
               <Form onSubmit={submitHandler}>

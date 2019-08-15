@@ -3,14 +3,14 @@ import { AUTH_SUCCESS, AUTH_LOGOUT } from './types'
 import * as Redux from 'redux'
 import axios from 'axios'
 
-export const loginAuth = (email: string, password: string, isLogin: boolean) => {
+export const fetchData = () => {
   return async (dispatch: Redux.Dispatch<any>) => {
-    const authData = { email, password, returnSecureToken: true}
+    
     let apiUrl = 'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=' + REACT_API_GOOGLE_WEB_API_KEY
-    if(isLogin) {
+    
       apiUrl = 'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=' + REACT_API_GOOGLE_WEB_API_KEY
-    }
-    return axios.post(apiUrl, authData)
+    
+    return axios.post(apiUrl)
       .then(response => {
         const data = response.data
 
