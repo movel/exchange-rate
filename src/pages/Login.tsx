@@ -3,7 +3,6 @@ import { connect } from 'react-redux'
 import Form from '../components/UI/Form/Form'
 import Button from '../components/UI/Button/Button'
 import Input from '../components/UI/Input/Input'
-import auth from '../components/Auth/Auth'
 import { loginAuth } from '../store/actions/auth'
 
 const initialFormControls = 
@@ -53,12 +52,8 @@ const Login = (props: any) => {
       formControls.password.value,
       true
     )
-    .then(() => {
-      props.history.push('/tickers')
-    })
-    .catch((e: any) => {
-      console.log(e)
-    })
+    .then(() => props.history.push('/tickers'))
+    .catch((e: any) => console.log(e))
   }
 
   const registerHandler = () => {

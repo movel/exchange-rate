@@ -13,7 +13,6 @@ export const loginAuth = (email: string, password: string, isLogin: boolean) => 
     return axios.post(apiUrl, authData)
       .then(response => {
         const data = response.data
-
         const expirationDate = new Date(new Date().getTime() + data.expiresIn + 1000)
 
         localStorage.setItem('token', data.idToken)

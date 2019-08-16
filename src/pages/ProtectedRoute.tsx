@@ -1,18 +1,20 @@
-import React from "react"
-import { Route, Redirect } from "react-router-dom"
-import auth from "../components/Auth/Auth"
+import React from 'react'
+import { Route, Redirect } from 'react-router-dom'
+import { connect } from 'react-redux'
 
-export const ProtectedRoute: React.ComponentType<any> = ({
+
+const ProtectedRoute: React.ComponentType<any> = ({
   component: Component,
   ...rest
 }) => {
+    const { isAuthenticated } = rest
     return (<Route {...rest} render={props => {
-      if (auth.isAuthenticated()) {
+      if (isAuthenticated) {
         return <Component {...props} />
       }
       else {
         return (<Redirect to={{
-          pathname: "/home",
+          pathname: "/",
           state: {
             from: props.location
           }
@@ -20,3 +22,11 @@ export const ProtectedRoute: React.ComponentType<any> = ({
       }
     } } />)
   }
+  
+function mapStateToProps(state: { auth: { token: any; }; }) {
+  return {
+    isAuthenticated: !!state.auth.token
+  }
+}
+
+export default connect(mapStateToProps)(ProtectedRoute)

@@ -9,7 +9,7 @@ export const rootReducer = (history: History) => combineReducers({
   selected: selectedReducer,
   router: connectRouter(history),
   auth: authReducer,
-  data: dataReducer
+  dataCurr: dataReducer
 })
 
 export interface State {

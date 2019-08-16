@@ -1,6 +1,6 @@
 import React, { lazy } from 'react'
 import { Route, Switch } from 'react-router'
-import { ProtectedRoute } from '../pages/ProtectedRoute'
+import ProtectedRoute from '../pages/ProtectedRoute'
 
 const Home = lazy(() => import('../pages/Home'))
 const About = lazy(() => import('../pages/About'))
@@ -9,7 +9,7 @@ const Tickers = lazy(() => import('../pages/Tickers/Tickers'))
 
 const PageNotFound = lazy(() => import('../components/PageNotFound/PageNotFound'))
 
-const routes = (
+const routes =  (
   <Switch>
     <Route exact path="/" component={Home} />
     <Route path="/home" component={Home} />

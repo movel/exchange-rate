@@ -3,7 +3,6 @@ import { connect } from 'react-redux'
 import Currency from '../../components/Currency/Currency'
 import './CurrenciesContainer.sass'
 // import FetchData from '../../components/FetchData/FetchData'
-import { loginAuth } from '../../store/actions/auth'
 // import axios from 'axios'
 // import { REACT_API_CURRENCY_LAYER_COM, REACT_API_GOOGLE_FIREBASE } from '../../env.local'
 
@@ -190,18 +189,12 @@ const CurrenciesContainer = (props: { dataCurrency: {}; }) => {
   )
 }
 
-function mapStateToProps(state: { data: { dataCurrency: any; }; }) {
+function mapStateToProps(state: { dataCurr: { dataCurrency: any; }; }) {
   return {
-    dataCurrency: state.data.dataCurrency
+    dataCurrency: state.dataCurr.dataCurrency
   }
 }
 
-function mapDispatchToProps(dispatch: (arg0: any) => void) {
-  return {
-    loginAuth: (email: string, password: string, isLogin: boolean) => dispatch(loginAuth(email, password, isLogin))
-  }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(CurrenciesContainer)
+export default connect(mapStateToProps, null)(CurrenciesContainer)
 
 export { dataCurrencyContext }
