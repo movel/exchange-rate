@@ -14,7 +14,10 @@ export const rootReducer = (history: History) => combineReducers({
 
 export interface State {
   selected: [],
-  router: RouterState
+  router: RouterState,
+  auth: {
+    token: string
+  }
 }
 
 export default rootReducer

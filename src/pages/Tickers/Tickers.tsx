@@ -5,11 +5,12 @@ import { css } from 'emotion'
 import Select, { components } from 'react-select'
 import CurrenciesContainer from '../../containers/CurrenciesContainer/CurrenciesContainer'
 import * as constants from '../../options'
-import auth from '../../components/Auth/Auth'
+// import auth from '../../components/Auth/Auth'
 import './Tickers.sass'
 import { addSelectedError, addSelected } from '../../store/actions/selected'
 import { Dispatch } from 'redux'
 import { State } from '../../store/reducers'
+import { logout } from '../../store/actions/auth'
 
 const MultiValueContainer = (props: any) => {
   return (
@@ -53,7 +54,7 @@ const options: any = constants.options.map(item => {
 
 const selectedContext = createContext([])
 
-const Tickers = (props: RouteComponentProps<any> & StateProps & DispatchProps) => {
+const Tickers = (props: any) => {
   const [selectedOption, setSelectedOption] = useState(props.selected)
 
   const handleChange = (selectedOption: any) => {
@@ -64,7 +65,7 @@ const Tickers = (props: RouteComponentProps<any> & StateProps & DispatchProps) =
     <div className="tickers__container">
       <h1>Tickers</h1>
       <button onClick={() => {
-        auth.logout(() => {
+        props.logout(() => {
           props.history.push("/");
         });
       } }>
@@ -99,15 +100,17 @@ interface DispatchProps {
   addSelected: (selected: []) => void
 }
 
-const mapStateToProps = (store: State) => {
+const mapStateToProps = (state: State) => {
   return ({
-    selected: store.selected
+    selected: state.selected,
+    isAuthenticated: !!state.auth.token
   });
 }
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   addSelectedError: (err: Error) => dispatch(addSelectedError(err)),
   addSelected: (selected: []) => dispatch(addSelected(selected)),
+  logout: () => logout()
 })
 
 export default connect<StateProps, DispatchProps, RouteComponentProps<any>, any>(mapStateToProps, mapDispatchToProps)(Tickers)
