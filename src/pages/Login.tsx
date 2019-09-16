@@ -53,7 +53,7 @@ const Login = (props: any) => {
       true
     )
     .then(() => props.history.push('/tickers'))
-    .catch((e: any) => console.log(e))
+    .catch((error: any) => {throw(error)})
   }
 
   const registerHandler = () => {
@@ -62,6 +62,8 @@ const Login = (props: any) => {
       formControls.password.value,
       false
     )
+    .then(() => props.history.push('/tickers'))
+    .catch((error: any) => {throw(error)})
   }
 
 
@@ -150,7 +152,7 @@ const Login = (props: any) => {
 
                 <div className="clearfix">
                   <Button
-                    type="success"
+                    type="submit success"
                     onClick={loginHandler}
                     disabled={!isFormValid}
                   >

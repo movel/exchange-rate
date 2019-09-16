@@ -16,10 +16,25 @@
     border: 1px solid #819aa0;
     padding: 7px;
     margin: 0 0 5px;
-    background-color: #d9f5f5;
+    background-color: #E8F0FE !important;
+    background-image: none !important;
+    color: rgb(0, 0, 0) !important;
     width: 100%;
     outline: none;
     transition: all 300ms ease-in-out;
+}
+
+.Input input:-internal-autofill-selected {
+    background-color: #E8F0FE !important;
+    background-image: none !important;
+    color: rgb(0, 0, 0) !important;
+}
+
+.Input input:focus {
+    outline: none;
+    background-color: #E8F0FE !important;
+    background-image: none !important;
+    color: rgb(0, 0, 0) !important;
 }
 
 .Input span {

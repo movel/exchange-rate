@@ -12,7 +12,7 @@ import { Dispatch } from 'redux'
 import { State } from '../../store/reducers'
 import { logout } from '../../store/actions/auth'
 
-const MultiValueContainer = (props: any) => {
+const MultiValueContainer = (props: { data: { title: string | undefined; }; }) => {
   return (
     <div title={props.data.title}>
       <components.MultiValueContainer {...props}/>
@@ -54,7 +54,7 @@ const options: any = constants.options.map(item => {
 
 const selectedContext = createContext([])
 
-const Tickers = (props: any) => {
+const Tickers = (props: { selected: any; logout: (arg0: () => void) => void; history: string[]; }) => {
   const [selectedOption, setSelectedOption] = useState(props.selected)
 
   const handleChange = (selectedOption: any) => {
@@ -102,8 +102,7 @@ interface DispatchProps {
 
 const mapStateToProps = (state: State) => {
   return ({
-    selected: state.selected,
-    isAuthenticated: !!state.auth.token
+    selected: state.selected
   });
 }
 

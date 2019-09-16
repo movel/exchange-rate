@@ -9,7 +9,6 @@ import './CurrenciesContainer.sass'
 const dataCurrencyContext = createContext({})
 
 const CurrenciesContainer = (props: { dataCurrency: {}; }) => {
-  // const [dataCurrency, setDataCurrency] = useState({USDJPY: 108.45183333,})
 
   // useEffect(() => {
   
@@ -189,12 +188,12 @@ const CurrenciesContainer = (props: { dataCurrency: {}; }) => {
   )
 }
 
-function mapStateToProps(state: { dataCurr: { dataCurrency: any; }; }) {
+function mapStateToProps(state: { rates: { dataCurrency: any; }; }) {
   return {
-    dataCurrency: state.dataCurr.dataCurrency
+    dataCurrency: state.rates.dataCurrency
   }
 }
 
-export default connect(mapStateToProps, null)(CurrenciesContainer)
+export default connect(mapStateToProps)(CurrenciesContainer)
 
 export { dataCurrencyContext }

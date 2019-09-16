@@ -1,4 +1,4 @@
-import { REACT_API_GOOGLE_WEB_API_KEY } from '../../env.local'
+import { REACT_API_GOOGLE_WEB_API_KEY, REACT_API_CURRENCY_LAYER_COM } from '../../env.local'
 import { AUTH_SUCCESS, AUTH_LOGOUT } from './types'
 import * as Redux from 'redux'
 import axios from 'axios'
@@ -18,6 +18,10 @@ export const loginAuth = (email: string, password: string, isLogin: boolean) => 
         localStorage.setItem('token', data.idToken)
         localStorage.setItem('userId', data.localId)
         localStorage.setItem('expirationDate', expirationDate.toString())
+
+        if(!isLogin && data.idToken) {
+          window.alert("Account created!")
+        }
 
         dispatch(authSuccess(data.idToken))
         dispatch(autoLogout(data.expiresIn))
