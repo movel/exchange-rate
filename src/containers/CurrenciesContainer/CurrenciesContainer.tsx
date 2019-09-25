@@ -1,14 +1,23 @@
-import React, { createContext } from 'react'
+import React, { createContext, useState, useEffect } from 'react'
 import { connect } from 'react-redux'
 import Currency from '../../components/Currency/Currency'
 import './CurrenciesContainer.sass'
+import { fetchGoogleFirebase } from '../../store/actions/rates'
 // import FetchData from '../../components/FetchData/FetchData'
 // import axios from 'axios'
 // import { REACT_API_CURRENCY_LAYER_COM, REACT_API_GOOGLE_FIREBASE } from '../../env.local'
 
 const dataCurrencyContext = createContext({})
 
-const CurrenciesContainer = (props: { dataCurrency: {}; }) => {
+const CurrenciesContainer = (props: any) => {
+
+  // const [dataCurrency, setDataCurrency] = useState(props.dataCurrency)
+
+  // setDataCurrency(props.dataCurrency)
+
+  useEffect(() => {
+    props.fetchGoogleFirebase()
+  }, [props])
 
   // useEffect(() => {
   
@@ -194,6 +203,12 @@ function mapStateToProps(state: { rates: { dataCurrency: any; }; }) {
   }
 }
 
-export default connect(mapStateToProps)(CurrenciesContainer)
+function mapDispatchToProps(dispatch: (arg0: any) => void) {
+  return {
+    fetchGoogleFirebase: () => dispatch(fetchGoogleFirebase())
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(CurrenciesContainer)
 
 export { dataCurrencyContext }

@@ -17,7 +17,8 @@ export interface State {
   router: RouterState,
   auth: {
     token: string
-  }
+  },
+  rates: []
 }
 
 export default rootReducer
