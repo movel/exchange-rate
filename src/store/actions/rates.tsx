@@ -5,7 +5,7 @@ import { FETCH_RATES_ERROR, FETCH_RATES_SUCCESS, FETCH_RATES_DATA, FETCH_RATES_Q
 
 export const fetchRatesSuccess = (payload: boolean) => ({
   type: FETCH_RATES_SUCCESS,
-  payload: payload
+  payload
 })
 
 export const fetchRatesError = (error: Error) => ({
@@ -15,7 +15,7 @@ export const fetchRatesError = (error: Error) => ({
 
 export const fetchRatesData = (payload: []) => ({
   type: FETCH_RATES_DATA,
-  payload: payload
+  payload
 })
 
 export const fetchRatesQuotes = (payload: []) => ({
@@ -25,13 +25,12 @@ export const fetchRatesQuotes = (payload: []) => ({
 
 export const fetchGoogleFirebase = () => {
   return async (dispatch: Redux.Dispatch<any>) => {
-    let apiTimeSeries = REACT_API_GOOGLE_FIREBASE + 'currency.json'
+    let api = REACT_API_GOOGLE_FIREBASE + 'currency.json'
     let quotesGoogle: any = null
     try {
-      await axios.get(apiTimeSeries.trim())
+      await axios.get(api.trim())
         .then(response => {
           quotesGoogle = response.data
-          // console.log(quotesGoogle)
           dispatch(fetchRatesQuotes(quotesGoogle))
       })
     } catch(e) {
