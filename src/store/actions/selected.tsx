@@ -1,14 +1,16 @@
+import { ADD_SELECTED, ADD_SELECTED_ERROR } from './types'
+
 export type Action =
   | { type: '' }
-  | { type: 'addSelected'; payload: [] }
-  | { type: 'addSelectedError'; payload: Error }
+  | { type: 'ADD_SELECTED'; selected: { value: string, label: string, title: string }[] }
+  | { type: 'ADD_SELECTED_ERROR'; payload: Error }
 
-export const addSelected = (payload: []) => ({
-  type: 'addSelected',
-  payload: payload
+export const addSelected = (selected: []) => ({
+  type: ADD_SELECTED,
+  selected
 })
 
 export const addSelectedError = (err: Error) => ({
-  type: 'addSelectedError',
+  type: ADD_SELECTED_ERROR,
   payload: err
 })

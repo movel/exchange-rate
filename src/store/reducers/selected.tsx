@@ -1,21 +1,20 @@
 import { Action } from '../actions/selected'
+import {ADD_SELECTED, ADD_SELECTED_ERROR} from '../actions/types'
 
 export const initialState = {
-  selected: [{
-    "value": "JPY",
-    "label": "JPY",
-    "title": "Japanese Yen",
-  }]
+  selected: []
 }
 
 export default function selectedReducer(state = initialState.selected, action: Action) {
   switch (action.type) {
-    case 'addSelected': return {
-      ...state,
-      selected: action.payload
+    case ADD_SELECTED: 
+      return {
+        ...state,
+        selected: action.selected
     };
-    case 'addSelectedError': return {
-      ...state,
+    case ADD_SELECTED_ERROR: 
+      return {
+        ...state,
     };
     default:
       return state;

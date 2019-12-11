@@ -1,11 +1,9 @@
 import React, { useState, createContext } from 'react'
-import { RouteComponentProps } from 'react-router'
 import { connect } from 'react-redux'
 import { css } from 'emotion'
 import Select, { components } from 'react-select'
 import CurrenciesContainer from '../../containers/CurrenciesContainer/CurrenciesContainer'
 import * as constants from '../../options'
-// import auth from '../../components/Auth/Auth'
 import './Tickers.sass'
 import { addSelectedError, addSelected } from '../../store/actions/selected'
 import { Dispatch } from 'redux'
@@ -54,11 +52,12 @@ const options: any = constants.options.map(item => {
 
 const selectedContext = createContext([])
 
-const Tickers = (props: { selected: any; logout: (arg0: () => void) => void; history: string[]; }) => {
+const Tickers = (props: { selected: any; addSelected: any; logout: (arg0: () => void) => void; history: any; }) => {
   const [selectedOption, setSelectedOption] = useState(props.selected)
 
   const handleChange = (selectedOption: any) => {
     setSelectedOption(selectedOption)
+    props.addSelected(selectedOption)
   }
 
   return (
@@ -106,11 +105,13 @@ const mapStateToProps = (state: State) => {
   });
 }
 
-const mapDispatchToProps = (dispatch: Dispatch) => ({
-  addSelectedError: (err: Error) => dispatch(addSelectedError(err)),
-  addSelected: (selected: []) => dispatch(addSelected(selected)),
-  logout: () => logout()
-})
+const mapDispatchToProps = (dispatch: Dispatch) => {
+  return ({
+    addSelectedError: (err: Error) => dispatch(addSelectedError(err)),
+    addSelected: (selected: []) => dispatch(addSelected(selected)),
+    logout: () => logout()
+  })
+}
 
-export default connect<StateProps, DispatchProps, RouteComponentProps<any>, any>(mapStateToProps, mapDispatchToProps)(Tickers)
+export default connect(mapStateToProps, mapDispatchToProps)(Tickers)
 export { selectedContext }
