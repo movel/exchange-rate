@@ -13,7 +13,7 @@ export const loginAuth = (email: string, password: string, isLogin: boolean) => 
     return axios.post(apiUrl, authData)
       .then(response => {
         const data = response.data
-        const expirationDate = new Date(new Date().getTime() + data.expiresIn + 1000)
+        const expirationDate = new Date(new Date().getTime() + data.expiresIn * 1000)
 
         localStorage.setItem('token', data.idToken)
         localStorage.setItem('userId', data.localId)
@@ -39,6 +39,7 @@ export const autoLogin = () => {
       dispatch(logout())
     } else {
       const expirationDate = new Date(localStorage.getItem('expirationDate')!)
+      
       if(expirationDate <= new Date()) {
         dispatch(logout())
       } else {

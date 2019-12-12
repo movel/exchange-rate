@@ -12,6 +12,7 @@ type AppProps = {
 }
 
 const App = ({ history }: AppProps) => {
+
   return (
     <ConnectedRouter history={history}>
       <div className="App">

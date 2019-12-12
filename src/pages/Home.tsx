@@ -1,7 +1,4 @@
 import React from 'react'
-// import { RouteComponentProps } from 'react-router-dom'
-// import { connect } from 'react-redux'
-
 import { useTheme } from '../themes/ThemeContext';
 import styled, { withTheme } from 'styled-components';
 import { buttonBackgroundColor, buttonTextColor } from '../themes/theme'

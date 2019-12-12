@@ -1,8 +1,7 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
 import { withRouter, RouteComponentProps, NavLink } from 'react-router-dom'
-// import auth from '../Auth/Auth'
-import { logout } from '../../store/actions/auth'
+import { logout, autoLogin } from '../../store/actions/auth'
 import './Menu.sass'
 
 import styled, { withTheme } from 'styled-components'
@@ -23,6 +22,10 @@ const goTo = (route: string, props: RouteComponentProps) => {
 }
 
 const Menu = (props: any) => {
+
+  useEffect(() => {
+    props.autoLogin()
+  }, [])
 
     return (
       <StyledNav className="menu">
@@ -93,7 +96,8 @@ function mapStateToProps(state: { auth: { token: any; }; }) {
 
 function mapDispatchToProps(dispatch: (arg0: any) => void) {
   return {
-    logout: () => dispatch(logout())
+    logout: () => dispatch(logout()),
+    autoLogin: () => dispatch(autoLogin())
   }
 }
 
