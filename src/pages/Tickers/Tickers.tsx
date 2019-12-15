@@ -1,4 +1,4 @@
-import React, { useState, createContext } from 'react'
+import React, { useState, createContext, useEffect } from 'react'
 import { connect } from 'react-redux'
 import { css } from 'emotion'
 import Select, { components } from 'react-select'
@@ -9,6 +9,7 @@ import { addSelectedError, addSelected } from '../../store/actions/selected'
 import { Dispatch } from 'redux'
 import { State } from '../../store/reducers'
 import { logout } from '../../store/actions/auth'
+import { fetchConfigs } from '../../store/actions/config'
 
 const MultiValueContainer = (props: { data: { title: string | undefined; }; }) => {
   return (
@@ -52,8 +53,12 @@ const options: any = constants.options.map(item => {
 
 const selectedContext = createContext([])
 
-const Tickers = (props: { selected: any; addSelected: any; logout: (arg0: () => void) => void; history: any; }) => {
+const Tickers = (props: { selected: any; addSelected: any; logout: (arg0: () => void) => void; history: any; fetchConfigs: any; }) => {
   const [selectedOption, setSelectedOption] = useState(props.selected)
+
+  useEffect(() => {
+    props.fetchConfigs()
+  }, [props])
 
   const handleChange = (selectedOption: any) => {
     setSelectedOption(selectedOption)
@@ -90,18 +95,11 @@ const Tickers = (props: { selected: any; addSelected: any; logout: (arg0: () => 
   )
 }
 
-interface StateProps {
-  selected: [],
-}
-
-interface DispatchProps {
-  addSelectedError: (err: Error) => void
-  addSelected: (selected: []) => void
-}
-
 const mapStateToProps = (state: State) => {
+  if(!state.selected) state.selected = [];
   return ({
-    selected: state.selected
+    selected: state.selected,
+    config: state.config
   });
 }
 
@@ -109,7 +107,8 @@ const mapDispatchToProps = (dispatch: Dispatch) => {
   return ({
     addSelectedError: (err: Error) => dispatch(addSelectedError(err)),
     addSelected: (selected: []) => dispatch(addSelected(selected)),
-    logout: () => logout()
+    logout: () => logout(),
+    fetchConfigs: () => fetchConfigs()
   })
 }
 

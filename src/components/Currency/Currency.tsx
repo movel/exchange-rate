@@ -6,7 +6,9 @@ import * as constants from '../../options'
 import { selectedContext } from '../../pages/Tickers/Tickers';
 
 const Currency = () => {
-  const selected = useContext(selectedContext)
+  let selected = useContext(selectedContext)
+
+  if(selected === null) selected = []
 
   const dataCurrency: any = useContext(dataCurrencyContext)
 
