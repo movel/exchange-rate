@@ -1,4 +1,4 @@
-import React, { createContext, useState, useEffect } from 'react'
+import React, { createContext, useEffect } from 'react'
 import { connect } from 'react-redux'
 import Currency from '../../components/Currency/Currency'
 import './CurrenciesContainer.sass'

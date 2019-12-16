@@ -6,7 +6,6 @@ import CurrenciesContainer from '../../containers/CurrenciesContainer/Currencies
 import * as constants from '../../options'
 import './Tickers.sass'
 import { addSelectedError, addSelected } from '../../store/actions/selected'
-import { Dispatch } from 'redux'
 import { State } from '../../store/reducers'
 import { logout } from '../../store/actions/auth'
 import { fetchConfigFromFirebase } from '../../store/actions/config'
@@ -54,17 +53,20 @@ const options: any = constants.options.map(item => {
 const selectedContext = createContext([])
 
 const Tickers = (props: any) => {
-  const [selectedOption, setSelectedOption] = useState(props.selected)
+  const [selectedOption, setSelectedOption] = useState(props.selected.selected)
 
   useEffect(() => {
     props.fetchConfigFromFirebase()
-    console.log('I am here')
   }, [])
 
   const handleChange = (selectedOption: any) => {
     setSelectedOption(selectedOption)
+    console.log(selectedOption)
     props.addSelected(selectedOption)
+    console.log(props)
   }
+
+  // console.log('selectedOption', selectedOption)
 
   return (
     <div className="tickers__container">
@@ -108,7 +110,7 @@ const mapDispatchToProps = (dispatch: (arg0: any) => void) => {
   return {
     addSelectedError: (err: Error) => dispatch(addSelectedError(err)),
     addSelected: (selected: []) => dispatch(addSelected(selected)),
-    logout: () => logout(),
+    logout: () => dispatch(logout()),
     fetchConfigFromFirebase: () => dispatch(fetchConfigFromFirebase())
   }
 }

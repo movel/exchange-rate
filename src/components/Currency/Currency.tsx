@@ -13,7 +13,7 @@ const Currency = () => {
   const dataCurrency: any = useContext(dataCurrencyContext)
 
   // const flagCountry = '<img src={`https://www.countryflags.io/${constants.countries[currency.label]}/shiny/64.png`} alt="flag"></img>'
-
+  
   const tickersCurrency: any = selected.map( (currency: { title: string | undefined; label: string | any; value: string | any; }) =>
     {
       let a: {value: string, label: string} = { value: '', label: ''}
