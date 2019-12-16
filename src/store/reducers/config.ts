@@ -14,7 +14,7 @@ export default function configReducer(state = initialState, action: any) {
     case FETCH_CONFIG_DATA:
       return {
         ...state,
-        config: action.config
+        config: action.payload
       }
     case FETCH_CONFIG_QUOTES:
       return {

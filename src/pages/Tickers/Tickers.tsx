@@ -9,7 +9,7 @@ import { addSelectedError, addSelected } from '../../store/actions/selected'
 import { Dispatch } from 'redux'
 import { State } from '../../store/reducers'
 import { logout } from '../../store/actions/auth'
-import { fetchConfigs } from '../../store/actions/config'
+import { fetchConfigFromFirebase } from '../../store/actions/config'
 
 const MultiValueContainer = (props: { data: { title: string | undefined; }; }) => {
   return (
@@ -53,12 +53,13 @@ const options: any = constants.options.map(item => {
 
 const selectedContext = createContext([])
 
-const Tickers = (props: { selected: any; addSelected: any; logout: (arg0: () => void) => void; history: any; fetchConfigs: any; }) => {
+const Tickers = (props: any) => {
   const [selectedOption, setSelectedOption] = useState(props.selected)
 
   useEffect(() => {
-    props.fetchConfigs()
-  }, [props])
+    props.fetchConfigFromFirebase()
+    console.log('I am here')
+  }, [])
 
   const handleChange = (selectedOption: any) => {
     setSelectedOption(selectedOption)
@@ -96,20 +97,20 @@ const Tickers = (props: { selected: any; addSelected: any; logout: (arg0: () => 
 }
 
 const mapStateToProps = (state: State) => {
-  if(!state.selected) state.selected = [];
+  
   return ({
     selected: state.selected,
     config: state.config
   });
 }
 
-const mapDispatchToProps = (dispatch: Dispatch) => {
-  return ({
+const mapDispatchToProps = (dispatch: (arg0: any) => void) => {
+  return {
     addSelectedError: (err: Error) => dispatch(addSelectedError(err)),
     addSelected: (selected: []) => dispatch(addSelected(selected)),
     logout: () => logout(),
-    fetchConfigs: () => fetchConfigs()
-  })
+    fetchConfigFromFirebase: () => dispatch(fetchConfigFromFirebase())
+  }
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Tickers)

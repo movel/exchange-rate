@@ -25,7 +25,7 @@ const Menu = (props: any) => {
 
   useEffect(() => {
     props.autoLogin()
-  }, [])
+  }, [props])
 
     return (
       <StyledNav className="menu">

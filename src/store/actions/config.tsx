@@ -31,7 +31,6 @@ export const fetchConfigFromFirebase = () => {
       await axios.get(api.trim())
         .then(response => {
           userConfigs = response.data
-          console.log(userConfigs)
           dispatch(fetchConfigData(userConfigs))
       })
     } catch(e) {
