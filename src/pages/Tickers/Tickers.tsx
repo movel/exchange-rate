@@ -8,7 +8,7 @@ import './Tickers.sass'
 import { addSelectedError, addSelected } from '../../store/actions/selected'
 import { State } from '../../store/reducers'
 import { logout } from '../../store/actions/auth'
-import { fetchConfigFromFirebase } from '../../store/actions/config'
+import { fetchConfigFromFirebase, postGoogleFirebase } from '../../store/actions/config'
 
 const MultiValueContainer = (props: { data: { title: string | undefined; }; }) => {
   return (
@@ -57,13 +57,17 @@ const Tickers = (props: any) => {
 
   useEffect(() => {
     props.fetchConfigFromFirebase()
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
+
+  // useEffect(() => {
+  //   props.postGoogleFirebase(selectedOption)
+  // }, [selectedOption])
 
   const handleChange = (selectedOption: any) => {
     setSelectedOption(selectedOption)
-    console.log(selectedOption)
     props.addSelected(selectedOption)
-    console.log(props)
+    props.postGoogleFirebase(selectedOption)
   }
 
   // console.log('selectedOption', selectedOption)
@@ -111,7 +115,8 @@ const mapDispatchToProps = (dispatch: (arg0: any) => void) => {
     addSelectedError: (err: Error) => dispatch(addSelectedError(err)),
     addSelected: (selected: []) => dispatch(addSelected(selected)),
     logout: () => dispatch(logout()),
-    fetchConfigFromFirebase: () => dispatch(fetchConfigFromFirebase())
+    fetchConfigFromFirebase: () => dispatch(fetchConfigFromFirebase()),
+    postGoogleFirebase: (selected: []) => dispatch(postGoogleFirebase(selected))
   }
 }
 

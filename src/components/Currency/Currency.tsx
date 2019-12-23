@@ -8,7 +8,7 @@ import { selectedContext } from '../../pages/Tickers/Tickers';
 const Currency = () => {
   let selected = useContext(selectedContext)
 
-  if(selected === null) selected = []
+  if(!selected) selected = []
 
   const dataCurrency: any = useContext(dataCurrencyContext)
 
