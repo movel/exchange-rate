@@ -24,7 +24,10 @@ const goTo = (route: string, props: RouteComponentProps) => {
 const Menu = (props: any) => {
 
   useEffect(() => {
-    props.autoLogin()
+    if(!props.isAuthenticated) {
+      props.autoLogin()
+    }
+    
   }, [props])
 
     return (

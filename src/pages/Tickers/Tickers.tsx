@@ -56,7 +56,9 @@ const Tickers = (props: any) => {
   const [selectedOption, setSelectedOption] = useState(props.selected.selected)
 
   useEffect(() => {
-    props.fetchConfigFromFirebase()
+    if(!props.isAuthenticated) {
+      props.fetchConfigFromFirebase()
+    }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
@@ -67,7 +69,9 @@ const Tickers = (props: any) => {
   const handleChange = (selectedOption: any) => {
     setSelectedOption(selectedOption)
     props.addSelected(selectedOption)
-    props.postGoogleFirebase(selectedOption)
+    if(!props.isAuthenticated) {
+      props.postGoogleFirebase(selectedOption)
+    }
   }
 
   // console.log('selectedOption', selectedOption)
@@ -103,10 +107,10 @@ const Tickers = (props: any) => {
 }
 
 const mapStateToProps = (state: State) => {
-  
   return ({
     selected: state.selected,
-    config: state.config
+    config: state.config,
+    isAuthenticated: !!state.auth.token
   });
 }
 

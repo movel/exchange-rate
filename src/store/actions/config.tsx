@@ -63,8 +63,9 @@ export const postGoogleFirebase = (dataConfig: any) => {
     let config = dataConfig
     try {
       await axios.post(apiTimeSeries.trim(), config)
-        .then(() => {
+        .then((response) => {
           dispatch(postConfigData())
+          console.log(response.data.name)
         })
     } catch (e) {
       console.log(e)
