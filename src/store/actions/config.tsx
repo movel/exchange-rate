@@ -61,11 +61,34 @@ export const postGoogleFirebase = (dataConfig: any) => {
     let apiTimeSeries = REACT_API_GOOGLE_FIREBASE + 'config.json'
     
     let config = dataConfig
+    let config_keys: any = []
     try {
       await axios.post(apiTimeSeries.trim(), config)
         .then((response) => {
           dispatch(postConfigData())
-          console.log(response.data.name)
+          config_keys = response.data
+        })
+        .then(() => {
+          Object.keys(config_keys).forEach(key => {
+            console.log('post_keys', key)
+          })
+          console.log('post_keys', config_keys)
+        })
+    } catch (e) {
+      console.log(e)
+    }
+  }
+}
+
+export const patchGoogleFirebase = (dataConfig: any) => {
+  return async (dispatch: Redux.Dispatch<any>) => {
+    let apiTimeSeries = REACT_API_GOOGLE_FIREBASE + 'config.json'
+    
+    let config = dataConfig
+    try {
+      await axios.post(apiTimeSeries.trim(), config)
+        .then((response) => {
+          dispatch(postConfigData())
         })
     } catch (e) {
       console.log(e)

@@ -4,6 +4,7 @@ import Form from '../components/UI/Form/Form'
 import Button from '../components/UI/Button/Button'
 import Input from '../components/UI/Input/Input'
 import { loginAuth } from '../store/actions/auth'
+import { postGoogleFirebase } from '../store/actions/config'
 
 const initialFormControls = 
   {
@@ -63,6 +64,7 @@ const Login = (props: any) => {
       false
     )
     .then(() => props.history.push('/tickers'))
+    .then(() => props.postGoogleFirebase({email: formControls.email.value}))
     .catch((error: any) => {throw(error)})
   }
 
@@ -184,7 +186,8 @@ function mapStateToProps(state: { auth: { token: any; }; }) {
 
 function mapDispatchToProps(dispatch: (arg0: any) => void) {
   return {
-    loginAuth: (email: string, password: string, isLogin: boolean) => dispatch(loginAuth(email, password, isLogin))
+    loginAuth: (email: string, password: string, isLogin: boolean) => dispatch(loginAuth(email, password, isLogin)),
+    postGoogleFirebase: (data: []) => dispatch(postGoogleFirebase(data)),
   }
 }
 

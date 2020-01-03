@@ -56,22 +56,19 @@ const Tickers = (props: any) => {
   const [selectedOption, setSelectedOption] = useState(props.selected.selected)
 
   useEffect(() => {
-    if(!props.isAuthenticated) {
+    if(props.isAuthenticated) {
       props.fetchConfigFromFirebase()
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  // useEffect(() => {
-  //   props.postGoogleFirebase(selectedOption)
-  // }, [selectedOption])
-
   const handleChange = (selectedOption: any) => {
     setSelectedOption(selectedOption)
     props.addSelected(selectedOption)
-    if(!props.isAuthenticated) {
-      props.postGoogleFirebase(selectedOption)
-    }
+    // if(props.isAuthenticated) {
+    //   let post_config_data = { selected: selectedOption, token: props.token }
+    //   props.postGoogleFirebase(post_config_data)
+    // }
   }
 
   // console.log('selectedOption', selectedOption)
@@ -110,7 +107,8 @@ const mapStateToProps = (state: State) => {
   return ({
     selected: state.selected,
     config: state.config,
-    isAuthenticated: !!state.auth.token
+    isAuthenticated: !!state.auth.token,
+    token: state.auth.token,
   });
 }
 
@@ -120,7 +118,7 @@ const mapDispatchToProps = (dispatch: (arg0: any) => void) => {
     addSelected: (selected: []) => dispatch(addSelected(selected)),
     logout: () => dispatch(logout()),
     fetchConfigFromFirebase: () => dispatch(fetchConfigFromFirebase()),
-    postGoogleFirebase: (selected: []) => dispatch(postGoogleFirebase(selected))
+    postGoogleFirebase: (data: []) => dispatch(postGoogleFirebase(data)),
   }
 }
 
