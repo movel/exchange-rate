@@ -61,18 +61,13 @@ export const postGoogleFirebase = (dataConfig: any) => {
     let apiTimeSeries = REACT_API_GOOGLE_FIREBASE + 'config.json'
     
     let config = dataConfig
-    let config_keys: any = []
     try {
       await axios.post(apiTimeSeries.trim(), config)
         .then((response) => {
           dispatch(postConfigData())
-          config_keys = response.data
-        })
-        .then(() => {
-          Object.keys(config_keys).forEach(key => {
-            console.log('post_keys', key)
-          })
-          console.log('post_keys', config_keys)
+          let config_user_key: string = response.data
+          
+          localStorage.setItem('config_user_key', config_user_key)
         })
     } catch (e) {
       console.log(e)

@@ -64,7 +64,7 @@ const Login = (props: any) => {
       false
     )
     .then(() => props.history.push('/tickers'))
-    .then(() => props.postGoogleFirebase({email: formControls.email.value}))
+    .then(() => props.postGoogleFirebase({email: formControls.email.value})) //create config data for user in db
     .catch((error: any) => {throw(error)})
   }
 
