@@ -64,7 +64,7 @@ const Login = (props: any) => {
       false
     )
     .then(() => props.history.push('/tickers'))
-    .then(() => props.postGoogleFirebase({email: formControls.email.value})) //create config data for user in db
+    .then(() => props.postGoogleFirebase({userId: props.userId})) //create config data for user in db
     .catch((error: any) => {throw(error)})
   }
 
@@ -178,9 +178,10 @@ const Login = (props: any) => {
   )
 }
 
-function mapStateToProps(state: { auth: { token: any; }; }) {
+function mapStateToProps(state: { auth: { token: any; userId: string }; }) {
   return {
-    isAuthenticated: !!state.auth.token
+    isAuthenticated: !!state.auth.token,
+    userId: state.auth.userId,
   }
 }
 
@@ -188,6 +189,7 @@ function mapDispatchToProps(dispatch: (arg0: any) => void) {
   return {
     loginAuth: (email: string, password: string, isLogin: boolean) => dispatch(loginAuth(email, password, isLogin)),
     postGoogleFirebase: (data: []) => dispatch(postGoogleFirebase(data)),
+
   }
 }
 

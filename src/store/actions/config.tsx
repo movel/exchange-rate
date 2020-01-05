@@ -32,18 +32,16 @@ export const postConfigData = () => {
 export const fetchConfigFromFirebase = () => {
   return async (dispatch: Redux.Dispatch<any>) => {
     let api = REACT_API_GOOGLE_FIREBASE + 'config.json'
-    let userConfigs: any = null
     try {
       await axios.get(api.trim())
         .then(response => {
-          userConfigs = response.data
-          dispatch(fetchConfigData(userConfigs))
+          dispatch(fetchConfigData(response.data))
       })
     } catch(e) {
       throw(e)
     }
 
-    return userConfigs
+    // return userConfigs
   }
 }
 
@@ -59,15 +57,12 @@ export const fetchConfigs = () => {
 export const postGoogleFirebase = (dataConfig: any) => {
   return async (dispatch: Redux.Dispatch<any>) => {
     let apiTimeSeries = REACT_API_GOOGLE_FIREBASE + 'config.json'
-    
-    let config = dataConfig
     try {
-      await axios.post(apiTimeSeries.trim(), config)
+      await axios.post(apiTimeSeries.trim(), dataConfig)
         .then((response) => {
+          let config_user_id = response.data
+          console.log('config_user_id', config_user_id)
           dispatch(postConfigData())
-          let config_user_key: string = response.data
-          
-          localStorage.setItem('config_user_key', config_user_key)
         })
     } catch (e) {
       console.log(e)
@@ -82,7 +77,7 @@ export const patchGoogleFirebase = (dataConfig: any) => {
     let config = dataConfig
     try {
       await axios.post(apiTimeSeries.trim(), config)
-        .then((response) => {
+        .then(() => {
           dispatch(postConfigData())
         })
     } catch (e) {

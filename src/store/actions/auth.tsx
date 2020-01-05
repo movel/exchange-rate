@@ -1,5 +1,5 @@
 import { REACT_API_GOOGLE_WEB_API_KEY } from '../../env.local'
-import { AUTH_SUCCESS, AUTH_LOGOUT } from './types'
+import { AUTH_SUCCESS, AUTH_LOGOUT, AUTH_CONFIG } from './types'
 import * as Redux from 'redux'
 import axios from 'axios'
 
@@ -24,6 +24,7 @@ export const loginAuth = (email: string, password: string, isLogin: boolean) => 
         }
 
         dispatch(authSuccess(data.idToken))
+        dispatch(authConfig(data.localId))
         dispatch(autoLogout(data.expiresIn))
       })
       .catch(error => {
@@ -54,6 +55,13 @@ export const authSuccess = (token: string) => {
   return {
     type: AUTH_SUCCESS,
     token
+  }
+}
+
+export const authConfig = (userId: string) => {
+  return {
+    type: AUTH_CONFIG,
+    userId
   }
 }
 
