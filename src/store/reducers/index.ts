@@ -18,7 +18,8 @@ export interface State {
   selected: [],
   router: RouterState,
   auth: {
-    token: string
+    token: string,
+    userId: string,
   },
   rates: [],
   config: [],

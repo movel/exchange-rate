@@ -8,7 +8,7 @@ import './Tickers.sass'
 import { addSelectedError, addSelected } from '../../store/actions/selected'
 import { State } from '../../store/reducers'
 import { logout } from '../../store/actions/auth'
-import { fetchConfigFromFirebase, postGoogleFirebase } from '../../store/actions/config'
+import { fetchConfigFromFirebase, postGoogleFirebase, patchGoogleFirebase } from '../../store/actions/config'
 
 const MultiValueContainer = (props: { data: { title: string | undefined; }; }) => {
   return (
@@ -57,7 +57,14 @@ const Tickers = (props: any) => {
 
   useEffect(() => {
     if(props.isAuthenticated) {
-      props.fetchConfigFromFirebase()
+      props.fetchConfigFromFirebase(props.userId)
+      .then(() => {
+        console.log('props.config', props.config)
+        if(!props.config) {
+          props.patchGoogleFirebase({ selected: selectedOption, userId: props.userId })
+          // window.alert('!')
+        }
+      })
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
@@ -65,10 +72,16 @@ const Tickers = (props: any) => {
   const handleChange = (selectedOption: any) => {
     setSelectedOption(selectedOption)
     props.addSelected(selectedOption)
-    // if(props.isAuthenticated) {
-    //   let post_config_data = { selected: selectedOption, token: props.token }
-    //   props.postGoogleFirebase(post_config_data)
-    // }
+    if(props.isAuthenticated) {
+      let post_config_data = { selected: selectedOption, userId: props.userId }
+      if(props.config) {
+        props.patchGoogleFirebase(post_config_data)
+      } else {
+        props.postGoogleFirebase(post_config_data)
+      }
+      
+      // props.fetchConfigFromFirebase(props.userId)
+    }
   }
 
   // console.log('selectedOption', selectedOption)
@@ -109,6 +122,7 @@ const mapStateToProps = (state: State) => {
     config: state.config,
     isAuthenticated: !!state.auth.token,
     token: state.auth.token,
+    userId: state.auth.userId,
   });
 }
 
@@ -117,8 +131,9 @@ const mapDispatchToProps = (dispatch: (arg0: any) => void) => {
     addSelectedError: (err: Error) => dispatch(addSelectedError(err)),
     addSelected: (selected: []) => dispatch(addSelected(selected)),
     logout: () => dispatch(logout()),
-    fetchConfigFromFirebase: () => dispatch(fetchConfigFromFirebase()),
+    fetchConfigFromFirebase: (userId: string) => dispatch(fetchConfigFromFirebase(userId)),
     postGoogleFirebase: (data: []) => dispatch(postGoogleFirebase(data)),
+    patchGoogleFirebase: (data: []) => dispatch(patchGoogleFirebase(data)),
   }
 }
 

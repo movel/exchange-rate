@@ -14,7 +14,8 @@ export default function authReducer(state = initialState, action: any) {
     case AUTH_LOGOUT:
       return {
         ...state,
-        token: null
+        token: null,
+        userId: null
       }
     case AUTH_CONFIG:
       return {
