@@ -43,18 +43,14 @@ export const fetchConfigFromFirebase = (userId: string) => {
       await axios.get(api.trim())
         .then(response => {
           config_data = response.data
-          // console.log('config_data: ', config_data)
           if(config_data) {
             let config_user: any = []
             Object.keys(config_data).forEach(key => {
               if(config_data[key].userId === userId) {
                 config_user.push(config_data[key].selected)
               }
-              console.log('userId_1', config_data[key].userId)
-              console.log('userId_2', userId)
             })
 
-            console.log(config_user)
             dispatch(fetchConfigData(config_user))
           }
       })

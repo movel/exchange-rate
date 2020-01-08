@@ -57,14 +57,7 @@ const Tickers = (props: any) => {
 
   useEffect(() => {
     if(props.isAuthenticated) {
-      props.fetchConfigFromFirebase(props.userId)
-      .then(() => {
-        console.log('props.config', props.config)
-        if(!props.config) {
-          props.patchGoogleFirebase({ selected: selectedOption, userId: props.userId })
-          // window.alert('!')
-        }
-      })
+      props.fetchConfigFromFirebase(props.userId)      
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
@@ -73,8 +66,8 @@ const Tickers = (props: any) => {
     setSelectedOption(selectedOption)
     props.addSelected(selectedOption)
     if(props.isAuthenticated) {
-      let post_config_data = { selected: selectedOption, userId: props.userId }
-      if(props.config) {
+      let post_config_data = { userId: props.userId, selected: selectedOption }
+      if(!!props.config.config) {
         props.patchGoogleFirebase(post_config_data)
       } else {
         props.postGoogleFirebase(post_config_data)
