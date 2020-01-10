@@ -28,6 +28,7 @@ export default function configReducer(state = initialState, action: any) {
     case POST_CONFIG_DATA:
       return {
         ...state,
+        config_key: action.payload
       }
     case PATCH_CONFIG_DATA:
       return {

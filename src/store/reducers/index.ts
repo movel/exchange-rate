@@ -22,7 +22,10 @@ export interface State {
     userId: string,
   },
   rates: [],
-  config: [],
+  config: {
+    config: [],
+    config_key: string,
+  },
 }
 
 export default rootReducer

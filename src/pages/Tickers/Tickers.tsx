@@ -57,7 +57,7 @@ const Tickers = (props: any) => {
 
   useEffect(() => {
     if(props.isAuthenticated) {
-      props.fetchConfigFromFirebase(props.userId)      
+      props.fetchConfigFromFirebase(props.userId)
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
@@ -67,11 +67,7 @@ const Tickers = (props: any) => {
     props.addSelected(selectedOption)
     if(props.isAuthenticated) {
       let post_config_data = { userId: props.userId, selected: selectedOption }
-      if(!!props.config.config) {
-        props.patchGoogleFirebase(post_config_data)
-      } else {
         props.postGoogleFirebase(post_config_data)
-      }
       
       // props.fetchConfigFromFirebase(props.userId)
     }
@@ -116,6 +112,7 @@ const mapStateToProps = (state: State) => {
     isAuthenticated: !!state.auth.token,
     token: state.auth.token,
     userId: state.auth.userId,
+    config_key: state.config.config_key
   });
 }
 

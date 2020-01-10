@@ -23,9 +23,10 @@ export const fetchConfigQuotes = (payload: []) => ({
   payload
 })
 
-export const postConfigData = () => {
+export const postConfigData = (payload: string) => {
   return {
-    type: POST_CONFIG_DATA
+    type: POST_CONFIG_DATA,
+    payload
   }
 }
 
@@ -46,19 +47,18 @@ export const fetchConfigFromFirebase = (userId: string) => {
           if(config_data) {
             let config_user: any = []
             Object.keys(config_data).forEach(key => {
+              console.log('key', key)
               if(config_data[key].userId === userId) {
                 config_user.push(config_data[key].selected)
               }
             })
-
+            
             dispatch(fetchConfigData(config_user))
           }
       })
     } catch(e) {
       throw(e)
     }
-
-    // return userConfigs
   }
 }
 
@@ -76,8 +76,8 @@ export const postGoogleFirebase = (dataConfig: any) => {
     let apiTimeSeries = REACT_API_GOOGLE_FIREBASE + 'config.json'
     try {
       await axios.post(apiTimeSeries.trim(), dataConfig)
-        .then(() => {
-          dispatch(postConfigData())
+        .then((response) => {
+          dispatch(postConfigData(response.data))
         })
     } catch (e) {
       console.log(e)
