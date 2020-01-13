@@ -2,6 +2,8 @@ import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
 import { withRouter, RouteComponentProps, NavLink } from 'react-router-dom'
 import { logout, autoLogin } from '../../store/actions/auth'
+import { clearSelectedData } from '../../store/actions/selected'
+import { clearAllConfigs } from '../../store/actions/config'
 import './Menu.sass'
 
 import styled, { withTheme } from 'styled-components'
@@ -69,8 +71,10 @@ const Menu = (props: any) => {
                   className="button__menu"
                   onClick={() => {
                     props.logout(() => {
-                      goTo('logout', props);
-                    });
+                      goTo('logout', props)
+                    })
+                    props.clearSelectedData()
+                    props.clearAllConfigs()
                   }}>
                   Log Out
                 </StyledNavLink>
@@ -100,7 +104,9 @@ function mapStateToProps(state: { auth: { token: any; }; }) {
 function mapDispatchToProps(dispatch: (arg0: any) => void) {
   return {
     logout: () => dispatch(logout()),
-    autoLogin: () => dispatch(autoLogin())
+    autoLogin: () => dispatch(autoLogin()),
+    clearSelectedData: () => dispatch(clearSelectedData()),
+    clearAllConfigs: () => dispatch(clearAllConfigs())
   }
 }
 

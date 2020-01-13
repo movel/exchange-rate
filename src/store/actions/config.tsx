@@ -1,7 +1,7 @@
 import * as Redux from 'redux'
 import axios from 'axios'
 import { REACT_API_GOOGLE_FIREBASE } from '../../env.local'
-import { FETCH_CONFIG_ERROR, FETCH_CONFIG_SUCCESS, FETCH_CONFIG_DATA, FETCH_CONFIG_QUOTES, POST_CONFIG_DATA, PATCH_CONFIG_DATA } from './types'
+import { FETCH_CONFIG_ERROR, FETCH_CONFIG_SUCCESS, FETCH_CONFIG_DATA, FETCH_CONFIG_QUOTES, POST_CONFIG_DATA, PATCH_CONFIG_DATA, CLEAR_CONFIG_DATA } from './types'
 
 export const fetchConfigSuccess = (payload: boolean) => ({
   type: FETCH_CONFIG_SUCCESS,
@@ -18,7 +18,7 @@ export const fetchConfigData = (payload: []) => ({
   payload
 })
 
-export const fetchConfigQuotes = (payload: []) => ({
+export const fetchConfigQuotes = async (payload: []) => ({
   type: FETCH_CONFIG_QUOTES,
   payload
 })
@@ -36,6 +36,12 @@ export const patchConfigData = () => {
   }
 }
 
+export const clearConfigData = () => {
+  return {
+    type: CLEAR_CONFIG_DATA
+  }
+}
+
 export const fetchConfigFromFirebase = (userId: string) => {
   return async (dispatch: Redux.Dispatch<any>) => {
     let api = REACT_API_GOOGLE_FIREBASE + 'config.json'
@@ -46,14 +52,17 @@ export const fetchConfigFromFirebase = (userId: string) => {
           config_data = response.data
           if(config_data) {
             let config_user: any = []
+            let key_name: string = ''
             Object.keys(config_data).forEach(key => {
               console.log('key', key)
               if(config_data[key].userId === userId) {
                 config_user.push(config_data[key].selected)
+                key_name = key
               }
             })
             
             dispatch(fetchConfigData(config_user))
+            dispatch(postConfigData(key_name))
           }
       })
     } catch(e) {
@@ -62,14 +71,11 @@ export const fetchConfigFromFirebase = (userId: string) => {
   }
 }
 
-// export const fetchConfigs = () => {
-//   let configUser: any = null
-//   return async (dispatch: Redux.Dispatch<any>) => {
-//     configUser = fetchConfigFromFirebase()
-    
-//     dispatch(fetchConfigData(configUser))
-//   }
-// }
+export const clearAllConfigs = () => {
+  return async (dispatch: Redux.Dispatch<any>) => {    
+    dispatch(clearConfigData())
+  }
+}
 
 export const postGoogleFirebase = (dataConfig: any) => {
   return async (dispatch: Redux.Dispatch<any>) => {
@@ -85,9 +91,9 @@ export const postGoogleFirebase = (dataConfig: any) => {
   }
 }
 
-export const patchGoogleFirebase = (dataConfig: any) => {
+export const patchGoogleFirebase = (key: string, dataConfig: any) => {
   return async (dispatch: Redux.Dispatch<any>) => {
-    let apiTimeSeries = REACT_API_GOOGLE_FIREBASE + 'config.json'
+    let apiTimeSeries = REACT_API_GOOGLE_FIREBASE + 'config/' + key + '.json'
     
     let config = dataConfig
     try {

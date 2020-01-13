@@ -8,7 +8,7 @@ import './Tickers.sass'
 import { addSelectedError, addSelected } from '../../store/actions/selected'
 import { State } from '../../store/reducers'
 import { logout } from '../../store/actions/auth'
-import { fetchConfigFromFirebase, postGoogleFirebase, patchGoogleFirebase } from '../../store/actions/config'
+import { fetchConfigFromFirebase, postGoogleFirebase, patchGoogleFirebase, fetchConfigData } from '../../store/actions/config'
 
 const MultiValueContainer = (props: { data: { title: string | undefined; }; }) => {
   return (
@@ -58,22 +58,29 @@ const Tickers = (props: any) => {
   useEffect(() => {
     if(props.isAuthenticated) {
       props.fetchConfigFromFirebase(props.userId)
+      .then(() => {
+        if(props.config_key) {
+          setSelectedOption(props.config.config[0])
+          props.addSelected(props.config.config[0])
+        }
+      })
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [props.config_key])
 
   const handleChange = (selectedOption: any) => {
     setSelectedOption(selectedOption)
     props.addSelected(selectedOption)
     if(props.isAuthenticated) {
       let post_config_data = { userId: props.userId, selected: selectedOption }
+      if(props.config.config_key) {
+        props.patchGoogleFirebase(props.config.config_key, post_config_data)
+      }
+      else {
         props.postGoogleFirebase(post_config_data)
-      
-      // props.fetchConfigFromFirebase(props.userId)
-    }
+      }
+    } 
   }
-
-  // console.log('selectedOption', selectedOption)
 
   return (
     <div className="tickers__container">
@@ -123,7 +130,7 @@ const mapDispatchToProps = (dispatch: (arg0: any) => void) => {
     logout: () => dispatch(logout()),
     fetchConfigFromFirebase: (userId: string) => dispatch(fetchConfigFromFirebase(userId)),
     postGoogleFirebase: (data: []) => dispatch(postGoogleFirebase(data)),
-    patchGoogleFirebase: (data: []) => dispatch(patchGoogleFirebase(data)),
+    patchGoogleFirebase: (key: string, data: []) => dispatch(patchGoogleFirebase(key, data)),
   }
 }
 
