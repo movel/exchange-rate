@@ -8,8 +8,11 @@ import './Tickers.sass'
 import { addSelectedError, addSelected } from '../../store/actions/selected'
 import { State } from '../../store/reducers'
 import { logout } from '../../store/actions/auth'
-import { fetchConfigFromFirebase, postGoogleFirebase, patchGoogleFirebase, fetchConfigData } from '../../store/actions/config'
+import { fetchConfigFromFirebase, postGoogleFirebase, patchGoogleFirebase } from '../../store/actions/config'
+import { checkActualData } from '../../store/actions/rates'
 
+// React-select component configuration
+// --- BEGIN ---
 const MultiValueContainer = (props: { data: { title: string | undefined; }; }) => {
   return (
     <div title={props.data.title}>
@@ -49,6 +52,8 @@ const options: any = constants.options.map(item => {
   if(title === undefined) title = {value:'no data', label:'no data'}
   return {...item, title: title.label}
 })
+// React-select component configuration
+// --- END ---
 
 const selectedContext = createContext([])
 
@@ -56,6 +61,7 @@ const Tickers = (props: any) => {
   const [selectedOption, setSelectedOption] = useState(props.selected.selected)
 
   useEffect(() => {
+    // Load Config data for user
     if(props.isAuthenticated) {
       props.fetchConfigFromFirebase(props.userId)
       .then(() => {
@@ -65,12 +71,22 @@ const Tickers = (props: any) => {
         }
       })
     }
+    // Load Currencies data
+    // Check Last data on FireBase
+    props.checkActualData()
+    .then(() => {
+      if(props.isActualData) {
+        
+      }
+      console.log('isActualData', props.isActualData)
+    })
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.config_key])
 
   const handleChange = (selectedOption: any) => {
     setSelectedOption(selectedOption)
     props.addSelected(selectedOption)
+    // Save config on FireBase
     if(props.isAuthenticated) {
       let post_config_data = { userId: props.userId, selected: selectedOption }
       if(props.config.config_key) {
@@ -119,7 +135,8 @@ const mapStateToProps = (state: State) => {
     isAuthenticated: !!state.auth.token,
     token: state.auth.token,
     userId: state.auth.userId,
-    config_key: state.config.config_key
+    config_key: state.config.config_key,
+    isActualData: state.rates.isActualData,
   });
 }
 
@@ -131,6 +148,7 @@ const mapDispatchToProps = (dispatch: (arg0: any) => void) => {
     fetchConfigFromFirebase: (userId: string) => dispatch(fetchConfigFromFirebase(userId)),
     postGoogleFirebase: (data: []) => dispatch(postGoogleFirebase(data)),
     patchGoogleFirebase: (key: string, data: []) => dispatch(patchGoogleFirebase(key, data)),
+    checkActualData: () => dispatch(checkActualData()),
   }
 }
 

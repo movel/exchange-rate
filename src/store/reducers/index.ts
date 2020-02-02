@@ -21,7 +21,10 @@ export interface State {
     token: string,
     userId: string,
   },
-  rates: [],
+  rates: {
+    dataCurrency: [],
+    isActualData: boolean,
+  }
   config: {
     config: [],
     config_key: string,

@@ -1,4 +1,4 @@
-import { FETCH_RATES_ERROR, FETCH_RATES_SUCCESS, FETCH_RATES_DATA, FETCH_RATES_QUOTES } from '../actions/types'
+import { FETCH_RATES_ERROR, FETCH_RATES_SUCCESS, FETCH_RATES_DATA, FETCH_RATES_QUOTES, IS_ACTUAL_DATA } from '../actions/types'
 
 const initialState = {
   dataCurrency: {USDJPY: 108.45183333,},
@@ -26,7 +26,12 @@ export default function ratesReducer(state = initialState, action: any) {
     case FETCH_RATES_ERROR:
       return {
         ...state,
-      }  
+      }
+    case IS_ACTUAL_DATA:
+      return {
+        ...state,
+        isActualData: action.payload
+      }
     default: 
       return state
   }

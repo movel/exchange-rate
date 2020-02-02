@@ -63,7 +63,6 @@ const Login = (props: any) => {
       formControls.password.value,
       false
     )
-    // .then(() => props.postGoogleFirebase({userId: props.userId, email: formControls.email.value})) //create config data for user in db
     .then(() => props.history.push('/tickers'))
     .catch((error: any) => {throw(error)})
   }
