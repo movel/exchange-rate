@@ -57,19 +57,42 @@ const options: any = constants.options.map(item => {
 
 const selectedContext = createContext([])
 
+interface MyConfigObj {
+  selected: [];
+  userId: string;
+}
+
 const Tickers = (props: any) => {
   const [selectedOption, setSelectedOption] = useState(props.selected.selected)
 
   useEffect(() => {
+    let configData = null
     // Load Config data for user
     if(props.isAuthenticated) {
-      props.fetchConfigFromFirebase(props.userId)
-      .then(() => {
-        if(props.config_key) {
-          setSelectedOption(props.config.config[0])
-          props.addSelected(props.config.config[0])
-        }
-      })
+      let configFromLocalStorage = localStorage.getItem('dataConfig')
+      if (typeof configFromLocalStorage === 'string') {
+        configData = JSON.parse(configFromLocalStorage);
+      }
+
+      if(configData && configData.userId === props.userId) {
+        // Load config from LocalStorage
+        setSelectedOption(configData.selected)
+        props.addSelected(configData.selected)
+        console.log('load data from LStorage')
+      } else {
+        // Remove config data for other user
+        localStorage.removeItem('dataConfig')
+        // Load config data from FireBase
+        props.fetchConfigFromFirebase(props.userId)
+        .then(() => {
+          if(props.config_key) {
+            setSelectedOption(props.config.config[0])
+            props.addSelected(props.config.config[0])
+          }
+        })
+        console.log('load data from FBase')
+      }
+      
     }
     // Load Currencies data
     // Check Last data on FireBase

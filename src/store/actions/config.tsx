@@ -61,8 +61,12 @@ export const fetchConfigFromFirebase = (userId: string) => {
               }
             })
             
+            console.log('config_user', config_user)
             dispatch(fetchConfigData(config_user))
             dispatch(postConfigData(key_name))
+
+            let config = { userId: userId, selected: config_user[0] }
+            localStorage.setItem('dataConfig', JSON.stringify(config))
           }
       })
     } catch(e) {
