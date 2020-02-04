@@ -84,7 +84,7 @@ export const postGoogleFirebase = (dataConfig: any) => {
       await axios.post(apiTimeSeries.trim(), dataConfig)
         .then((response) => {
           dispatch(postConfigData(response.data))
-          localStorage.setItem('dataConfig', response.data)
+          localStorage.setItem('dataConfig', JSON.stringify(response.data))
         })
     } catch (e) {
       console.log(e)
@@ -102,7 +102,7 @@ export const patchGoogleFirebase = (key: string, dataConfig: any) => {
         .then(() => {
           dispatch(patchConfigData())
           localStorage.removeItem('dataConfig')
-          localStorage.setItem('dataConfig', config)
+          localStorage.setItem('dataConfig', JSON.stringify(config))
         })
     } catch (e) {
       console.log(e)
