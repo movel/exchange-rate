@@ -57,11 +57,6 @@ const options: any = constants.options.map(item => {
 
 const selectedContext = createContext([])
 
-interface MyConfigObj {
-  selected: [];
-  userId: string;
-}
-
 const Tickers = (props: any) => {
   const [selectedOption, setSelectedOption] = useState(props.selected.selected)
 
@@ -71,14 +66,13 @@ const Tickers = (props: any) => {
     if(props.isAuthenticated) {
       let configFromLocalStorage = localStorage.getItem('dataConfig')
       if (typeof configFromLocalStorage === 'string') {
-        configData = JSON.parse(configFromLocalStorage);
+        configData = JSON.parse(configFromLocalStorage)
       }
 
-      if(configData && configData.userId === props.userId) {
+      if(configData.userId && configData.userId === props.userId) {
         // Load config from LocalStorage
         setSelectedOption(configData.selected)
         props.addSelected(configData.selected)
-        console.log('load data from LStorage')
       } else {
         // Remove config data for other user
         localStorage.removeItem('dataConfig')
@@ -90,7 +84,6 @@ const Tickers = (props: any) => {
             props.addSelected(props.config.config[0])
           }
         })
-        console.log('load data from FBase')
       }
       
     }

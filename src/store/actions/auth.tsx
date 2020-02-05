@@ -36,6 +36,7 @@ export const loginAuth = (email: string, password: string, isLogin: boolean) => 
 export const autoLogin = () => {
   return (dispatch: Redux.Dispatch<any>) => {
     const token = localStorage.getItem('token')
+    const userId = localStorage.getItem('userId')
     if(!token) {
       dispatch(logout())
     } else {
@@ -45,6 +46,9 @@ export const autoLogin = () => {
         dispatch(logout())
       } else {
         dispatch(authSuccess(token))
+        if (typeof userId === 'string') {
+          dispatch(authConfig(userId))
+        }
         dispatch(autoLogout((expirationDate.getTime() - new Date().getTime()) / 1000))
       }
     }

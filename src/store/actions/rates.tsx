@@ -32,7 +32,6 @@ export const fetchGoogleFirebase = () => {
   return async (dispatch: Redux.Dispatch<any>) => {
     let api = REACT_API_GOOGLE_FIREBASE + 'currency.json'
     let quotesGoogle: any = null
-    let quotesKeys: any = []
     console.log('fetchGoogleFireBase - response', 'response.data')
     try {
       await axios.get(api.trim())
@@ -41,11 +40,6 @@ export const fetchGoogleFirebase = () => {
           quotesGoogle = response.data
           dispatch(fetchRatesQuotes(quotesGoogle))
           return quotesGoogle
-          // Object.keys(quotesGoogle).forEach(key => {
-          //   quotesKeys.push({
-          //     id: key
-          //   })
-          // })
       })
     } catch(e) {
       throw(e)
@@ -92,8 +86,8 @@ export const checkActualData = () => {
         }
         dispatch(actualData(isActualData))
       })
-    } catch (e) {
-      console.log(e)
+    } catch(e) {
+      throw(e)
     }
   }
 }

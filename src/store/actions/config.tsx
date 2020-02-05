@@ -54,19 +54,16 @@ export const fetchConfigFromFirebase = (userId: string) => {
             let config_user: any = []
             let key_name: string = ''
             Object.keys(config_data).forEach(key => {
-              console.log('key', key)
               if(config_data[key].userId === userId) {
                 config_user.push(config_data[key].selected)
                 key_name = key
               }
             })
-            
-            console.log('config_user', config_user)
+
+            localStorage.setItem('dataConfig', JSON.stringify({ userId: userId, selected: config_user[0] }))
+
             dispatch(fetchConfigData(config_user))
             dispatch(postConfigData(key_name))
-
-            let config = { userId: userId, selected: config_user[0] }
-            localStorage.setItem('dataConfig', JSON.stringify(config))
           }
       })
     } catch(e) {
