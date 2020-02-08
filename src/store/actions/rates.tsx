@@ -1,7 +1,7 @@
 import * as Redux from 'redux'
 import axios from 'axios'
 import { REACT_API_GOOGLE_FIREBASE } from '../../env.local'
-import { FETCH_RATES_ERROR, FETCH_RATES_SUCCESS, FETCH_RATES_DATA, FETCH_RATES_QUOTES, IS_ACTUAL_DATA } from './types'
+import { FETCH_RATES_ERROR, FETCH_RATES_SUCCESS, FETCH_RATES_DATA, FETCH_RATES_QUOTES } from './types'
 
 export const fetchRatesSuccess = (payload: boolean) => ({
   type: FETCH_RATES_SUCCESS,
@@ -20,11 +20,6 @@ export const fetchRatesData = (payload: []) => ({
 
 export const fetchRatesQuotes = (payload: []) => ({
   type: FETCH_RATES_QUOTES,
-  payload
-})
-
-export const actualData = (payload: boolean) => ({
-  type: IS_ACTUAL_DATA,
   payload
 })
 
@@ -55,7 +50,6 @@ export const checkActualData = () => {
     let api = REACT_API_GOOGLE_FIREBASE + 'currency.json'
     let quotesGoogle: any = null
     let quotesKeys: any = []
-    let isActualData = false
 
     // Get current data from FireBase
     try {
@@ -74,6 +68,7 @@ export const checkActualData = () => {
 
     // Check last data on FireBase
     let apiTimeSeries = REACT_API_GOOGLE_FIREBASE + 'currency/' + quotesKeys[quotesKeys.length - 1].id + '.json'
+    let actualData = false
     let lastData: any = null
     let date: string = new Date().toISOString().split('T')[0]
 
@@ -82,9 +77,11 @@ export const checkActualData = () => {
       .then(response => {
         lastData = response.data
         if(lastData.date === date) {
-          isActualData = true
+          actualData = true
         }
-        dispatch(actualData(isActualData))
+
+        localStorage.setItem('rates', JSON.stringify({ actualData: actualData }))
+        dispatch(fetchRatesSuccess(actualData))
       })
     } catch(e) {
       throw(e)

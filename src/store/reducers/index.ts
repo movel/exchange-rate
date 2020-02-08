@@ -23,7 +23,7 @@ export interface State {
   },
   rates: {
     dataCurrency: [],
-    isActualData: boolean,
+    actualData: boolean,
   }
   config: {
     config: [],

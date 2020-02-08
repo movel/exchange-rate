@@ -61,8 +61,9 @@ const Tickers = (props: any) => {
   const [selectedOption, setSelectedOption] = useState(props.selected.selected)
 
   useEffect(() => {
-    let configData = null
     // Load Config data for user
+    let configData = null
+
     if(props.isAuthenticated) {
       let configFromLocalStorage = localStorage.getItem('dataConfig')
       if (typeof configFromLocalStorage === 'string') {
@@ -87,15 +88,28 @@ const Tickers = (props: any) => {
       }
       
     }
+
     // Load Currencies data
     // Check Last data on FireBase
+    let rates: any  = null
+    let actualData = false
+
     props.checkActualData()
     .then(() => {
-      if(props.isActualData) {
-        
+      let ratesFromLocalStorage = localStorage.getItem('rates')
+      if (typeof ratesFromLocalStorage === 'string') {
+        rates = JSON.parse(ratesFromLocalStorage)
       }
-      console.log('isActualData', props.isActualData)
+
+      console.log('rates', rates)
+      actualData = rates.actualData
+      if(actualData) {
+
+      } else {
+
+      }
     })
+
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.config_key])
 
@@ -152,7 +166,7 @@ const mapStateToProps = (state: State) => {
     token: state.auth.token,
     userId: state.auth.userId,
     config_key: state.config.config_key,
-    isActualData: state.rates.isActualData,
+    isActualData: state.rates.actualData,
   });
 }
 
