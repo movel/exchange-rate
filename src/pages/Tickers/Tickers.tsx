@@ -10,6 +10,10 @@ import { State } from '../../store/reducers'
 import { logout } from '../../store/actions/auth'
 import { fetchConfigFromFirebase, postGoogleFirebase, patchGoogleFirebase } from '../../store/actions/config'
 import { checkActualData } from '../../store/actions/rates'
+import { getSelected } from '../../store/selectors/selected'
+import { getConfig, getConfigKey } from '../../store/selectors/config'
+import { getActualData } from '../../store/selectors/rates'
+import { getIsAuthenticated, getToken, getUserId } from '../../store/selectors/auth'
 
 // React-select component configuration
 // --- BEGIN ---
@@ -60,6 +64,8 @@ const selectedContext = createContext([])
 const Tickers = (props: any) => {
   const [selectedOption, setSelectedOption] = useState(props.selected.selected)
 
+  // let config_key: string = props.config_key
+
   useEffect(() => {
     // Load Config data for user
     let configData = null
@@ -80,10 +86,13 @@ const Tickers = (props: any) => {
         // Load config data from FireBase
         props.fetchConfigFromFirebase(props.userId)
         .then(() => {
-          if(props.config_key) {
-            setSelectedOption(props.config.config[0])
-            props.addSelected(props.config.config[0])
-          }
+          // if(typeof props.config.config[0] == null) {
+            
+          // } else {
+          //   console.log('props.config.config[0]', props.config.config[0])
+          //   setSelectedOption(props.config.config[0])
+          //   props.addSelected(props.config.config[0])
+          // }
         })
       }
       
@@ -101,7 +110,6 @@ const Tickers = (props: any) => {
         rates = JSON.parse(ratesFromLocalStorage)
       }
 
-      console.log('rates', rates)
       actualData = rates.actualData
       if(actualData) {
 
@@ -160,13 +168,13 @@ const Tickers = (props: any) => {
 
 const mapStateToProps = (state: State) => {
   return ({
-    selected: state.selected,
-    config: state.config,
-    isAuthenticated: !!state.auth.token,
-    token: state.auth.token,
-    userId: state.auth.userId,
-    config_key: state.config.config_key,
-    isActualData: state.rates.actualData,
+    selected: getSelected(state),
+    config: getConfig(state),
+    isAuthenticated: getIsAuthenticated(state),
+    token: getToken(state),
+    userId: getUserId(state),
+    config_key: getConfigKey(state),
+    isActualData: getActualData(state),
   });
 }
 
