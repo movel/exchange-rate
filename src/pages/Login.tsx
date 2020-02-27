@@ -177,7 +177,7 @@ const Login = (props: any) => {
   )
 }
 
-function mapStateToProps(state: { auth: { token: any; userId: string }; }) {
+function mapStateToProps(state: { auth: { token: string; userId: string }; }) {
   return {
     isAuthenticated: !!state.auth.token,
     userId: state.auth.userId,

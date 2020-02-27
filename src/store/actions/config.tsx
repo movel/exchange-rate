@@ -57,6 +57,7 @@ export const fetchConfigFromFirebase = (userId: string) => {
               if(config_data[key].userId === userId) {
                 config_user.push(config_data[key].selected)
                 key_name = key
+                console.log('key_name', key_name)                
               }
             })
 
@@ -80,9 +81,9 @@ export const clearAllConfigs = () => {
 
 export const postGoogleFirebase = (dataConfig: any) => {
   return async (dispatch: Redux.Dispatch<any>) => {
-    let apiTimeSeries = REACT_API_GOOGLE_FIREBASE + 'config.json'
+    let api = REACT_API_GOOGLE_FIREBASE + 'config.json'
     try {
-      await axios.post(apiTimeSeries.trim(), dataConfig)
+      await axios.post(api.trim(), dataConfig)
         .then((response) => {
           dispatch(postConfigData(response.data))
           localStorage.setItem('dataConfig', JSON.stringify(response.data))
@@ -95,11 +96,13 @@ export const postGoogleFirebase = (dataConfig: any) => {
 
 export const patchGoogleFirebase = (key: string, dataConfig: any) => {
   return async (dispatch: Redux.Dispatch<any>) => {
-    let apiTimeSeries = REACT_API_GOOGLE_FIREBASE + 'config/' + key + '.json'
-    
+    let api = REACT_API_GOOGLE_FIREBASE + 'config/' + key + '.json'
+    console.log('apiTimeSeries', api)
+    console.log('key from patch', key)
+
     let config = dataConfig
     try {
-      await axios.patch(apiTimeSeries.trim(), config)
+      await axios.patch(api.trim(), JSON.stringify(config))
         .then(() => {
           dispatch(patchConfigData())
           localStorage.removeItem('dataConfig')

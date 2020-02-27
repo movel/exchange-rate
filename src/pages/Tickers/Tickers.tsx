@@ -1,85 +1,35 @@
 import React, { useState, createContext, useEffect } from 'react'
 import { connect } from 'react-redux'
-import { css } from 'emotion'
-import Select, { components } from 'react-select'
+import Select from 'react-select'
 import CurrenciesContainer from '../../containers/CurrenciesContainer/CurrenciesContainer'
-import * as constants from '../../options'
+import { MultiValueContainer, Option, options } from '../Tickers/ReactSelect'
 import './Tickers.sass'
-import { addSelectedError, addSelected } from '../../store/actions/selected'
 import { State } from '../../store/reducers'
-import { logout } from '../../store/actions/auth'
-import { fetchConfigFromFirebase, postGoogleFirebase, patchGoogleFirebase } from '../../store/actions/config'
-import { checkActualData } from '../../store/actions/rates'
-import { getSelected } from '../../store/selectors/selected'
-import { getConfig, getConfigKey } from '../../store/selectors/config'
-import { getActualData } from '../../store/selectors/rates'
-import { getIsAuthenticated, getToken, getUserId } from '../../store/selectors/auth'
-
-// React-select component configuration
-// --- BEGIN ---
-const MultiValueContainer = (props: { data: { title: string | undefined; }; }) => {
-  return (
-    <div title={props.data.title}>
-      <components.MultiValueContainer {...props}/>
-    </div>
-  )
-}
-
-const Option = (props: any) => {
-  const { children, className, cx, getStyles, isDisabled, isFocused, isSelected, innerProps } = props;
-  const ref = React.createRef()
-  
-  return (
-    <div
-      ref={ref}
-      className={cx(
-        css(getStyles('option', props)),
-        {
-          'option': true,
-          'option--is-disabled': isDisabled,
-          'option--is-focused': isFocused,
-          'option--is-selected': isSelected,
-        },
-        className
-      )}
-      {...innerProps}
-    >
-      {children}<span className="tooltip">{props.data.title}</span>
-    </div>
-  );
-};
-
-const options: any = constants.options.map(item => {
-  let title = constants.currencies.find(element => {
-    return element.value === item.value
-  })
-  if(title === undefined) title = {value:'no data', label:'no data'}
-  return {...item, title: title.label}
-})
-// React-select component configuration
-// --- END ---
+import { addSelectedError, addSelected, logout, fetchConfigFromFirebase, postGoogleFirebase, patchGoogleFirebase, checkActualData } from '../../store/actions'
+import { getSelected, getConfig, getConfigKey, getActualData, getIsAuthenticated, getToken, getUserId } from '../../store/selectors'
 
 const selectedContext = createContext([])
 
 const Tickers = (props: any) => {
   const [selectedOption, setSelectedOption] = useState(props.selected.selected)
 
-  // let config_key: string = props.config_key
+  let config_key: string = props.config_key.name
+  console.log('1', config_key)
 
   useEffect(() => {
     // Load Config data for user
     let configData = null
+    console.log('2', config_key)
 
     if(props.isAuthenticated) {
       let configFromLocalStorage = localStorage.getItem('dataConfig')
       if (typeof configFromLocalStorage === 'string') {
         configData = JSON.parse(configFromLocalStorage)
-      }
-
-      if(configData.userId && configData.userId === props.userId) {
-        // Load config from LocalStorage
-        setSelectedOption(configData.selected)
-        props.addSelected(configData.selected)
+        if(configData.userId && configData.userId === props.userId) {
+          // Load config from LocalStorage
+          setSelectedOption(configData.selected)
+          props.addSelected(configData.selected)
+        }
       } else {
         // Remove config data for other user
         localStorage.removeItem('dataConfig')
@@ -98,28 +48,31 @@ const Tickers = (props: any) => {
       
     }
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [config_key])
+
+  useEffect(() => {
     // Load Currencies data
     // Check Last data on FireBase
-    let rates: any  = null
-    let actualData = false
+    // let rates: any  = null
+    // let actualData = false
 
-    props.checkActualData()
-    .then(() => {
-      let ratesFromLocalStorage = localStorage.getItem('rates')
-      if (typeof ratesFromLocalStorage === 'string') {
-        rates = JSON.parse(ratesFromLocalStorage)
-      }
+    // props.checkActualData()
+    // .then(() => {
+    //   let ratesFromLocalStorage = localStorage.getItem('rates')
+    //   if (typeof ratesFromLocalStorage === 'string') {
+    //     rates = JSON.parse(ratesFromLocalStorage)
+    //   }
 
-      actualData = rates.actualData
-      if(actualData) {
+    //   actualData = rates.actualData
+    //   if(actualData) {
 
-      } else {
+    //   } else {
 
-      }
-    })
-
+    //   }
+    // })
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [props.config_key])
+  }, [props.isAuthenticated])
 
   const handleChange = (selectedOption: any) => {
     setSelectedOption(selectedOption)
@@ -127,10 +80,12 @@ const Tickers = (props: any) => {
     // Save config on FireBase
     if(props.isAuthenticated) {
       let post_config_data = { userId: props.userId, selected: selectedOption }
-      if(props.config.config_key) {
-        props.patchGoogleFirebase(props.config.config_key, post_config_data)
+      if(config_key) {
+        console.log('3', config_key)
+        props.patchGoogleFirebase(config_key, post_config_data)
       }
       else {
+        console.log('4', config_key)
         props.postGoogleFirebase(post_config_data)
       }
     } 
