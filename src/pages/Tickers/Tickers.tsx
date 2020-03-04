@@ -13,43 +13,42 @@ const selectedContext = createContext([])
 const Tickers = (props: any) => {
   const [selectedOption, setSelectedOption] = useState(props.selected.selected)
 
-  let config_key: string = props.config_key.name
-  console.log('1', config_key)
-
   useEffect(() => {
     // Load Config data for user
     let configData = null
-    console.log('2', config_key)
 
     if(props.isAuthenticated) {
+      console.log('ue')
       let configFromLocalStorage = localStorage.getItem('dataConfig')
       if (typeof configFromLocalStorage === 'string') {
         configData = JSON.parse(configFromLocalStorage)
         if(configData.userId && configData.userId === props.userId) {
+          console.log('ue_local')
           // Load config from LocalStorage
           setSelectedOption(configData.selected)
           props.addSelected(configData.selected)
+        } else {
+          console.log('ue_bd')
+          // Remove config data for other user
+          localStorage.removeItem('dataConfig')
+          // Load config data from FireBase
+          console.log('userId___', props.userId)
+          props.fetchConfigFromFirebase(props.userId)
         }
-      } else {
-        // Remove config data for other user
-        localStorage.removeItem('dataConfig')
-        // Load config data from FireBase
-        props.fetchConfigFromFirebase(props.userId)
-        .then(() => {
-          // if(typeof props.config.config[0] == null) {
-            
-          // } else {
-          //   console.log('props.config.config[0]', props.config.config[0])
-          //   setSelectedOption(props.config.config[0])
-          //   props.addSelected(props.config.config[0])
-          // }
-        })
-      }
-      
+      }      
     }
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [config_key])
+  }, [])
+
+  // useEffect(() => {
+    
+  //     setSelectedOption(props.config.config[0])
+    
+    
+      
+  // // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [props.selected])
 
   useEffect(() => {
     // Load Currencies data
@@ -72,7 +71,7 @@ const Tickers = (props: any) => {
     //   }
     // })
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [props.isAuthenticated])
+  }, [props.config])
 
   const handleChange = (selectedOption: any) => {
     setSelectedOption(selectedOption)
@@ -80,6 +79,7 @@ const Tickers = (props: any) => {
     // Save config on FireBase
     if(props.isAuthenticated) {
       let post_config_data = { userId: props.userId, selected: selectedOption }
+      let config_key: string = props.config_key
       if(config_key) {
         console.log('3', config_key)
         props.patchGoogleFirebase(config_key, post_config_data)
@@ -102,13 +102,13 @@ const Tickers = (props: any) => {
         Logout
       </button>
       <br />
-      <selectedContext.Provider value={selectedOption}>
+      <selectedContext.Provider value={props.selected.selected}>
         <CurrenciesContainer />
       </selectedContext.Provider>
       <br />
         <Select 
           closeMenuOnSelect={false}
-          value={ selectedOption }
+          value={ props.selected.selected }
           onChange={ handleChange }
           components={{ MultiValueContainer, Option }}
           isMulti 

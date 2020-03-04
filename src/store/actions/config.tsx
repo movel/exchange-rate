@@ -1,5 +1,6 @@
 import * as Redux from 'redux'
 import axios from 'axios'
+import { addSelected } from '../actions/selected'
 import { REACT_API_GOOGLE_FIREBASE } from '../../env.local'
 import { FETCH_CONFIG_ERROR, FETCH_CONFIG_SUCCESS, FETCH_CONFIG_DATA, FETCH_CONFIG_QUOTES, POST_CONFIG_DATA, PATCH_CONFIG_DATA, CLEAR_CONFIG_DATA } from './types'
 
@@ -14,8 +15,8 @@ export const fetchConfigError = (error: Error) => ({
 })
 
 export const fetchConfigData = (payload: []) => ({
-  type: FETCH_CONFIG_DATA,
-  payload
+    type: FETCH_CONFIG_DATA,
+    payload  
 })
 
 export const fetchConfigQuotes = async (payload: []) => ({
@@ -46,6 +47,7 @@ export const fetchConfigFromFirebase = (userId: string) => {
   return async (dispatch: Redux.Dispatch<any>) => {
     let api = REACT_API_GOOGLE_FIREBASE + 'config.json'
     let config_data: any = []
+    console.log('fetch')
     try {
       await axios.get(api.trim())
         .then(response => {
@@ -57,7 +59,7 @@ export const fetchConfigFromFirebase = (userId: string) => {
               if(config_data[key].userId === userId) {
                 config_user.push(config_data[key].selected)
                 key_name = key
-                console.log('key_name', key_name)                
+                console.log('key_name', key)                
               }
             })
 
@@ -65,6 +67,7 @@ export const fetchConfigFromFirebase = (userId: string) => {
 
             dispatch(fetchConfigData(config_user))
             dispatch(postConfigData(key_name))
+            dispatch(addSelected(config_user[0]))
           }
       })
     } catch(e) {

@@ -27,7 +27,9 @@ export interface State {
   }
   config: {
     config: [],
-    config_key: string,
+    config_key: {
+      name: string
+    }
   },
 }
 

@@ -38,7 +38,7 @@ export default function configReducer(state = initialState, action: any) {
       return {
         ...state,
         config: null,
-        config_key: null
+        config_key: ''
       }
     default: 
       return state
