@@ -1,7 +1,13 @@
 import { AUTH_SUCCESS, AUTH_LOGOUT, AUTH_CONFIG } from '../actions/types'
 
-const initialState = {
-  token: null
+export type InitialStateType = {
+  token: string | null
+  userId: string | null
+}
+
+const initialState: InitialStateType = {
+  token: null,
+  userId: null
 }
 
 export default function authReducer(state = initialState, action: any) {

@@ -7,7 +7,7 @@ export const getConfig = (state: State) => {
 
 export const getConfigKeyReselector = (state: State) => {
   if (state.config.config_key !== undefined) {
-    return state.config.config_key.name
+    return state.config.config_key
   } else return 'name'
   
 }

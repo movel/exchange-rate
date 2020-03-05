@@ -1,7 +1,12 @@
 import { FETCH_CONFIG_ERROR, FETCH_CONFIG_SUCCESS, FETCH_CONFIG_DATA, FETCH_CONFIG_QUOTES, POST_CONFIG_DATA, PATCH_CONFIG_DATA, CLEAR_CONFIG_DATA } from '../actions/types'
 
-const initialState = {
-  config: null
+export type InitialStateConfigType = {
+  config?: string [],
+  config_key: string | null
+}
+
+const initialState: InitialStateConfigType = {
+  config_key: null
 }
 
 export default function configReducer(state = initialState, action: any) {

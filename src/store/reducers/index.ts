@@ -1,17 +1,18 @@
 import { combineReducers } from 'redux'
 import { History } from 'history'
 import { RouterState, connectRouter } from 'connected-react-router'
+import { InitialStateConfigType } from './config'
 import selectedReducer from './selected'
 import authReducer from './auth'
 import ratesReducer from './rates'
 import configReducer from './config'
 
 export const rootReducer = (history: History) => combineReducers({
-  selected: selectedReducer,
-  router: connectRouter(history),
   auth: authReducer,
   rates: ratesReducer,
   config: configReducer,
+  selected: selectedReducer,
+  router: connectRouter(history),
 })
 
 export interface State {
@@ -25,12 +26,7 @@ export interface State {
     dataCurrency: [],
     actualData: boolean,
   }
-  config: {
-    config: [],
-    config_key: {
-      name: string
-    }
-  },
+  config: InitialStateConfigType,
 }
 
 export default rootReducer

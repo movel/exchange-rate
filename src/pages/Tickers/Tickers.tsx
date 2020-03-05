@@ -1,4 +1,4 @@
-import React, { useState, createContext, useEffect } from 'react'
+import React, { createContext, useEffect } from 'react'
 import { connect } from 'react-redux'
 import Select from 'react-select'
 import CurrenciesContainer from '../../containers/CurrenciesContainer/CurrenciesContainer'
@@ -11,7 +11,7 @@ import { getSelected, getConfig, getConfigKey, getActualData, getIsAuthenticated
 const selectedContext = createContext([])
 
 const Tickers = (props: any) => {
-  const [selectedOption, setSelectedOption] = useState(props.selected.selected)
+  // const [selectedOption, setSelectedOption] = useState(props.selected.selected)
 
   useEffect(() => {
     // Load Config data for user
@@ -25,7 +25,7 @@ const Tickers = (props: any) => {
         if(configData.userId && configData.userId === props.userId) {
           console.log('ue_local')
           // Load config from LocalStorage
-          setSelectedOption(configData.selected)
+          // setSelectedOption(configData.selected)
           props.addSelected(configData.selected)
         } else {
           console.log('ue_bd')
@@ -74,7 +74,7 @@ const Tickers = (props: any) => {
   }, [props.config])
 
   const handleChange = (selectedOption: any) => {
-    setSelectedOption(selectedOption)
+    // setSelectedOption(selectedOption)
     props.addSelected(selectedOption)
     // Save config on FireBase
     if(props.isAuthenticated) {
