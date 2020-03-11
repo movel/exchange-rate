@@ -10,9 +10,9 @@ import configReducer from './config'
 export const rootReducer = (history: History) => combineReducers({
   auth: authReducer,
   rates: ratesReducer,
+  router: connectRouter(history),
   config: configReducer,
   selected: selectedReducer,
-  router: connectRouter(history),
 })
 
 export interface State {

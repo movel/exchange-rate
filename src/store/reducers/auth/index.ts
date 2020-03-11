@@ -1,4 +1,4 @@
-import { AUTH_SUCCESS, AUTH_LOGOUT, AUTH_CONFIG } from '../actions/types'
+import { AUTH_SUCCESS, AUTH_LOGOUT, AUTH_CONFIG } from '../../actions/types'
 
 export type InitialStateType = {
   token: string | null

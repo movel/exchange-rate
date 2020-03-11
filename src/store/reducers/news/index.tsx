@@ -1,4 +1,4 @@
-import { Action } from '../actions/news'
+import { Action } from '../../actions/news'
 
 export const initialState = {
   news:

@@ -1,5 +1,5 @@
-import { Action } from '../actions/selected'
-import {ADD_SELECTED, ADD_SELECTED_ERROR, CLEAR_SELECTED_DATA} from '../actions/types'
+import { Action } from '../../actions/selected'
+import {ADD_SELECTED, ADD_SELECTED_ERROR, CLEAR_SELECTED_DATA} from '../../actions/types'
 
 export const initialState = {
   selected: []

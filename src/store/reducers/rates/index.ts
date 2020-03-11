@@ -1,4 +1,4 @@
-import { FETCH_RATES_ERROR, FETCH_RATES_SUCCESS, FETCH_RATES_DATA, FETCH_RATES_QUOTES } from '../actions/types'
+import { FETCH_RATES_ERROR, FETCH_RATES_SUCCESS, FETCH_RATES_DATA, FETCH_RATES_QUOTES } from '../../actions/types'
 
 const initialState = {
   dataCurrency: {USDJPY: 108.45183333,},
