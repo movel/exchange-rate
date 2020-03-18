@@ -1,5 +1,5 @@
-import { State } from "../reducers"
+import { AppStateType } from './../reducers/AppStateType'
 
-export const getActualData = (state: State) => {
+export const getActualData = (state: AppStateType) => {
   return state.rates.actualData
 }

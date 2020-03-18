@@ -1,22 +1,25 @@
-import { Action } from '../../actions/selected'
-import {ADD_SELECTED, ADD_SELECTED_ERROR, CLEAR_SELECTED_DATA} from '../../actions/types'
+import { actionTypes } from '../../actions/types'
 
-export const initialState = {
+export type StateSelectedType = {
+  selected: string [] | null
+}
+
+const initialState: StateSelectedType = {
   selected: []
 }
 
-export default function selectedReducer(state = initialState.selected, action: Action) {
+export default function selectedReducer(state = initialState, action: any): StateSelectedType {
   switch (action.type) {
-    case ADD_SELECTED: 
+    case actionTypes.ADD_SELECTED: 
       return {
         ...state,
         selected: action.selected
     }
-    case ADD_SELECTED_ERROR: 
+    case actionTypes.ADD_SELECTED_ERROR: 
       return {
         ...state,
     }
-    case CLEAR_SELECTED_DATA: 
+    case actionTypes.CLEAR_SELECTED_DATA: 
       return {
         ...state,
         selected: null

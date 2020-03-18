@@ -1,25 +1,25 @@
 import * as Redux from 'redux'
 import axios from 'axios'
 import { REACT_API_GOOGLE_FIREBASE } from '../../env.local'
-import { FETCH_RATES_ERROR, FETCH_RATES_SUCCESS, FETCH_RATES_DATA, FETCH_RATES_QUOTES } from './types'
+import { actionTypes } from './types'
 
 export const fetchRatesSuccess = (payload: boolean) => ({
-  type: FETCH_RATES_SUCCESS,
+  type: actionTypes.FETCH_RATES_SUCCESS,
   payload
 })
 
 export const fetchRatesError = (error: Error) => ({
-  type: FETCH_RATES_ERROR,
+  type: actionTypes.FETCH_RATES_ERROR,
   payload: error
 })
 
 export const fetchRatesData = (payload: []) => ({
-  type: FETCH_RATES_DATA,
+  type: actionTypes.FETCH_RATES_DATA,
   payload
 })
 
 export const fetchRatesQuotes = (payload: []) => ({
-  type: FETCH_RATES_QUOTES,
+  type: actionTypes.FETCH_RATES_QUOTES,
   payload
 })
 

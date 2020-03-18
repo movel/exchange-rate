@@ -1,5 +1,5 @@
-import { State } from "../reducers"
+import { AppStateType } from './../reducers/AppStateType'
 
-export const getSelected = (state: State) => {
+export const getSelected = (state: AppStateType) => {
   return state.selected
 }

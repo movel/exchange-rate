@@ -1,29 +1,29 @@
-import { AUTH_SUCCESS, AUTH_LOGOUT, AUTH_CONFIG } from '../../actions/types'
+import { actionTypes } from '../../actions/types'
 
-export type InitialStateType = {
+export type StateAuthType = {
   token: string | null
   userId: string | null
 }
 
-const initialState: InitialStateType = {
+const initialState: StateAuthType = {
   token: null,
   userId: null
 }
 
-export default function authReducer(state = initialState, action: any) {
+export default function authReducer(state = initialState, action: any): StateAuthType {
   switch(action.type) {
-    case AUTH_SUCCESS:
+    case actionTypes.AUTH_SUCCESS:
       return {
         ...state,
         token: action.token
       }
-    case AUTH_LOGOUT:
+    case actionTypes.AUTH_LOGOUT:
       return {
         ...state,
         token: null,
         userId: null
       }
-    case AUTH_CONFIG:
+    case actionTypes.AUTH_CONFIG:
       return {
         ...state,
         userId: action.userId

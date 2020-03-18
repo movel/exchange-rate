@@ -1,15 +1,16 @@
-import { State } from "../reducers"
+import { AppStateType } from './../reducers/AppStateType'
 import { createSelector } from "reselect"
 
-export const getIsAuthenticated = (state: State) => {
+
+export const getIsAuthenticated = (state: AppStateType) => {
   return !!state.auth.token
 }
 
-export const getToken = (state: State) => {
+export const getToken = (state: AppStateType) => {
   return state.auth.token
 }
 
-export const getUserIdReselector = (state: State) => {
+export const getUserIdReselector = (state: AppStateType) => {
   return state.auth.userId
 }
 

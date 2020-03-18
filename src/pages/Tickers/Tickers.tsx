@@ -4,9 +4,11 @@ import Select from 'react-select'
 import CurrenciesContainer from '../../containers/CurrenciesContainer/CurrenciesContainer'
 import { MultiValueContainer, Option, options } from '../Tickers/ReactSelect'
 import './Tickers.sass'
-import { State } from '../../store/reducers'
+import { AppStateType } from '../../store/reducers/AppStateType'
 import { addSelectedError, addSelected, logout, fetchConfigFromFirebase, postGoogleFirebase, patchGoogleFirebase, checkActualData } from '../../store/actions'
 import { getSelected, getConfig, getConfigKey, getActualData, getIsAuthenticated, getToken, getUserId } from '../../store/selectors'
+import { compose } from 'redux'
+
 
 const selectedContext = createContext([])
 
@@ -121,8 +123,8 @@ const Tickers = (props: any) => {
   )
 }
 
-const mapStateToProps = (state: State) => {
-  return ({
+const mapStateToProps = (state: AppStateType) => {
+  return {
     selected: getSelected(state),
     config: getConfig(state),
     isAuthenticated: getIsAuthenticated(state),
@@ -130,7 +132,7 @@ const mapStateToProps = (state: State) => {
     userId: getUserId(state),
     config_key: getConfigKey(state),
     isActualData: getActualData(state),
-  });
+  };
 }
 
 const mapDispatchToProps = (dispatch: (arg0: any) => void) => {
@@ -145,5 +147,5 @@ const mapDispatchToProps = (dispatch: (arg0: any) => void) => {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Tickers)
+export default compose(connect(mapStateToProps, mapDispatchToProps))(Tickers)
 export { selectedContext }

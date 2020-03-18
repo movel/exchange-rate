@@ -1,11 +1,11 @@
-import { State } from "../reducers"
+import { AppStateType } from './../reducers/AppStateType';
 import { createSelector } from "reselect"
 
-export const getConfig = (state: State) => {
+export const getConfig = (state: AppStateType) => {
   return state.config
 }
 
-export const getConfigKeyReselector = (state: State) => {
+export const getConfigKeyReselector = (state: AppStateType) => {
   if (state.config.config_key !== undefined) {
     return state.config.config_key
   } else return 'name'
