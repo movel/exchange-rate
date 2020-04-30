@@ -7,7 +7,26 @@ import './Tickers.sass'
 import { AppStateType } from '../../store/reducers/AppStateType'
 import { addSelectedError, addSelected, logout, fetchConfigFromFirebase, postGoogleFirebase, patchGoogleFirebase, checkActualData } from '../../store/actions'
 import { getSelected, getConfig, getConfigKey, getActualData, getIsAuthenticated, getToken, getUserId } from '../../store/selectors'
-import { compose } from 'redux'
+
+// type MapStateToPropsType = {
+//   selected: Array<SelectedType>,
+//   config: Array<ConfigType>,
+//   isAuthenticated: boolean,
+//   token: string,
+//   userId: string,
+//   config_key: string,
+//   isActualData: boolean,
+// }
+
+type MapDispatchToPropsType = {
+  addSelectedError: (err: Error) => void,
+  addSelected: (selected: []) => void,
+  logout: () => void,
+  fetchConfigFromFirebase: (userId: string) => void,
+  postGoogleFirebase: (data: []) => void,
+  patchGoogleFirebase: (key: string, data: []) => void,
+  checkActualData: () => void,
+}
 
 
 const selectedContext = createContext([])
@@ -20,21 +39,16 @@ const Tickers = (props: any) => {
     let configData = null
 
     if(props.isAuthenticated) {
-      console.log('ue')
       let configFromLocalStorage = localStorage.getItem('dataConfig')
       if (typeof configFromLocalStorage === 'string') {
         configData = JSON.parse(configFromLocalStorage)
         if(configData.userId && configData.userId === props.userId) {
-          console.log('ue_local')
           // Load config from LocalStorage
-          // setSelectedOption(configData.selected)
           props.addSelected(configData.selected)
         } else {
-          console.log('ue_bd')
           // Remove config data for other user
           localStorage.removeItem('dataConfig')
           // Load config data from FireBase
-          console.log('userId___', props.userId)
           props.fetchConfigFromFirebase(props.userId)
         }
       }      
@@ -83,11 +97,9 @@ const Tickers = (props: any) => {
       let post_config_data = { userId: props.userId, selected: selectedOption }
       let config_key: string = props.config_key
       if(config_key) {
-        console.log('3', config_key)
         props.patchGoogleFirebase(config_key, post_config_data)
       }
       else {
-        console.log('4', config_key)
         props.postGoogleFirebase(post_config_data)
       }
     } 
@@ -135,17 +147,15 @@ const mapStateToProps = (state: AppStateType) => {
   };
 }
 
-const mapDispatchToProps = (dispatch: (arg0: any) => void) => {
-  return {
-    addSelectedError: (err: Error) => dispatch(addSelectedError(err)),
-    addSelected: (selected: []) => dispatch(addSelected(selected)),
-    logout: () => dispatch(logout()),
-    fetchConfigFromFirebase: (userId: string) => dispatch(fetchConfigFromFirebase(userId)),
-    postGoogleFirebase: (data: []) => dispatch(postGoogleFirebase(data)),
-    patchGoogleFirebase: (key: string, data: []) => dispatch(patchGoogleFirebase(key, data)),
-    checkActualData: () => dispatch(checkActualData()),
-  }
-}
+const mapDispatchToProps = (dispatch: (arg0: any) => void): MapDispatchToPropsType => ({
+  addSelectedError: (err: Error) => dispatch(addSelectedError(err)),
+  addSelected: (selected: []) => dispatch(addSelected(selected)),
+  logout: () => dispatch(logout()),
+  fetchConfigFromFirebase: (userId: string) => dispatch(fetchConfigFromFirebase(userId)),
+  postGoogleFirebase: (data: []) => dispatch(postGoogleFirebase(data)),
+  patchGoogleFirebase: (key: string, data: []) => dispatch(patchGoogleFirebase(key, data)),
+  checkActualData: () => dispatch(checkActualData()),
+})
 
-export default compose(connect(mapStateToProps, mapDispatchToProps))(Tickers)
+export default connect(mapStateToProps, mapDispatchToProps)(Tickers)
 export { selectedContext }
