@@ -7,7 +7,7 @@ import { clearAllConfigs } from '../../store/actions/config'
 import './Menu.sass'
 
 import styled, { withTheme } from 'styled-components'
-import { backgroundColor, textColor } from '../../themes/theme'
+import { backgroundColorBody, backgroundColor, textColor } from '../../themes/theme'
 
 const StyledNavLink = styled(NavLink)`
     background: ${backgroundColor};
@@ -15,7 +15,7 @@ const StyledNavLink = styled(NavLink)`
   `;
 
 const StyledNav = styled.nav`
-  background: ${backgroundColor};
+  background: ${backgroundColorBody};
   color: ${textColor};
   `;
 

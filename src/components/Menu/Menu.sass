@@ -2,29 +2,33 @@
   width: 100%
   margin: 0 auto
   max-width: 1200px
+  // background-color: #1f4287
+  background: transparent
   ul 
     list-style: none
     margin: 0
     padding: 0
     overflow: hidden
     text-align: center
+    // https://colorhunt.co/palette/132247 - dark palette
+    // https://www.color-hex.com/color-palette/764 - pastel palette
     li 
       font-family: 'Oswald', sans-serif
       font-size: 1.4em
       line-height: 40px
       height: 40px
-      border-bottom: 1px solid #888
       a
         display: block
         text-align: center
         text-decoration: none
-        text-decoration: none
-        display: block
+        margin: 0
+        padding: 0
         transition: .3s background-color
-      a:hover:not(.active), a:focus
-        background-color: #005f5f
-      a.active 
-        background-color: #4CAF50
+      a:hover:not(.active), a:focus, a:active
+        font-weight: bold
+        text-decoration: underline
+      // a.active 
+      //   font-weight: bold
 
 @media screen and (min-width: 600px) 
   .menu 

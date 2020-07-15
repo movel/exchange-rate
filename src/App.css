@@ -1,23 +1,23 @@
 .App {
   text-align: center;
-  background-color: #3b4465;
   height: 100vh;
   width: 100%;
 }
 
 header {
-  background-color: #444444;
+  background-color: #1f4287;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  /* font-size: calc(10px + 2vmin); */
-  color: #ccc;
+  width: 100%;
+  /* background-color: palevioletred; */
 }
 
 .page {
   margin: 0 auto;
-  padding: 0 10px;
+  padding: 10px;
+  background-color: #071e3d;
 }
 
 img {
