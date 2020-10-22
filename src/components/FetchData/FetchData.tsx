@@ -9,7 +9,7 @@ const FetchData = () => {
   let quotes: any = null
   let quotesGoogle: any = null
   let quotesKeys: any = []
-  let isActualData = false
+  let isActualData: boolean = false
   let lastData: any = null
 
   let date: string = new Date().toISOString().split('T')[0]
