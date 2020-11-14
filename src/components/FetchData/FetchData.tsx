@@ -101,18 +101,21 @@ function FetchData() {
   let itemsOfReceived = 0
   let itemsDateStart = ''
 
+  // console.log('FetchData')
+
   // Main  loop of databases queries
   fetchGoogleFirebase()
-    .then(() => {
+    .then(() => { // Get keys for all records
       Object.keys(quotesGoogle).forEach(key => {
         quotesKeys.push({
           id: key
         })
       })
     })
-    .then(async () => {
+    .then(async () => { // Get Last record in database
       let apiTimeSeries = REACT_API_GOOGLE_FIREBASE + 'currency/' + quotesKeys[quotesKeys.length - 1].id + '.json'
       records = quotesKeys.length
+      console.log('Get last record')
 
       try {
         await axios.get(apiTimeSeries.trim())
@@ -121,62 +124,67 @@ function FetchData() {
             if (lastData.date === date) {
               setDataCurrency(lastData)
               isActualData = true
+              console.log('lastData_True',lastData)
+            } else {
+              setDataCurrency(lastData)
+              isActualData = false
+              console.log('lastData_False',lastData)
             }
           })
       } catch (e) {
         console.log(e)
       }
     })
-    .then(async () => {
-      if (!isActualData) {
-        difference = daysLag({ dateString1: date, dateString2: lastData.date })
-        if (difference > 10) {
-          itemsOfDelete = 10
-          itemsOfReceived = 10
-        } else {
-          itemsOfDelete = difference + records - 11
-          itemsOfReceived = difference
-        }
-        itemsDateStart = getDateStart({ dateString: date, days: itemsOfReceived - 1 })
+    // .then(async () => {
+    //   if (!isActualData) {
+    //     difference = daysLag({ dateString1: date, dateString2: lastData.date })
+    //     if (difference > 10) {
+    //       itemsOfDelete = 10
+    //       itemsOfReceived = 10
+    //     } else {
+    //       itemsOfDelete = difference + records - 11
+    //       itemsOfReceived = difference
+    //     }
+    //     itemsDateStart = getDateStart({ dateString: date, days: itemsOfReceived - 1 })
 
-        if (itemsOfDelete > 0) {
-          for (let i = 0; i < itemsOfDelete; i++) {
-            try {
-              await axios.delete(REACT_API_GOOGLE_FIREBASE + 'currency/' + quotesKeys[quotesKeys.i].id + '.json')
-            } catch (e) {
-              console.log(e)
-            }
-          }
-        }
-      }
-    })
-    .then(async () => {
-      if (!isActualData) {
-        if (itemsOfReceived > 0) {
-          fetchCurrencyDataHistoricalRates(itemsDateStart)
-            .then(() => {
-              postGoogleFirebase({ curr: quotes, dateItem: itemsDateStart })
-            })
-        }
-      }
-    })
-    .then(async () => {
-      if (!isActualData) {
-        let apiTimeSeries = REACT_API_GOOGLE_FIREBASE + 'currency/' + quotesKeys[quotesKeys.length - 1].id + '.json'
-        records = quotesKeys.length
+    //     if (itemsOfDelete > 0) {
+    //       for (let i = 0; i < itemsOfDelete; i++) {
+    //         try {
+    //           await axios.delete(REACT_API_GOOGLE_FIREBASE + 'currency/' + quotesKeys[quotesKeys.i].id + '.json')
+    //         } catch (e) {
+    //           console.log(e)
+    //         }
+    //       }
+    //     }
+    //   }
+    // })
+    // .then(async () => {
+    //   if (!isActualData) {
+    //     if (itemsOfReceived > 0) {
+    //       fetchCurrencyDataHistoricalRates(itemsDateStart)
+    //         .then(() => {
+    //           postGoogleFirebase({ curr: quotes, dateItem: itemsDateStart })
+    //         })
+    //     }
+    //   }
+    // })
+    // .then(async () => {
+    //   if (!isActualData) {
+    //     let apiTimeSeries = REACT_API_GOOGLE_FIREBASE + 'currency/' + quotesKeys[quotesKeys.length - 1].id + '.json'
+    //     records = quotesKeys.length
 
-        try {
-          await axios.get(apiTimeSeries.trim())
-            .then(response => {
-              lastData = response.data
-              setDataCurrency(lastData)
-              isActualData = true
-            })
-        } catch (e) {
-          console.log(e)
-        }
-      }
-    })
+    //     try {
+    //       await axios.get(apiTimeSeries.trim())
+    //         .then(response => {
+    //           lastData = response.data
+    //           setDataCurrency(lastData)
+    //           isActualData = true
+    //         })
+    //     } catch (e) {
+    //       console.log(e)
+    //     }
+    //   }
+    // })
 
 
   // .then(() => {

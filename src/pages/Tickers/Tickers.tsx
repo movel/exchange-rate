@@ -5,7 +5,10 @@ import CurrenciesContainer from '../../containers/CurrenciesContainer/Currencies
 import { MultiValueContainer, Option, options } from '../Tickers/ReactSelect'
 import './Tickers.sass'
 import { AppStateType } from '../../store/reducers/AppStateType'
-import { addSelectedError, addSelected, logout, fetchConfigFromFirebase, postGoogleFirebase, patchGoogleFirebase, checkActualData } from '../../store/actions'
+import { logout } from '../../store/actions/auth'
+import { addSelectedError, addSelected } from '../../store/actions/selected'
+import { fetchConfigFromFirebase, postGoogleFirebase, patchGoogleFirebase } from '../../store/actions/config'
+import { checkActualData } from '../../store/actions/rates'
 import { getSelected, getConfig, getConfigKey, getActualData, getIsAuthenticated, getToken, getUserId } from '../../store/selectors'
 
 // type MapStateToPropsType = {
@@ -18,16 +21,30 @@ import { getSelected, getConfig, getConfigKey, getActualData, getIsAuthenticated
 //   isActualData: boolean,
 // }
 
-type MapDispatchToPropsType = {
+type MapDispatchToPropsTypeAuth = {
+  logout: () => void,
+}
+
+type MapDispatchToPropsTypeSelected = {
   addSelectedError: (err: Error) => void,
   addSelected: (selected: []) => void,
-  logout: () => void,
+}
+
+type MapDispatchToPropsTypeConfig = {
   fetchConfigFromFirebase: (userId: string) => void,
   postGoogleFirebase: (data: []) => void,
   patchGoogleFirebase: (key: string, data: []) => void,
+}
+
+type MapDispatchToPropsTypeRates = {
   checkActualData: () => void,
 }
 
+type MapDispatchToPropsType = 
+  | MapDispatchToPropsTypeAuth
+  | MapDispatchToPropsTypeSelected
+  | MapDispatchToPropsTypeConfig
+  | MapDispatchToPropsTypeRates
 
 const selectedContext = createContext([])
 
@@ -66,7 +83,7 @@ const Tickers = (props: any) => {
   // // eslint-disable-next-line react-hooks/exhaustive-deps
   // }, [props.selected])
 
-  useEffect(() => {
+  // useEffect(() => {
     // Load Currencies data
     // Check Last data on FireBase
     // let rates: any  = null
@@ -87,7 +104,7 @@ const Tickers = (props: any) => {
     //   }
     // })
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [props.config])
+  // }, [props.config])
 
   const handleChange = (selectedOption: any) => {
     // setSelectedOption(selectedOption)

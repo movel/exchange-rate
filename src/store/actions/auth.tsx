@@ -69,7 +69,7 @@ export const authConfig = (userId: string) => {
   }
 }
 
-export const autoLogout = (time: any) => {
+export const autoLogout = (time: number) => {
   return (dispatch: Redux.Dispatch<any>) => {
     setTimeout(() => {
       dispatch(logout())
