@@ -27,11 +27,11 @@ export const fetchGoogleFirebase = () => {
   return async (dispatch: Redux.Dispatch<any>) => {
     let api = REACT_API_GOOGLE_FIREBASE + 'currency.json'
     let quotesGoogle: any = null
-    console.log('fetchGoogleFireBase - response', 'response.data')
+    // console.log('fetchGoogleFireBase - response - rates.tsx - 30', 'response.data')
     try {
       await axios.get(api.trim())
         .then(response => {
-          console.log('fetchGoogleFireBase - response', response.data)
+          console.log('fetchGoogleFireBase - response - rates.tsx - 30', response.data)
           quotesGoogle = response.data
           dispatch(fetchRatesQuotes(quotesGoogle))
           return quotesGoogle

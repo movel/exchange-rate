@@ -8,7 +8,7 @@ import { AppStateType } from '../../store/reducers/AppStateType'
 import { logout } from '../../store/actions/auth'
 import { addSelectedError, addSelected } from '../../store/actions/selected'
 import { fetchConfigFromFirebase, postGoogleFirebase, patchGoogleFirebase } from '../../store/actions/config'
-import { checkActualData } from '../../store/actions/rates'
+import { checkActualData, fetchGoogleFirebase } from '../../store/actions/rates'
 import { getSelected, getConfig, getConfigKey, getActualData, getIsAuthenticated, getToken, getUserId } from '../../store/selectors'
 
 // type MapStateToPropsType = {
@@ -38,6 +38,7 @@ type MapDispatchToPropsTypeConfig = {
 
 type MapDispatchToPropsTypeRates = {
   checkActualData: () => void,
+  fetchGoogleFirebase: () => void,
 }
 
 type MapDispatchToPropsType = 
@@ -53,7 +54,7 @@ const Tickers = (props: any) => {
 
   useEffect(() => {
     // Load Config data for user
-    let configData = null
+    let configData: { userId: string; selected: []} = { userId: '', selected: []}
 
     if(props.isAuthenticated) {
       let configFromLocalStorage = localStorage.getItem('dataConfig')
@@ -71,6 +72,16 @@ const Tickers = (props: any) => {
       }      
     }
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
+  useEffect(() => {
+    let ratesData: string | null = null
+
+    if(props.isAuthenticated) {
+      //let ratesFromLocalStorage: string | null = localStorage.getItem('dataRates')
+      props.fetchGoogleFirebase()
+    }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
@@ -172,6 +183,7 @@ const mapDispatchToProps = (dispatch: (arg0: any) => void): MapDispatchToPropsTy
   postGoogleFirebase: (data: []) => dispatch(postGoogleFirebase(data)),
   patchGoogleFirebase: (key: string, data: []) => dispatch(patchGoogleFirebase(key, data)),
   checkActualData: () => dispatch(checkActualData()),
+  fetchGoogleFirebase: () => dispatch(fetchGoogleFirebase()),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Tickers)

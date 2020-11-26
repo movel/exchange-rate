@@ -6,9 +6,9 @@ import axios from 'axios'
 export const loginAuth = (email: string, password: string, isLogin: boolean) => {
   return async (dispatch: Redux.Dispatch<any>) => {
     const authData = { email, password, returnSecureToken: true}
-    let apiUrl = 'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=' + REACT_API_GOOGLE_WEB_API_KEY
+    let apiUrl = `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${REACT_API_GOOGLE_WEB_API_KEY}`
     if(isLogin) {
-      apiUrl = 'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=' + REACT_API_GOOGLE_WEB_API_KEY
+      apiUrl = `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${REACT_API_GOOGLE_WEB_API_KEY}`
     }
     return axios.post(apiUrl, authData)
       .then(response => {
@@ -27,8 +27,8 @@ export const loginAuth = (email: string, password: string, isLogin: boolean) => 
         dispatch(authConfig(data.localId))
         dispatch(autoLogout(data.expiresIn))
       })
-      .catch(error => {
-        throw(error)
+      .catch(err => {
+        alert(err.response.data.error.message)
       })
   }
 }
