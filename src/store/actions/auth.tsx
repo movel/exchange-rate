@@ -28,7 +28,7 @@ export const loginAuth = (email: string, password: string, isLogin: boolean) => 
         dispatch(autoLogout(data.expiresIn))
       })
       .catch(err => {
-        alert(err.response.data.error.message)
+        window.alert(err.response.data.error.message)
       })
   }
 }

@@ -9,7 +9,7 @@ import { logout } from '../../store/actions/auth'
 import { addSelectedError, addSelected } from '../../store/actions/selected'
 import { fetchConfigFromFirebase, postGoogleFirebase, patchGoogleFirebase } from '../../store/actions/config'
 import { checkActualData, fetchGoogleFirebase } from '../../store/actions/rates'
-import { getSelected, getConfig, getConfigKey, getActualData, getIsAuthenticated, getToken, getUserId } from '../../store/selectors'
+import { getSelected, getConfig, getConfigKey, getActualData, getIsAuthenticated, getToken, getUserId, getQuotes } from '../../store/selectors'
 
 // type MapStateToPropsType = {
 //   selected: Array<SelectedType>,
@@ -57,7 +57,7 @@ const Tickers = (props: any) => {
     let configData: { userId: string; selected: []} = { userId: '', selected: []}
 
     if(props.isAuthenticated) {
-      let configFromLocalStorage = localStorage.getItem('dataConfig')
+      let configFromLocalStorage: string | null = localStorage.getItem('dataConfig')
       if (typeof configFromLocalStorage === 'string') {
         configData = JSON.parse(configFromLocalStorage)
         if(configData.userId && configData.userId === props.userId) {
@@ -79,43 +79,37 @@ const Tickers = (props: any) => {
     let ratesData: string | null = null
 
     if(props.isAuthenticated) {
-      //let ratesFromLocalStorage: string | null = localStorage.getItem('dataRates')
-      props.fetchGoogleFirebase()
+      let ratesFromLocalStorage: string | null = localStorage.getItem('dataRates')
+      if (typeof ratesFromLocalStorage === 'string') {
+        ratesData = JSON.parse(ratesFromLocalStorage)
+        if(ratesData && ratesData=== props.rates) {
+          // Load rates from LocalStorage
+          console.log('1')
+        } else {
+          // Remove rates data for other user
+          localStorage.removeItem('dataRates')
+          // Load rates data from FireBase
+          // let quotesRates = props.fetchRates()
+          // console.log(quotesRates)
+          // console.log('2')
+        }
+      } else if(ratesFromLocalStorage == null) {
+        // Load rates data from FireBase
+        props.fetchGoogleFirebase()
+      }
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  // useEffect(() => {
-    
-  //     setSelectedOption(props.config.config[0])
-    
-    
-      
-  // // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [props.selected])
-
-  // useEffect(() => {
-    // Load Currencies data
-    // Check Last data on FireBase
-    // let rates: any  = null
-    // let actualData = false
-
-    // props.checkActualData()
-    // .then(() => {
-    //   let ratesFromLocalStorage = localStorage.getItem('rates')
-    //   if (typeof ratesFromLocalStorage === 'string') {
-    //     rates = JSON.parse(ratesFromLocalStorage)
-    //   }
-
-    //   actualData = rates.actualData
-    //   if(actualData) {
-
-    //   } else {
-
-    //   }
-    // })
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [props.config])
+  useEffect(() => {
+    //remove duplicates in quotes
+    let quotes = props.quotes
+    let keysQuotes: Object | any = {}
+    Object.keys(quotes).forEach(key => {
+      if(keysQuotes.hasOwnProperty(quotes[key].date)) delete quotes[key]
+      else keysQuotes[quotes[key].date] = key
+    })
+  },[props.quotes])
 
   const handleChange = (selectedOption: any) => {
     // setSelectedOption(selectedOption)
@@ -172,6 +166,7 @@ const mapStateToProps = (state: AppStateType) => {
     userId: getUserId(state),
     config_key: getConfigKey(state),
     isActualData: getActualData(state),
+    quotes: getQuotes(state),
   };
 }
 

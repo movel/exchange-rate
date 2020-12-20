@@ -23,24 +23,17 @@ export const fetchRatesQuotes = (payload: []) => ({
   payload
 })
 
-export const fetchGoogleFirebase = () => {
-  return async (dispatch: Redux.Dispatch<any>) => {
-    let api = REACT_API_GOOGLE_FIREBASE + 'currency.json'
-    let quotesGoogle: any = null
-    // console.log('fetchGoogleFireBase - response - rates.tsx - 30', 'response.data')
-    try {
-      await axios.get(api.trim())
-        .then(response => {
-          console.log('fetchGoogleFireBase - response - rates.tsx - 30', response.data)
-          quotesGoogle = response.data
-          dispatch(fetchRatesQuotes(quotesGoogle))
-          return quotesGoogle
-      })
-    } catch(e) {
-      throw(e)
-    }
-
-    return quotesGoogle
+export const fetchGoogleFirebase = () => async (dispatch: Redux.Dispatch<any>) => {
+  let api = REACT_API_GOOGLE_FIREBASE + 'currency.json'
+  let quotesGoogle: any = null
+  try {
+    await axios.get(api.trim())
+      .then(response => {
+        quotesGoogle = response.data
+        dispatch(fetchRatesQuotes(quotesGoogle))
+    })
+  } catch(e) {
+    window.alert(e.response.data.error.message)
   }
 }
 
@@ -90,9 +83,6 @@ export const checkActualData = () => {
 }
 
 export const fetchRates = () => {
-  let quotesGoogle: any = null
-  return async () => {
-    quotesGoogle = fetchGoogleFirebase()
-    return quotesGoogle
-  }
+  // let quotesGoogle: any = null
+  fetchGoogleFirebase()  
 }
